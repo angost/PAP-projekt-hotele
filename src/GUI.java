@@ -4,8 +4,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+// jedna klasa - mainGUI, ze startowaniem okienka, custom komponentami (rounded button) itd
+// klasa z typem okienka - wpisywanie danych - przy tworzeniu uzytkownika/dodawaniu oferty; scrollowania - przegladanie ofert, przegladanie wlasnych hoteli, przegladanie historii
+
 class GUI {
-    public static void main(String[] args) {
+
+    void run(){
         JFrame frame = new JFrame("Reservation System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1080,720);
@@ -59,7 +63,13 @@ class GUI {
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
         frame.setVisible(true);
     }
+
+
+    public static void main(String[] args) {
+        new GUI().run();
+    }
 }
+
 
 class RoundedButton extends JButton {
     Color bgColor;
