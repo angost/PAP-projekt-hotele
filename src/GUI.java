@@ -1,6 +1,8 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 class GUI {
     public static void main(String[] args) {
@@ -31,6 +33,17 @@ class GUI {
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         RoundedButton userButton = new RoundedButton("User", "#54e865");
         RoundedButton ownerButton = new RoundedButton("Owner", "#5390ed");
+
+        userButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "User account created");
+            }
+        });
+        ownerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "Owner account created");
+            }
+        });
 
         buttonsPanel.add(Box.createHorizontalGlue());
         buttonsPanel.add(userButton); buttonsPanel.add(Box.createRigidArea(new Dimension(40,0))); buttonsPanel.add(ownerButton);
