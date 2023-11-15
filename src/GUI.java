@@ -9,34 +9,41 @@ import java.awt.event.ActionEvent;
 
 class GUI {
 
+    JFrame frame;
+    JMenuBar mb;
+    JMenu FileMenu, EditMenu, HelpMenu;
+    JMenuItem NewMenuItem, UndoMenuItem, ContactMenuItem;
     RoundedButton userButton;
     RoundedButton ownerButton;
+    JPanel mainPanel, buttonsPanel;
+    JLabel chooseUserLabel;
+
 
     void run(){
-        JFrame frame = new JFrame("Reservation System");
+        frame = new JFrame("Reservation System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1080,720);
 
-        JMenuBar mb = new JMenuBar();
-        JMenu FileMenu = new JMenu("File");
-        JMenu EditMenu = new JMenu("Edit");
-        JMenu HelpMenu = new JMenu("Help");
+        mb = new JMenuBar();
+        FileMenu = new JMenu("File");
+        EditMenu = new JMenu("Edit");
+        HelpMenu = new JMenu("Help");
         mb.add(FileMenu); mb.add(EditMenu); mb.add(HelpMenu);
-        JMenuItem NewMenuItem = new JMenuItem("New");
-        JMenuItem UndoMenuItem = new JMenuItem("Undo");
-        JMenuItem ContactMenuItem = new JMenuItem("Contact us");
+        NewMenuItem = new JMenuItem("New");
+        UndoMenuItem = new JMenuItem("Undo");
+        ContactMenuItem = new JMenuItem("Contact us");
         FileMenu.add(NewMenuItem); EditMenu.add(UndoMenuItem); HelpMenu.add(ContactMenuItem);
         frame.getContentPane().add(BorderLayout.PAGE_START, mb);
 
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
-        JLabel chooseUserLabel = new JLabel("Choose user type:", JLabel.CENTER);
+        chooseUserLabel = new JLabel("Choose user type:", JLabel.CENTER);
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(chooseUserLabel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,30)));
 
-        JPanel buttonsPanel = new JPanel();
+        buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         userButton = new RoundedButton("User", "#54e865");
         ownerButton = new RoundedButton("Owner", "#5390ed");
