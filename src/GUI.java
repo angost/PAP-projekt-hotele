@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 
 class GUI {
 
+    RoundedButton userButton;
+    RoundedButton ownerButton;
+
     void run(){
         JFrame frame = new JFrame("Reservation System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,9 +38,10 @@ class GUI {
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
-        RoundedButton userButton = new RoundedButton("User", "#54e865");
-        RoundedButton ownerButton = new RoundedButton("Owner", "#5390ed");
+        userButton = new RoundedButton("User", "#54e865");
+        ownerButton = new RoundedButton("Owner", "#5390ed");
 
+        //zmienic na uzycie osobnej metody
         userButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(frame, "User account created");
