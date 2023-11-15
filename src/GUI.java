@@ -51,6 +51,7 @@ class GUI {
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 
         chooseUserLabel = new JLabel("Choose user type:", JLabel.CENTER);
+        chooseUserLabel.setFont(chooseUserLabel.getFont().deriveFont(Font.BOLD));
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(chooseUserLabel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,30)));
@@ -95,6 +96,7 @@ class RoundedButton extends JButton {
     Color bgColor;
     public RoundedButton(String text, String hexBgColor) {
         super(text);
+        this.setFont(this.getFont().deriveFont(Font.BOLD));
         this.bgColor = Color.decode(hexBgColor);
         setContentAreaFilled(false); // Make the button transparent
         setFocusPainted(false); // Remove the focus border
