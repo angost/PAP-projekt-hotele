@@ -40,18 +40,8 @@ class GUI {
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         userButton = new RoundedButton("User", "#54e865");
         ownerButton = new RoundedButton("Owner", "#5390ed");
-
-        //zmienic na uzycie osobnej metody
-        userButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "User account created");
-            }
-        });
-        ownerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Owner account created");
-            }
-        });
+        userButton.addActionListener(e->createUserAction());
+        ownerButton.addActionListener(e->createOwnerAction());
 
         buttonsPanel.add(Box.createHorizontalGlue());
         buttonsPanel.add(userButton); buttonsPanel.add(Box.createRigidArea(new Dimension(40,0))); buttonsPanel.add(ownerButton);
@@ -66,6 +56,16 @@ class GUI {
         }
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
         frame.setVisible(true);
+    }
+
+    void createUserAction() {
+        System.out.println("User account created");
+//        JOptionPane.showMessageDialog(frame, "User account created");
+    }
+
+    void createOwnerAction() {
+        System.out.println("Owner account created");
+//        JOptionPane.showMessageDialog(frame, "Owner account created");
     }
 
 
