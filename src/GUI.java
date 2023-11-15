@@ -18,12 +18,20 @@ class GUI {
     JPanel mainPanel, buttonsPanel;
     JLabel chooseUserLabel;
 
-
-    void run(){
+    void createBaseGUI(){
         frame = new JFrame("Reservation System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1080,720);
 
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            SwingUtilities.updateComponentTreeUI(frame);
+        } catch (Exception e) {
+            ;
+        }
+    }
+
+    void createMenus(){
         mb = new JMenuBar();
         FileMenu = new JMenu("File");
         EditMenu = new JMenu("Edit");
@@ -34,9 +42,13 @@ class GUI {
         ContactMenuItem = new JMenuItem("Contact us");
         FileMenu.add(NewMenuItem); EditMenu.add(UndoMenuItem); HelpMenu.add(ContactMenuItem);
         frame.getContentPane().add(BorderLayout.PAGE_START, mb);
+    }
+
+    void createCustomGUI(){
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 
         chooseUserLabel = new JLabel("Choose user type:", JLabel.CENTER);
         mainPanel.add(Box.createVerticalGlue());
@@ -47,39 +59,36 @@ class GUI {
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         userButton = new RoundedButton("User", "#54e865");
         ownerButton = new RoundedButton("Owner", "#5390ed");
-        userButton.addActionListener(e->createUserAction());
-        ownerButton.addActionListener(e->createOwnerAction());
-
+        userButton.addActionListener(e->createUserAccountAction());
+        ownerButton.addActionListener(e->createOwnerAccountAction());
         buttonsPanel.add(Box.createHorizontalGlue());
         buttonsPanel.add(userButton); buttonsPanel.add(Box.createRigidArea(new Dimension(40,0))); buttonsPanel.add(ownerButton);
         buttonsPanel.add(Box.createHorizontalGlue());
         mainPanel.add(buttonsPanel);
         mainPanel.add(Box.createVerticalGlue());
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(frame);
-        } catch (Exception e) {
-            ;
-        }
-        frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
+
+    }
+
+    void createGUI(){
+        createBaseGUI();
+        createMenus();
+        createCustomGUI();
         frame.setVisible(true);
     }
 
-    void createUserAction() {
-        System.out.println("User account created");
-//        JOptionPane.showMessageDialog(frame, "User account created");
+    void createUserAccountAction() {
+        JOptionPane.showMessageDialog(frame, "User account created");
     }
 
-    void createOwnerAction() {
-        System.out.println("Owner account created");
-//        JOptionPane.showMessageDialog(frame, "Owner account created");
+    void createOwnerAccountAction() {
+        JOptionPane.showMessageDialog(frame, "Owner account created");
     }
-
 
     public static void main(String[] args) {
-        new GUI().run();
+        new GUI().createGUI();
     }
 }
+
 
 
 class RoundedButton extends JButton {
