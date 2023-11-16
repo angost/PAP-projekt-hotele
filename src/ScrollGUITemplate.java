@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class ScrollGUITemplate extends BaseGUI{
     JPanel mainPanel, scrollPanel;
+    // move some new components here
 
     void createCustomGUI() {
         mainPanel = new JPanel();
@@ -26,15 +27,21 @@ public class ScrollGUITemplate extends BaseGUI{
 
         for (int i = 0; i<9; i++) {
 
+            int offerHeight = frameHeight/4;
+
             JPanel offerPanel = new JPanel();
-            offerPanel.setPreferredSize(new Dimension(frameWidth, frameHeight/5));
-            offerPanel.setMaximumSize(new Dimension(frameWidth, frameHeight/5));
+//            offerPanel.setBackground(bgColor);
+            offerPanel.setLayout(new BoxLayout(offerPanel, BoxLayout.LINE_AXIS));
+            offerPanel.setPreferredSize(new Dimension(frameWidth, offerHeight));
+            offerPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
+            offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
             JPanel offerInfo = new JPanel();
-            offerInfo.setBackground(neutralColor);
-            offerInfo.setPreferredSize(new Dimension(frameWidth/3, frameHeight/5));
-            offerInfo.setMaximumSize(new Dimension(frameWidth/3, frameHeight/5));
+            offerInfo.setBackground(helpingColor);
+            offerInfo.setPreferredSize(new Dimension(frameWidth/3, offerHeight));
+            offerInfo.setMaximumSize(new Dimension(frameWidth/3, offerHeight));
             offerPanel.add(offerInfo);
+            offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
             RoundedButton seeOfferBtn = new RoundedButton("See offer "+ i, frameHeight/6, frameHeight/6, secondColor, secondColorDarker);
             offerPanel.add(seeOfferBtn);
