@@ -7,37 +7,42 @@ public class ScrollGUITemplate extends BaseGUI{
     void createCustomGUI() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-//        mainPanel.setBackground(Color.green);
+        mainPanel.setBackground(bgColor);
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 
-        scrollPanel = new JPanel();
-        scrollPanel.setBackground(Color.green);
-        scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.PAGE_AXIS));
+        LogoPanel logoPanel = new LogoPanel(logoColor, frameHeight, frameWidth, frameHeight/10);
+        mainPanel.add(logoPanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
+        scrollPanel = new JPanel();
+        scrollPanel.setBackground(bgColor);
+        scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.PAGE_AXIS));
         JScrollPane scrollPanelEnabler = new JScrollPane(scrollPanel);
         scrollPanelEnabler.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPanelEnabler.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 //        scrollPanelEnabler.getViewport().setBackground(Color.black);
-
         mainPanel.add(scrollPanelEnabler);
-        mainPanel.add(new LogoPanel(Color.BLUE, frameHeight, frameWidth,frameHeight/5));
+
 
         for (int i = 0; i<9; i++) {
-            RoundedButton btn = new RoundedButton("User "+ i, frameWidth*3/20, frameHeight/6, secondColor, secondColorDarker);
-            LogoPanel logoPanel = new LogoPanel(Color.BLUE, frameHeight, frameWidth, frameHeight/5);
-            scrollPanel.add(logoPanel);
+
+            JPanel offerPanel = new JPanel();
+            offerPanel.setPreferredSize(new Dimension(frameWidth, frameHeight/5));
+            offerPanel.setMaximumSize(new Dimension(frameWidth, frameHeight/5));
+
+            JPanel offerInfo = new JPanel();
+            offerInfo.setBackground(neutralColor);
+            offerInfo.setPreferredSize(new Dimension(frameWidth/3, frameHeight/5));
+            offerInfo.setMaximumSize(new Dimension(frameWidth/3, frameHeight/5));
+            offerPanel.add(offerInfo);
+
+            RoundedButton seeOfferBtn = new RoundedButton("See offer "+ i, frameHeight/6, frameHeight/6, secondColor, secondColorDarker);
+            offerPanel.add(seeOfferBtn);
+
+            scrollPanel.add(offerPanel);
             scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));
-//            scrollPanel.add(btn);
-//            scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));
-//            JPanel panel1 = new JPanel();
-//            panel1.setBackground(Color.BLUE);
-//            panel1.setPreferredSize(new Dimension(frameWidth, frameHeight/5));
-//            panel1.setMaximumSize(new Dimension(frameWidth, frameHeight/5));
-//            scrollPanel.add(panel1);
 
         }
-
-//        JTextArea textArea = new JTextArea(5, 5);
 
     }
 
