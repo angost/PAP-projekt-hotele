@@ -30,7 +30,7 @@ public class ScrollGUITemplate extends BaseGUI{
             int offerHeight = frameHeight/4;
 
             JPanel offerPanel = new JPanel();
-//            offerPanel.setBackground(bgColor);
+            offerPanel.setBackground(neutralColor);
             offerPanel.setLayout(new BoxLayout(offerPanel, BoxLayout.LINE_AXIS));
             offerPanel.setPreferredSize(new Dimension(frameWidth, offerHeight));
             offerPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
@@ -43,7 +43,7 @@ public class ScrollGUITemplate extends BaseGUI{
             offerPanel.add(offerInfo);
             offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
-            RoundedButton seeOfferBtn = new RoundedButton("See offer "+ i, frameHeight/6, frameHeight/6, secondColor, secondColorDarker);
+            RoundedButton seeOfferBtn = new RoundedButton("See offer "+ i, frameHeight/7, frameHeight/7, secondColor, secondColorDarker, true);
             offerPanel.add(seeOfferBtn);
 
             scrollPanel.add(offerPanel);

@@ -60,13 +60,15 @@ public class BaseGUI {
 class RoundedButton extends JButton {
     Color fillColor, hoverColor; //, borderColor;
     int preferredWidth, preferredHeight;
+    boolean squareShaped;
 //    int borderSize = 3;
 
-    public RoundedButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor){//, String hexBorderColor) {
+    public RoundedButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, boolean squareShaped){//, String hexBorderColor) {
         super(text);
         this.setFont(this.getFont().deriveFont(Font.BOLD));
         this.fillColor = fillColor;
         this.hoverColor = hoverColor;
+        this.squareShaped = squareShaped;
 //        this.borderColor = Color.decode(hexBorderColor);
         setContentAreaFilled(false); // Make the button transparent
         setFocusPainted(false); // Remove the focus border
@@ -91,7 +93,11 @@ class RoundedButton extends JButton {
             g2.setColor(fillColor);
         }
 //        g2.fillRoundRect(borderSize, borderSize, getWidth()-borderSize*2, getHeight()-borderSize*2, preferredWidth/2, preferredHeight);
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight);
+        if (squareShaped) {
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight/2);
+        } else {
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight);
+        }
 
         super.paintComponent(g);
     }
