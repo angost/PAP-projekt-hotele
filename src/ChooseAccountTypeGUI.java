@@ -21,7 +21,7 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         mainPanel.setBackground(bgColor);
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 
-        logoPanel = new LogoPanel(logoColor, frameHeight, frameHeight/5);
+        logoPanel = new LogoPanel(logoColor, frameHeight,Integer.MAX_VALUE, frameHeight/5);
         mainPanel.add(logoPanel);
 
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight*3/20)));
@@ -37,8 +37,8 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         buttonsPanel.setBackground(bgColor);
-        userButton = new RoundedButton("User", frameWidth*3/20, frameHeight/10, "#e09f3e", "#b88232", "#e09f3e");
-        ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, "#e09f3e", "#b88232", "#e09f3e");
+        userButton = new RoundedButton("User", frameWidth*3/20, frameHeight/10, "#e09f3e", "#b88232");
+        ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, "#e09f3e", "#b88232");
         userButton.addActionListener(e->createUserAccountAction());
         ownerButton.addActionListener(e->createOwnerAccountAction());
         buttonsPanel.add(Box.createHorizontalGlue());

@@ -57,7 +57,7 @@ class RoundedButton extends JButton {
     int preferredWidth, preferredHeight;
 //    int borderSize = 3;
 
-    public RoundedButton(String text, int preferredWidth, int preferredHeight, String hexFillColor, String hexHoverColor, String hexBorderColor) {
+    public RoundedButton(String text, int preferredWidth, int preferredHeight, String hexFillColor, String hexHoverColor){//, String hexBorderColor) {
         super(text);
         this.setFont(this.getFont().deriveFont(Font.BOLD));
         this.fillColor = Color.decode(hexFillColor);
@@ -99,14 +99,14 @@ class LogoPanel extends JPanel {
     Image scaledLogoImage;
     JLabel logoImageLabel;
 
-    public LogoPanel(Color logoColor, int frameHeight, int panelHeight) {
+    public LogoPanel(Color logoColor, int frameHeight, int panelWidth, int panelHeight) {
         this.frameHeight = frameHeight;
         this.imgWidth = (int)(panelHeight*5/7*3.6);
         this.imgHeight = (int)(panelHeight*5/7);
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         setBackground(logoColor);
-        setPreferredSize(new Dimension(Integer.MAX_VALUE, panelHeight));
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, panelHeight));
+        setPreferredSize(new Dimension(panelWidth, panelHeight));
+        setMaximumSize(new Dimension(panelWidth, panelHeight));
         addLogoImage();
     }
 
