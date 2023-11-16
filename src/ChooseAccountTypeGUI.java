@@ -2,18 +2,15 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.File;
 
 
 public class ChooseAccountTypeGUI extends BaseGUI {
 
     RoundedButton userButton;
     RoundedButton ownerButton;
-    JPanel mainPanel, buttonsPanel, logoPanel, textPanel;
+    JPanel mainPanel, buttonsPanel, textPanel;
+    LogoPanel logoPanel;
     JLabel chooseUserLabel;
-    BufferedImage logoImage;
 
     void createCustomGUI(){
 //        Color bgColor = Color.decode("#fff3b0");
@@ -24,21 +21,7 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         mainPanel.setBackground(bgColor);
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 
-        logoPanel = new JPanel();
-        logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.LINE_AXIS));
-        logoPanel.setBackground(logoColor);
-        logoPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, frameHeight/5));
-        logoPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, frameHeight/5));
-        try {
-            logoImage = ImageIO.read(new File("res/logo_name_mixed.png"));
-            Image scaledLogoImage = logoImage.getScaledInstance((int)(frameHeight/7*3.6), frameHeight/7, Image.SCALE_SMOOTH);
-            JLabel logoImageLabel = new JLabel(new ImageIcon(scaledLogoImage));
-            logoPanel.add(Box.createRigidArea(new Dimension(20,0)));
-            logoPanel.add(logoImageLabel);
-            logoPanel.add(Box.createHorizontalGlue());
-        } catch (Exception e) {
-            ;
-        }
+        logoPanel = new LogoPanel(logoColor, frameHeight, frameHeight/5);
         mainPanel.add(logoPanel);
 
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight*3/20)));

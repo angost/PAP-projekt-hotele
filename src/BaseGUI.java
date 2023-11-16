@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
 
 
 public class BaseGUI {
@@ -86,5 +89,37 @@ class RoundedButton extends JButton {
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight);
 
         super.paintComponent(g);
+    }
+}
+
+
+class LogoPanel extends JPanel {
+    int frameHeight, imgWidth, imgHeight;
+    BufferedImage logoImage;
+    Image scaledLogoImage;
+    JLabel logoImageLabel;
+
+    public LogoPanel(Color logoColor, int frameHeight, int panelHeight) {
+        this.frameHeight = frameHeight;
+        this.imgWidth = (int)(panelHeight*5/7*3.6);
+        this.imgHeight = (int)(panelHeight*5/7);
+        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+        setBackground(logoColor);
+        setPreferredSize(new Dimension(Integer.MAX_VALUE, panelHeight));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, panelHeight));
+        addLogoImage();
+    }
+
+    void addLogoImage() {
+        try {
+            logoImage = ImageIO.read(new File("res/logo_name_mixed.png"));
+            scaledLogoImage = logoImage.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
+            logoImageLabel = new JLabel(new ImageIcon(scaledLogoImage));
+            this.add(Box.createRigidArea(new Dimension(20,0)));
+            this.add(logoImageLabel);
+            this.add(Box.createHorizontalGlue());
+        } catch (Exception e) {
+            ;
+        }
     }
 }
