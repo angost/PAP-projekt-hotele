@@ -52,7 +52,8 @@ class GUI {
     }
 
     void createCustomGUI(){
-        Color bgColor = Color.decode("#fff3b0");
+//        Color bgColor = Color.decode("#fff3b0");
+        Color bgColor = Color.decode("#e3e3e3");
         Color logoColor = Color.decode("#9e2a2b");
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
@@ -89,8 +90,8 @@ class GUI {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         buttonsPanel.setBackground(bgColor);
-        userButton = new RoundedButton("User", "#e09f3e", frameWidth*3/20, frameHeight/10);
-        ownerButton = new RoundedButton("Owner", "#e09f3e", frameWidth*3/20, frameHeight/10);
+        userButton = new RoundedButton("User", frameWidth*3/20, frameHeight/10, "#e09f3e", "#b88232", "#e09f3e");
+        ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, "#e09f3e", "#b88232", "#e09f3e");
         userButton.addActionListener(e->createUserAccountAction());
         ownerButton.addActionListener(e->createOwnerAccountAction());
         buttonsPanel.add(Box.createHorizontalGlue());
@@ -124,13 +125,16 @@ class GUI {
 
 
 class RoundedButton extends JButton {
-    Color bgColor;
+    Color fillColor, hoverColor; //, borderColor;
     int preferredWidth, preferredHeight;
+//    int borderSize = 3;
 
-    public RoundedButton(String text, String hexBgColor, int preferredWidth, int preferredHeight) {
+    public RoundedButton(String text, int preferredWidth, int preferredHeight, String hexFillColor, String hexHoverColor, String hexBorderColor) {
         super(text);
         this.setFont(this.getFont().deriveFont(Font.BOLD));
-        this.bgColor = Color.decode(hexBgColor);
+        this.fillColor = Color.decode(hexFillColor);
+        this.hoverColor = Color.decode(hexHoverColor);
+//        this.borderColor = Color.decode(hexBorderColor);
         setContentAreaFilled(false); // Make the button transparent
         setFocusPainted(false); // Remove the focus border
         setBorderPainted(false); // Make border transparent
@@ -142,16 +146,19 @@ class RoundedButton extends JButton {
 
     @Override
     protected void paintComponent(Graphics g) {
-        if (getModel().isArmed()) {
-            g.setColor(Color.lightGray); // Change the background color when the button is pressed
-        } else {
-            g.setColor(this.bgColor);
-        }
-
         // Draw the rounded button
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+//        g2.setColor(borderColor);
+//        g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight);
+
+        if (getModel().isArmed() || getModel().isRollover()) {
+            g2.setColor(hoverColor);
+        } else {
+            g2.setColor(fillColor);
+        }
+//        g2.fillRoundRect(borderSize, borderSize, getWidth()-borderSize*2, getHeight()-borderSize*2, preferredWidth/2, preferredHeight);
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight);
 
         super.paintComponent(g);
     }
