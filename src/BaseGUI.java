@@ -11,6 +11,9 @@ public class BaseGUI {
     JMenu FileMenu, EditMenu, HelpMenu;
     JMenuItem NewMenuItem, UndoMenuItem, ContactMenuItem;
     int frameWidth = 1080; int frameHeight = 720;
+    Color bgColor = Color.decode("#e3e3e3"); Color logoColor = Color.decode("#9e2a2b");
+    Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
+
 
     void createFrame(){
         frame = new JFrame("Reservation System");
@@ -57,11 +60,11 @@ class RoundedButton extends JButton {
     int preferredWidth, preferredHeight;
 //    int borderSize = 3;
 
-    public RoundedButton(String text, int preferredWidth, int preferredHeight, String hexFillColor, String hexHoverColor){//, String hexBorderColor) {
+    public RoundedButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor){//, String hexBorderColor) {
         super(text);
         this.setFont(this.getFont().deriveFont(Font.BOLD));
-        this.fillColor = Color.decode(hexFillColor);
-        this.hoverColor = Color.decode(hexHoverColor);
+        this.fillColor = fillColor;
+        this.hoverColor = hoverColor;
 //        this.borderColor = Color.decode(hexBorderColor);
         setContentAreaFilled(false); // Make the button transparent
         setFocusPainted(false); // Remove the focus border

@@ -23,7 +23,7 @@ public class ScrollGUITemplate extends BaseGUI{
         mainPanel.add(new LogoPanel(Color.BLUE, frameHeight, frameWidth,frameHeight/5));
 
         for (int i = 0; i<9; i++) {
-            RoundedButton btn = new RoundedButton("User "+ i, frameWidth*3/20, frameHeight/6, "#e09f3e", "#b88232");
+            RoundedButton btn = new RoundedButton("User "+ i, frameWidth*3/20, frameHeight/6, secondColor, secondColorDarker);
             LogoPanel logoPanel = new LogoPanel(Color.BLUE, frameHeight, frameWidth, frameHeight/5);
             scrollPanel.add(logoPanel);
             scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));

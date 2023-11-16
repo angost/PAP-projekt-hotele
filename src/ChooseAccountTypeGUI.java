@@ -13,9 +13,6 @@ public class ChooseAccountTypeGUI extends BaseGUI {
     JLabel chooseUserLabel;
 
     void createCustomGUI(){
-//        Color bgColor = Color.decode("#fff3b0");
-        Color bgColor = Color.decode("#e3e3e3");
-        Color logoColor = Color.decode("#9e2a2b");
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.setBackground(bgColor);
@@ -37,8 +34,8 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         buttonsPanel.setBackground(bgColor);
-        userButton = new RoundedButton("User", frameWidth*3/20, frameHeight/10, "#e09f3e", "#b88232");
-        ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, "#e09f3e", "#b88232");
+        userButton = new RoundedButton("User", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker);
+        ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker);
         userButton.addActionListener(e->createUserAccountAction());
         ownerButton.addActionListener(e->createOwnerAccountAction());
         buttonsPanel.add(Box.createHorizontalGlue());
