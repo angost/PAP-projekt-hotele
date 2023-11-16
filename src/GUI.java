@@ -1,11 +1,13 @@
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
 
-// jedna klasa - mainGUI, ze startowaniem okienka, custom komponentami (rounded button) itd
-// klasa z typem okienka - wpisywanie danych - przy tworzeniu uzytkownika/dodawaniu oferty; scrollowania - przegladanie ofert, przegladanie wlasnych hoteli, przegladanie historii
 
 class GUI {
 
@@ -15,13 +17,18 @@ class GUI {
     JMenuItem NewMenuItem, UndoMenuItem, ContactMenuItem;
     RoundedButton userButton;
     RoundedButton ownerButton;
-    JPanel mainPanel, buttonsPanel;
+    JPanel mainPanel, buttonsPanel, logoPanel, textPanel;
     JLabel chooseUserLabel;
+    BufferedImage logoImage;
+
+    int frameWidth = 1080; int frameHeight = 720;
 
     void createBaseGUI(){
         frame = new JFrame("Reservation System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1080,720);
+        frame.setSize(frameWidth, frameHeight);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
 
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -45,28 +52,52 @@ class GUI {
     }
 
     void createCustomGUI(){
-
+        Color bgColor = Color.decode("#fff3b0");
+        Color logoColor = Color.decode("#9e2a2b");
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        mainPanel.setBackground(bgColor);
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 
+        logoPanel = new JPanel();
+        logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.LINE_AXIS));
+        logoPanel.setBackground(logoColor);
+        logoPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, frameHeight/5));
+        logoPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, frameHeight/5));
+        try {
+            logoImage = ImageIO.read(new File("res/logo_name_mixed.png"));
+            Image scaledLogoImage = logoImage.getScaledInstance((int)(frameHeight/7*3.6), frameHeight/7, Image.SCALE_SMOOTH);
+            JLabel logoImageLabel = new JLabel(new ImageIcon(scaledLogoImage));
+            logoPanel.add(Box.createRigidArea(new Dimension(20,0)));
+            logoPanel.add(logoImageLabel);
+            logoPanel.add(Box.createHorizontalGlue());
+        } catch (Exception e) {
+            ;
+        }
+        mainPanel.add(logoPanel);
+
+        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight*3/20)));
+        textPanel = new JPanel();
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.LINE_AXIS));
+        textPanel.setBackground(bgColor);
         chooseUserLabel = new JLabel("Choose user type:", JLabel.CENTER);
-        chooseUserLabel.setFont(chooseUserLabel.getFont().deriveFont(Font.BOLD));
-        mainPanel.add(Box.createVerticalGlue());
-        mainPanel.add(chooseUserLabel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0,30)));
+        chooseUserLabel.setFont(chooseUserLabel.getFont().deriveFont(Font.BOLD, 16));
+        textPanel.add(Box.createHorizontalGlue()); textPanel.add(chooseUserLabel); textPanel.add(Box.createHorizontalGlue());
+        mainPanel.add(textPanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0,40)));
 
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
-        userButton = new RoundedButton("User", "#54e865");
-        ownerButton = new RoundedButton("Owner", "#5390ed");
+        buttonsPanel.setBackground(bgColor);
+        userButton = new RoundedButton("User", "#e09f3e", frameWidth*3/20, frameHeight/10);
+        ownerButton = new RoundedButton("Owner", "#e09f3e", frameWidth*3/20, frameHeight/10);
         userButton.addActionListener(e->createUserAccountAction());
         ownerButton.addActionListener(e->createOwnerAccountAction());
         buttonsPanel.add(Box.createHorizontalGlue());
-        buttonsPanel.add(userButton); buttonsPanel.add(Box.createRigidArea(new Dimension(40,0))); buttonsPanel.add(ownerButton);
+        buttonsPanel.add(userButton); buttonsPanel.add(Box.createRigidArea(new Dimension(userButton.preferredWidth/5,0))); buttonsPanel.add(ownerButton);
         buttonsPanel.add(Box.createHorizontalGlue());
         mainPanel.add(buttonsPanel);
-        mainPanel.add(Box.createVerticalGlue());
+        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight*3/10)));
 
     }
 
@@ -94,13 +125,19 @@ class GUI {
 
 class RoundedButton extends JButton {
     Color bgColor;
-    public RoundedButton(String text, String hexBgColor) {
+    int preferredWidth, preferredHeight;
+
+    public RoundedButton(String text, String hexBgColor, int preferredWidth, int preferredHeight) {
         super(text);
         this.setFont(this.getFont().deriveFont(Font.BOLD));
         this.bgColor = Color.decode(hexBgColor);
         setContentAreaFilled(false); // Make the button transparent
         setFocusPainted(false); // Remove the focus border
         setBorderPainted(false); // Make border transparent
+        setPreferredSize(new Dimension(preferredWidth, preferredHeight));
+        setMaximumSize(new Dimension(preferredWidth, preferredHeight));
+        this.preferredWidth = preferredWidth;
+        this.preferredHeight = preferredHeight;
     }
 
     @Override
