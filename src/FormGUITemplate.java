@@ -16,49 +16,52 @@ public class FormGUITemplate extends BaseGUI{
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
 
-        int n_of_fields = 15;
-        int field_height = Math.min(frameHeight/20, (frameHeight - frameHeight/10 - frameHeight/20 - 2*n_of_fields)/n_of_fields);
-        for (int i = 0; i < n_of_fields; i++){
+        int nrOfFields = 10;
+        String[] fieldNames = {"Name", "Surname", "Gender", "Country", "City", "Street", "Street number", "Postal Code", "Phone number", "Email address"};
+//        assert fieldNames.length == nrOfFields;
+        int fieldHeight = frameHeight/22;
+
+        for (int i = 0; i < nrOfFields; i++){
 
             JPanel fieldPanel = new JPanel();
             fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.LINE_AXIS));
             fieldPanel.setBackground(bgColor);
-            fieldPanel.setPreferredSize(new Dimension(frameWidth, field_height));
-            fieldPanel.setMaximumSize(new Dimension(frameWidth, field_height));
+
+            fieldPanel.setPreferredSize(new Dimension(frameWidth, fieldHeight));
+            fieldPanel.setMaximumSize(new Dimension(frameWidth, fieldHeight));
             mainPanel.add(fieldPanel);
             fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
-            JLabel fieldName = new JLabel("Name" + i);
-            fieldName.setFont(new Font("Arial", Font.PLAIN, 20));
+            JLabel fieldName = new JLabel(fieldNames[i]);
+            fieldName.setFont(new Font("Malgun Gothic", Font.PLAIN, 20));
             fieldPanel.add(fieldName);
             fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
             JTextField inputField = new JTextField();
-            inputField.setFont(new Font("Arial", Font.PLAIN, 15));
-            inputField.setPreferredSize(new Dimension(frameWidth/5, frameHeight/n_of_fields));
-            inputField.setMaximumSize(new Dimension(frameWidth/5, frameHeight/n_of_fields));
+            inputField.setFont(new Font("Malgun Gothic", Font.PLAIN, 18));
+            inputField.setPreferredSize(new Dimension(frameWidth/5, fieldHeight));
+            inputField.setMaximumSize(new Dimension(frameWidth/5, fieldHeight));
             fieldPanel.add(inputField);
 
-//            mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
-
-
+            mainPanel.add(Box.createVerticalGlue());
 
         }
-//        male = new JRadioButton("Male");
+//
+//        JRadioButton male = new JRadioButton("Male");
 //        male.setFont(new Font("Arial", Font.PLAIN, 15));
 //        male.setSelected(true);
 //        male.setSize(75, 20);
 //        male.setLocation(200, 200);
-//        c.add(male);
-//
-//        female = new JRadioButton("Female");
+//        mainPanel.add(male);
+////
+//        JRadioButton female = new JRadioButton("Female");
 //        female.setFont(new Font("Arial", Font.PLAIN, 15));
 //        female.setSelected(false);
 //        female.setSize(80, 20);
 //        female.setLocation(275, 200);
-//        c.add(female);
-//
-//        gengp = new ButtonGroup();
+//        mainPanel.add(female);
+////
+//        ButtonGroup gengp = new ButtonGroup();
 //        gengp.add(male);
 //        gengp.add(female);
 
