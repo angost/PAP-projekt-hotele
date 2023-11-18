@@ -43,7 +43,7 @@ public class ScrollGUITemplate extends BaseGUI{
             offerPanel.add(offerInfo);
             offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
-            RoundedButton seeOfferBtn = new RoundedButton("See offer "+ i, frameHeight/7, frameHeight/7, secondColor, secondColorDarker, true);
+            RoundedButton seeOfferBtn = new RoundedButton("See offer "+ i, frameHeight/7, frameHeight/7, secondColor, secondColorDarker, fontButtons, true);
             offerPanel.add(seeOfferBtn);
 
             scrollPanel.add(offerPanel);

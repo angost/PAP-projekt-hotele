@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.InputStream;
 import java.time.Year;
 import java.util.Comparator;
 import java.util.stream.Stream;
@@ -47,6 +46,7 @@ public class FormGUITemplate extends BaseGUI{
         int fieldHeight = frameHeight/22;
         String longestLabelText = Stream.of(fieldLabels).max(Comparator.comparingInt(String::length)).get();
         JLabel longestLabel = new JLabel(longestLabelText);
+        longestLabel.setFont(fontBigger);
         int longestLabelWidth = longestLabel.getFontMetrics(fontBigger).stringWidth(String.valueOf(longestLabel.getText()));
         int minLabelInputGap = 20;
 
@@ -69,7 +69,7 @@ public class FormGUITemplate extends BaseGUI{
 
             if (fieldTypes[i].equals("text")){
                 JTextField inputField = new JTextField();
-                inputField.setFont(fontSmaller);
+                inputField.setFont(fontMiddle);
                 inputField.setPreferredSize(new Dimension(frameWidth/5, fieldHeight));
                 inputField.setMaximumSize(new Dimension(frameWidth/5, fieldHeight));
                 fieldPanel.add(inputField);
@@ -84,9 +84,9 @@ public class FormGUITemplate extends BaseGUI{
                 ButtonGroup radioButtonGroup = new ButtonGroup();
                 for (var option : radioBtnOptions) {
                     JRadioButton optionBtn = new JRadioButton(String.valueOf(option));
-                    optionBtn.setFont(fontSmaller);
+                    optionBtn.setFont(fontMiddle);
                     optionBtn.setSelected(false);
-                    int optionWidth = optionBtn.getFontMetrics(fontSmaller).stringWidth(String.valueOf(option));
+                    int optionWidth = optionBtn.getFontMetrics(fontMiddle).stringWidth(String.valueOf(option));
                     optionBtn.setPreferredSize(new Dimension(optionWidth + 25, fieldHeight));
                     optionBtn.setMaximumSize(new Dimension(optionWidth + 25, fieldHeight));
                     fieldPanel.add(optionBtn);
@@ -105,7 +105,7 @@ public class FormGUITemplate extends BaseGUI{
                 // Create comboBox from data
                 for ( var data: comboBoxesData) {
                     JComboBox comboBox = new JComboBox(data);
-                    comboBox.setFont(fontSmaller);
+                    comboBox.setFont(fontMiddle);
 
                     String longestEl = "";
                     for (var el : data) {
@@ -114,7 +114,7 @@ public class FormGUITemplate extends BaseGUI{
                             longestEl = elToString;
                         }
                     }
-                    int longestElWidth = comboBox.getFontMetrics(fontSmaller).stringWidth(longestEl);
+                    int longestElWidth = comboBox.getFontMetrics(fontMiddle).stringWidth(longestEl);
                     comboBox.setPreferredSize(new Dimension(longestElWidth+50, fieldHeight));
                     comboBox.setMaximumSize(new Dimension(longestElWidth+50, fieldHeight));
                     fieldPanel.add(comboBox);

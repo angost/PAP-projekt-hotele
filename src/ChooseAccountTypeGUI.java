@@ -26,7 +26,7 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.LINE_AXIS));
         textPanel.setBackground(bgColor);
         chooseUserLabel = new JLabel("Choose user type:", JLabel.CENTER);
-        chooseUserLabel.setFont(chooseUserLabel.getFont().deriveFont(Font.BOLD, 16));
+        chooseUserLabel.setFont(fontMiddle);
         textPanel.add(Box.createHorizontalGlue()); textPanel.add(chooseUserLabel); textPanel.add(Box.createHorizontalGlue());
         mainPanel.add(textPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,40)));
@@ -34,8 +34,8 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         buttonsPanel.setBackground(bgColor);
-        userButton = new RoundedButton("User", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, false);
-        ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, false);
+        userButton = new RoundedButton("User", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
         userButton.addActionListener(e->createUserAccountAction());
         ownerButton.addActionListener(e->createOwnerAccountAction());
         buttonsPanel.add(Box.createHorizontalGlue());

@@ -17,7 +17,7 @@ public class BaseGUI {
     Color helpingColor = Color.decode("#a89f9f");
     Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
     Color logoColor = Color.decode("#9e2a2b");
-    Font fontBigger, fontSmaller;
+    Font fontBigger, fontMiddle, fontSmaller, fontButtons ;
 
 
     void createFrame(){
@@ -60,10 +60,17 @@ public class BaseGUI {
             File fontFile = new File("res/Montserrat-Regular.ttf");
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             fontBigger = font.deriveFont(20f);
-            fontSmaller = font.deriveFont(18f);
+            fontMiddle = font.deriveFont(18f);
+            fontSmaller = font.deriveFont(16f);
+            fontFile = new File("res/Montserrat-Bold.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            fontButtons = font.deriveFont(12f);
+
         } catch (java.awt.FontFormatException | java.io.IOException ex) {
             fontBigger = new JLabel().getFont().deriveFont(20f);
-            fontSmaller = new JLabel().getFont().deriveFont(18f);
+            fontMiddle = new JLabel().getFont().deriveFont(18f);
+            fontSmaller = new JLabel().getFont().deriveFont(16f);
+            fontButtons = new JLabel().getFont().deriveFont(Font.BOLD, 12f);
         }
     }
 
@@ -79,9 +86,9 @@ class RoundedButton extends JButton {
     boolean squareShaped;
 //    int borderSize = 3;
 
-    public RoundedButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, boolean squareShaped){//, String hexBorderColor) {
+    public RoundedButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped){//, String hexBorderColor) {
         super(text);
-        this.setFont(this.getFont().deriveFont(Font.BOLD));
+        this.setFont(font);
         this.fillColor = fillColor;
         this.hoverColor = hoverColor;
         this.squareShaped = squareShaped;
