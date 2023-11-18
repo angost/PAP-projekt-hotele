@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.InputStream;
+import java.util.logging.Logger;
 
 
 public class BaseGUI {
@@ -15,6 +17,7 @@ public class BaseGUI {
     Color helpingColor = Color.decode("#a89f9f");
     Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
     Color logoColor = Color.decode("#9e2a2b");
+    Font fontBigger, fontSmaller;
 
 
     void createFrame(){
@@ -46,9 +49,22 @@ public class BaseGUI {
     }
 
     void createBaseGUI(){
+        setFonts();
         createFrame();
         createMenus();
 //        frame.setVisible(true);
+    }
+
+    void setFonts(){
+        try {
+            File fontFile = new File("res/Montserrat-Regular.ttf");
+            Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            fontBigger = font.deriveFont(20f);
+            fontSmaller = font.deriveFont(18f);
+        } catch (java.awt.FontFormatException | java.io.IOException ex) {
+            fontBigger = new JLabel().getFont().deriveFont(20f);
+            fontSmaller = new JLabel().getFont().deriveFont(18f);
+        }
     }
 
     public static void main(String[] args) {
@@ -102,7 +118,6 @@ class RoundedButton extends JButton {
         super.paintComponent(g);
     }
 }
-
 
 class LogoPanel extends JPanel {
     int frameHeight, imgWidth, imgHeight;

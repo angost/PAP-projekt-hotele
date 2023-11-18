@@ -1,19 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 import java.time.Year;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
 public class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
-    Font fontBigger = new Font("Malgun Gothic", Font.PLAIN, 20);
-    Font fontSmaller = new Font("Malgun Gothic", Font.PLAIN, 18);
+
 
     void createCustomGUI() {
         // Move this part to new BaseGUI function/to createBaseGUI function
         // wyrzucic testy stad do f. dziedziczacej
-        // font na taki co ma polskie znaki
-        // wyrownane pola wprowadzania
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.setBackground(bgColor);
@@ -124,10 +122,10 @@ public class FormGUITemplate extends BaseGUI{
                 }
             }
 
-//            mainPanel.add(Box.createVerticalGlue());
-
+            mainPanel.add(Box.createVerticalGlue());
         }
 
+        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
     }
 
     // make BaseGUI abstract, add createcustomgui as virtual method and createGUI with body as below
@@ -140,15 +138,4 @@ public class FormGUITemplate extends BaseGUI{
     public static void main(String[] args) {
         new FormGUITemplate().createGUI();
     }
-}
-
-
-class FormTextField extends JTextField {
-
-    public FormTextField(int frameWidth, int fieldHeight) {
-        setFont(new Font("Malgun Gothic", Font.PLAIN, 18));
-        setPreferredSize(new Dimension(frameWidth/5, fieldHeight));
-        setMaximumSize(new Dimension(frameWidth/5, fieldHeight));
-    }
-
 }
