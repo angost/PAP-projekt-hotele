@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.time.Year;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
 public class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
@@ -9,6 +11,9 @@ public class FormGUITemplate extends BaseGUI{
 
     void createCustomGUI() {
         // Move this part to new BaseGUI function/to createBaseGUI function
+        // wyrzucic testy stad do f. dziedziczacej
+        // font na taki co ma polskie znaki
+        // wyrownane pola wprowadzania
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.setBackground(bgColor);
@@ -42,6 +47,10 @@ public class FormGUITemplate extends BaseGUI{
 
 
         int fieldHeight = frameHeight/22;
+        String longestLabelText = Stream.of(fieldLabels).max(Comparator.comparingInt(String::length)).get();
+        JLabel longestLabel = new JLabel(longestLabelText);
+        int longestLabelWidth = longestLabel.getFontMetrics(fontBigger).stringWidth(String.valueOf(longestLabel.getText()));
+        int minLabelInputGap = 20;
 
         for (int i = 0; i < nrOfFields; i++){
 
@@ -56,7 +65,9 @@ public class FormGUITemplate extends BaseGUI{
             JLabel fieldLabel = new JLabel(fieldLabels[i]);
             fieldLabel.setFont(fontBigger);
             fieldPanel.add(fieldLabel);
-            fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
+            int labelWidth = fieldLabel.getFontMetrics(fontBigger).stringWidth(String.valueOf(fieldLabel.getText()));
+            int labelInputGap = longestLabelWidth - labelWidth + minLabelInputGap;
+            fieldPanel.add(Box.createRigidArea(new Dimension(labelInputGap,0)));
 
             if (fieldTypes[i].equals("text")){
                 JTextField inputField = new JTextField();
@@ -78,7 +89,6 @@ public class FormGUITemplate extends BaseGUI{
                     optionBtn.setFont(fontSmaller);
                     optionBtn.setSelected(false);
                     int optionWidth = optionBtn.getFontMetrics(fontSmaller).stringWidth(String.valueOf(option));
-                    System.out.println(optionWidth);
                     optionBtn.setPreferredSize(new Dimension(optionWidth + 25, fieldHeight));
                     optionBtn.setMaximumSize(new Dimension(optionWidth + 25, fieldHeight));
                     fieldPanel.add(optionBtn);
