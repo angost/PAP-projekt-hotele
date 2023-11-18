@@ -1,8 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.time.Year;
 
 public class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
+    Font fontBigger = new Font("Malgun Gothic", Font.PLAIN, 20);
+    Font fontSmaller = new Font("Malgun Gothic", Font.PLAIN, 18);
 
     void createCustomGUI() {
         // Move this part to new BaseGUI function/to createBaseGUI function
@@ -16,9 +19,28 @@ public class FormGUITemplate extends BaseGUI{
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
 
-        int nrOfFields = 10;
-        String[] fieldNames = {"Name", "Surname", "Gender", "Country", "City", "Street", "Street number", "Postal Code", "Phone number", "Email address"};
-//        assert fieldNames.length == nrOfFields;
+        Integer[] days = new Integer[31];
+        for (int i=0; i < days.length; i++) {
+            days[i] = i+1;
+        }
+        Integer[] months = new Integer[12];
+        for (int i=0; i < months.length; i++) {
+            months[i] = i+1;
+        }
+
+        int baseYear = Year.now().getValue();
+        Integer[] years = new Integer[110];
+        for (int i=0; i < years.length; i++) {
+            years[i] = baseYear-i;
+        }
+
+        int nrOfFields = 11;
+        String[] fieldLabels = {"Name", "Surname", "Date of birth", "Gender", "Country", "City", "Street", "Street number", "Postal Code", "Phone number", "Email address"};
+        String[] fieldTypes = {"text", "text", "comboBox", "radioButton", "text", "text", "text", "text", "text", "text", "text"};
+        Object[] fieldParameters = {20, 30, new Integer[][]{days, months, years}, new String[]{"Male", "Female"}, 20, 20, 30, 10, 10, 15, 30};
+        assert (fieldLabels.length == nrOfFields) && (fieldTypes.length == nrOfFields) && (fieldParameters.length == nrOfFields);
+
+
         int fieldHeight = frameHeight/22;
 
         for (int i = 0; i < nrOfFields; i++){
@@ -26,45 +48,62 @@ public class FormGUITemplate extends BaseGUI{
             JPanel fieldPanel = new JPanel();
             fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.LINE_AXIS));
             fieldPanel.setBackground(bgColor);
-
             fieldPanel.setPreferredSize(new Dimension(frameWidth, fieldHeight));
             fieldPanel.setMaximumSize(new Dimension(frameWidth, fieldHeight));
             mainPanel.add(fieldPanel);
             fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
-            JLabel fieldName = new JLabel(fieldNames[i]);
-            fieldName.setFont(new Font("Malgun Gothic", Font.PLAIN, 20));
-            fieldPanel.add(fieldName);
+            JLabel fieldLabel = new JLabel(fieldLabels[i]);
+            fieldLabel.setFont(fontBigger);
+            fieldPanel.add(fieldLabel);
             fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
-            JTextField inputField = new JTextField();
-            inputField.setFont(new Font("Malgun Gothic", Font.PLAIN, 18));
-            inputField.setPreferredSize(new Dimension(frameWidth/5, fieldHeight));
-            inputField.setMaximumSize(new Dimension(frameWidth/5, fieldHeight));
-            fieldPanel.add(inputField);
+            if (fieldTypes[i].equals("text")){
+                JTextField inputField = new JTextField();
+                inputField.setFont(fontSmaller);
+                inputField.setPreferredSize(new Dimension(frameWidth/5, fieldHeight));
+                inputField.setMaximumSize(new Dimension(frameWidth/5, fieldHeight));
+                fieldPanel.add(inputField);
+
+            } else if (fieldTypes[i].equals("radioButton")) {
+                ButtonGroup radioButtonGroup = new ButtonGroup();
+                String[] radioBtnOptions = (String[]) fieldParameters[i];
+                for (String option : radioBtnOptions) {
+                    JRadioButton optionBtn = new JRadioButton(option);
+                    optionBtn.setFont(fontSmaller);
+                    optionBtn.setSelected(false);
+                    optionBtn.setPreferredSize(new Dimension(100, fieldHeight));
+                    optionBtn.setMaximumSize(new Dimension(100, fieldHeight));
+                    fieldPanel.add(optionBtn);
+                    fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
+                    radioButtonGroup.add(optionBtn);
+                }
+            } else if (fieldTypes[i].equals("comboBox")) {
+                Integer[][] comboBoxesData = (Integer[][])fieldParameters[i];
+                for ( Integer[] data: comboBoxesData) {
+
+                    JComboBox comboBox = new JComboBox(data);
+                    comboBox.setFont(fontSmaller);
+
+                    String longestEl = "";
+                    for (Integer el : data){
+                        String elToString = String.valueOf(el);
+                        if (elToString.length() > longestEl.length()) {
+                            longestEl = elToString;
+                        }
+                    }
+                    int longestElWidth = comboBox.getFontMetrics(fontSmaller).stringWidth(longestEl);
+                    comboBox.setPreferredSize(new Dimension(longestElWidth+50, fieldHeight));
+                    comboBox.setMaximumSize(new Dimension(longestElWidth+50, fieldHeight));
+
+                    fieldPanel.add(comboBox);
+                    fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
+                }
+            }
 
             mainPanel.add(Box.createVerticalGlue());
 
         }
-//
-//        JRadioButton male = new JRadioButton("Male");
-//        male.setFont(new Font("Arial", Font.PLAIN, 15));
-//        male.setSelected(true);
-//        male.setSize(75, 20);
-//        male.setLocation(200, 200);
-//        mainPanel.add(male);
-////
-//        JRadioButton female = new JRadioButton("Female");
-//        female.setFont(new Font("Arial", Font.PLAIN, 15));
-//        female.setSelected(false);
-//        female.setSize(80, 20);
-//        female.setLocation(275, 200);
-//        mainPanel.add(female);
-////
-//        ButtonGroup gengp = new ButtonGroup();
-//        gengp.add(male);
-//        gengp.add(female);
-
 
     }
 
@@ -77,6 +116,16 @@ public class FormGUITemplate extends BaseGUI{
 
     public static void main(String[] args) {
         new FormGUITemplate().createGUI();
+    }
+}
+
+
+class FormTextField extends JTextField {
+
+    public FormTextField(int frameWidth, int fieldHeight) {
+        setFont(new Font("Malgun Gothic", Font.PLAIN, 18));
+        setPreferredSize(new Dimension(frameWidth/5, fieldHeight));
+        setMaximumSize(new Dimension(frameWidth/5, fieldHeight));
     }
 
 }
