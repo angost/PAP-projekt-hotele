@@ -1,12 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
-import java.time.Year;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
-public class FormGUITemplate extends BaseGUI{
+public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
+    //przeniesc tutaj niektore componenty
 
+    abstract String[] getFieldLabels();
+    abstract String[] getFieldTypes();
+    abstract Object[] getFieldParameters();
 
     void createCustomGUI() {
         // Move this part to new BaseGUI function/to createBaseGUI function
@@ -20,28 +23,17 @@ public class FormGUITemplate extends BaseGUI{
         mainPanel.add(logoPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
+        int nrOfFields;
+        String[] fieldLabels = getFieldLabels();
+        String[] fieldTypes = getFieldTypes();
+        Object[] fieldParameters = getFieldParameters();
 
-        Integer[] days = new Integer[31];
-        for (int i=0; i < days.length; i++) {
-            days[i] = i+1;
+        if ((fieldLabels.length == fieldTypes.length) && (fieldLabels.length == fieldParameters.length) && (fieldTypes.length == fieldParameters.length)) {
+            nrOfFields = fieldLabels.length;
+        } else {
+            nrOfFields = 0; // Throw exception?
+            JOptionPane.showMessageDialog(frame, "Nr of fields inconsistent", "Error!", JOptionPane.ERROR_MESSAGE);
         }
-        Integer[] months = new Integer[12];
-        for (int i=0; i < months.length; i++) {
-            months[i] = i+1;
-        }
-
-        int baseYear = Year.now().getValue();
-        Integer[] years = new Integer[110];
-        for (int i=0; i < years.length; i++) {
-            years[i] = baseYear-i;
-        }
-
-        int nrOfFields = 12;
-        String[] fieldLabels = {"Name", "Surname", "Date of birth", "Payment option", "Gender", "Country", "City", "Street", "Street number", "Postal Code", "Phone number", "Email address"};
-        String[] fieldTypes = {"text", "text", "comboBoxInteger", "comboBoxString", "radioButton", "text", "text", "text", "text", "text", "text", "text"};
-        Object[] fieldParameters = {20, 30, new Integer[][]{days, months, years}, new String[][]{new String[]{"Credit card", "Debet card", "Bank transfer", "BLIK", "Cash"}}, new String[]{"Male", "Female"}, 20, 20, 30, 10, 10, 15, 30};
-        assert (fieldLabels.length == nrOfFields) && (fieldTypes.length == nrOfFields) && (fieldParameters.length == nrOfFields);
-
 
         int fieldHeight = frameHeight/22;
         String longestLabelText = Stream.of(fieldLabels).max(Comparator.comparingInt(String::length)).get();
@@ -121,10 +113,8 @@ public class FormGUITemplate extends BaseGUI{
                     fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
                 }
             }
-
             mainPanel.add(Box.createVerticalGlue());
         }
-
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
     }
 
@@ -135,7 +125,4 @@ public class FormGUITemplate extends BaseGUI{
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new FormGUITemplate().createGUI();
-    }
 }
