@@ -13,7 +13,7 @@ public abstract class FormGUITemplate extends BaseGUI{
 
     void createCustomGUI() {
         // Move this part to new BaseGUI function/to createBaseGUI function
-        // wyrzucic testy stad do f. dziedziczacej
+        // podzielic te funkcje na czesci
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.setBackground(bgColor);
@@ -22,6 +22,28 @@ public abstract class FormGUITemplate extends BaseGUI{
         LogoPanel logoPanel = new LogoPanel(logoColor, frameHeight, frameWidth, frameHeight/10);
         mainPanel.add(logoPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
+
+        int contentPanelSize = frameHeight - frameHeight/10 - frameHeight/20 - frameHeight/20;
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.LINE_AXIS));
+        contentPanel.setBackground(bgColor);
+        contentPanel.setPreferredSize(new Dimension(frameWidth, contentPanelSize));
+        contentPanel.setMaximumSize(new Dimension(frameWidth, contentPanelSize));
+        mainPanel.add(contentPanel);
+
+        JPanel fieldsPanel = new JPanel();
+        fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.PAGE_AXIS));
+        fieldsPanel.setBackground(bgColor);
+        fieldsPanel.setPreferredSize(new Dimension(frameWidth*2/3, contentPanelSize));
+        fieldsPanel.setMaximumSize(new Dimension(frameWidth*2/3, contentPanelSize));
+        contentPanel.add(fieldsPanel);
+
+        JPanel registerPanel = new JPanel();
+        registerPanel.setLayout(new BoxLayout(registerPanel, BoxLayout.PAGE_AXIS));
+        registerPanel.setBackground(bgColor);
+        registerPanel.setPreferredSize(new Dimension(frameWidth/3, contentPanelSize));
+        registerPanel.setMaximumSize(new Dimension(frameWidth/3, contentPanelSize));
+        contentPanel.add(registerPanel);
 
         int nrOfFields;
         String[] fieldLabels = getFieldLabels();
@@ -42,6 +64,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         int longestLabelWidth = longestLabel.getFontMetrics(fontBigger).stringWidth(String.valueOf(longestLabel.getText()));
         int minLabelInputGap = 20;
 
+        // Creating all the form fields according to types
         for (int i = 0; i < nrOfFields; i++){
 
             JPanel fieldPanel = new JPanel();
@@ -49,7 +72,7 @@ public abstract class FormGUITemplate extends BaseGUI{
             fieldPanel.setBackground(bgColor);
             fieldPanel.setPreferredSize(new Dimension(frameWidth, fieldHeight));
             fieldPanel.setMaximumSize(new Dimension(frameWidth, fieldHeight));
-            mainPanel.add(fieldPanel);
+            fieldsPanel.add(fieldPanel);
             fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
             JLabel fieldLabel = new JLabel(fieldLabels[i]);
@@ -113,8 +136,13 @@ public abstract class FormGUITemplate extends BaseGUI{
                     fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
                 }
             }
-            mainPanel.add(Box.createVerticalGlue());
+            fieldsPanel.add(Box.createVerticalGlue());
         }
+
+        RoundedButton registerButton = new RoundedButton("Register", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        registerPanel.add(Box.createVerticalGlue());
+        registerPanel.add(registerButton);
+        registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
     }
 
