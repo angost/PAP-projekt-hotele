@@ -34,10 +34,10 @@ public class FormGUITemplate extends BaseGUI{
             years[i] = baseYear-i;
         }
 
-        int nrOfFields = 11;
-        String[] fieldLabels = {"Name", "Surname", "Date of birth", "Gender", "Country", "City", "Street", "Street number", "Postal Code", "Phone number", "Email address"};
-        String[] fieldTypes = {"text", "text", "comboBox", "radioButton", "text", "text", "text", "text", "text", "text", "text"};
-        Object[] fieldParameters = {20, 30, new Integer[][]{days, months, years}, new String[]{"Male", "Female"}, 20, 20, 30, 10, 10, 15, 30};
+        int nrOfFields = 12;
+        String[] fieldLabels = {"Name", "Surname", "Date of birth", "Payment option", "Gender", "Country", "City", "Street", "Street number", "Postal Code", "Phone number", "Email address"};
+        String[] fieldTypes = {"text", "text", "comboBoxInteger", "comboBoxString", "radioButton", "text", "text", "text", "text", "text", "text", "text"};
+        Object[] fieldParameters = {20, 30, new Integer[][]{days, months, years}, new String[][]{new String[]{"Credit card", "Debet card", "Bank transfer", "BLIK", "Cash"}}, new String[]{"Male", "Female"}, 20, 20, 30, 10, 10, 15, 30};
         assert (fieldLabels.length == nrOfFields) && (fieldTypes.length == nrOfFields) && (fieldParameters.length == nrOfFields);
 
 
@@ -65,28 +65,42 @@ public class FormGUITemplate extends BaseGUI{
                 inputField.setMaximumSize(new Dimension(frameWidth/5, fieldHeight));
                 fieldPanel.add(inputField);
 
-            } else if (fieldTypes[i].equals("radioButton")) {
+            } else if (fieldTypes[i].startsWith("radioButton")) {
+                Object[] radioBtnOptions;
+                if (fieldTypes[i].equals("radioButtonInteger")) {
+                    radioBtnOptions = (Integer[]) fieldParameters[i];
+                } else {
+                    radioBtnOptions = (String[]) fieldParameters[i];
+                }
                 ButtonGroup radioButtonGroup = new ButtonGroup();
-                String[] radioBtnOptions = (String[]) fieldParameters[i];
-                for (String option : radioBtnOptions) {
-                    JRadioButton optionBtn = new JRadioButton(option);
+                for (var option : radioBtnOptions) {
+                    JRadioButton optionBtn = new JRadioButton(String.valueOf(option));
                     optionBtn.setFont(fontSmaller);
                     optionBtn.setSelected(false);
-                    optionBtn.setPreferredSize(new Dimension(100, fieldHeight));
-                    optionBtn.setMaximumSize(new Dimension(100, fieldHeight));
+                    int optionWidth = optionBtn.getFontMetrics(fontSmaller).stringWidth(String.valueOf(option));
+                    System.out.println(optionWidth);
+                    optionBtn.setPreferredSize(new Dimension(optionWidth + 25, fieldHeight));
+                    optionBtn.setMaximumSize(new Dimension(optionWidth + 25, fieldHeight));
                     fieldPanel.add(optionBtn);
                     fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
                     radioButtonGroup.add(optionBtn);
                 }
-            } else if (fieldTypes[i].equals("comboBox")) {
-                Integer[][] comboBoxesData = (Integer[][])fieldParameters[i];
-                for ( Integer[] data: comboBoxesData) {
 
+            } else if (fieldTypes[i].startsWith("comboBox")) {
+                // comboBoxesData may all be Integer or all String
+                Object[][] comboBoxesData;
+                if (fieldTypes[i].equals("comboBoxInteger")) {
+                    comboBoxesData = (Integer[][]) fieldParameters[i];
+                } else {
+                    comboBoxesData = (String[][]) fieldParameters[i];
+                }
+                // Create comboBox from data
+                for ( var data: comboBoxesData) {
                     JComboBox comboBox = new JComboBox(data);
                     comboBox.setFont(fontSmaller);
 
                     String longestEl = "";
-                    for (Integer el : data){
+                    for (var el : data) {
                         String elToString = String.valueOf(el);
                         if (elToString.length() > longestEl.length()) {
                             longestEl = elToString;
@@ -95,13 +109,12 @@ public class FormGUITemplate extends BaseGUI{
                     int longestElWidth = comboBox.getFontMetrics(fontSmaller).stringWidth(longestEl);
                     comboBox.setPreferredSize(new Dimension(longestElWidth+50, fieldHeight));
                     comboBox.setMaximumSize(new Dimension(longestElWidth+50, fieldHeight));
-
                     fieldPanel.add(comboBox);
                     fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
                 }
             }
 
-            mainPanel.add(Box.createVerticalGlue());
+//            mainPanel.add(Box.createVerticalGlue());
 
         }
 
