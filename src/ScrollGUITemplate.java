@@ -3,6 +3,10 @@ import java.awt.*;
 
 public class ScrollGUITemplate extends BaseGUI{
     JPanel mainPanel, scrollPanel;
+    FiltersPanel filtersPanel;
+    JScrollPane scrollPanelEnabler;
+
+
     // move some new components here
 
     void createCustomGUI() {
@@ -11,16 +15,26 @@ public class ScrollGUITemplate extends BaseGUI{
         mainPanel.setBackground(bgColor);
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 
-        LogoPanel logoPanel = new LogoPanel(logoColor, frameHeight, frameWidth, frameHeight/10);
+        int logoPanelHeight = frameHeight/10;
+        LogoPanel logoPanel = new LogoPanel(logoColor, frameHeight, frameWidth, logoPanelHeight);
         mainPanel.add(logoPanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
+//        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
+        int filtersPanelHeight = frameHeight/15;
+        filtersPanel = new FiltersPanel(helpingColor, frameHeight, frameWidth, filtersPanelHeight);
+        mainPanel.add(filtersPanel);
+
+        int scrollPanelEnablerHeight = frameHeight - logoPanelHeight - filtersPanelHeight;
         scrollPanel = new JPanel();
         scrollPanel.setBackground(bgColor);
         scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.PAGE_AXIS));
-        JScrollPane scrollPanelEnabler = new JScrollPane(scrollPanel);
+//        scrollPanel.setPreferredSize(new Dimension(frameWidth, frameHeight/2));
+//        scrollPanel.setMaximumSize(new Dimension(frameWidth, frameHeight/2));
+        scrollPanelEnabler = new JScrollPane(scrollPanel);
         scrollPanelEnabler.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPanelEnabler.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanelEnabler.setPreferredSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
+        scrollPanelEnabler.setMaximumSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
 //        scrollPanelEnabler.getViewport().setBackground(Color.black);
         mainPanel.add(scrollPanelEnabler);
 
@@ -61,6 +75,22 @@ public class ScrollGUITemplate extends BaseGUI{
 
     public static void main(String[] args) {
         new ScrollGUITemplate().createGUI();
+    }
+
+}
+
+class FiltersPanel extends JPanel {
+
+//    int frameHeight, imgWidth, imgHeight;
+
+    public FiltersPanel(Color panelColor, int frameHeight, int panelWidth, int panelHeight) {
+//        this.frameHeight = frameHeight;
+//        this.imgWidth = (int)(panelHeight*5/7*3.6);
+//        this.imgHeight = (int)(panelHeight*5/7);
+        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+        setBackground(panelColor);
+        setPreferredSize(new Dimension(panelWidth, panelHeight));
+        setMaximumSize(new Dimension(panelWidth, panelHeight));
     }
 
 }
