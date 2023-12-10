@@ -13,9 +13,9 @@ public class Main {
             session.beginTransaction();
 
             Address a = new Address();
-            a.setCountry("Polando");
-            a.setCity("Sfdf");
-            a.setStreet("Kofdf");
+            a.setCountry("Poland");
+            a.setCity("Warszawa");
+            a.setStreet("Koszykowa");
             a.setStreetNumber("86");
             a.setPostalCode("00-667");
 
