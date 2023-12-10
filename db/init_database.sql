@@ -22,12 +22,13 @@ CREATE TABLE "addresses" (
                              "street_no" varchar
 );
 
-CREATE TABLE "payments" (
-                            "payment_id" serial PRIMARY KEY,
+CREATE TABLE "payment_methods" (
+                            "payment_method_id" serial PRIMARY KEY,
                             "client_id" integer,
                             "card_number" varchar,
                             "cvv" varchar,
                             "expiration_date" timestamp,
+                            "card_holder" varchar,
                             "is_active" bool
 );
 
@@ -40,7 +41,7 @@ CREATE TABLE "owners" (
                           "phone_number" varchar,
                           "address_id" integer,
                           "nip" varchar,
-                          "verified" bool,
+                          "is_verified" bool,
                           "is_active" bool
 );
 
@@ -53,7 +54,7 @@ CREATE TABLE "admins" (
 
 CREATE TABLE "hotels" (
                           "hotel_id" serial PRIMARY KEY,
-                          "manager_id" integer,
+                          "owner_id" integer,
                           "name" varchar,
                           "add_date" timestamp,
                           "description" varchar,
@@ -67,8 +68,8 @@ CREATE TABLE "hotels" (
 CREATE TABLE "offers" (
                           "offer_id" serial PRIMARY KEY,
                           "hotel_id" integer,
-                          "type" varchar,
-                          "offer_name" varchar,
+                          "room_type" varchar,
+                          "name" varchar,
                           "add_date" timestamp,
                           "description" varchar,
                           "bathroom_no" integer,
@@ -86,18 +87,20 @@ CREATE TABLE "ratings" (
                            "client_id" integer,
                            "rating" integer,
                            "comment" varchar,
-                           "hidden" bool
+                           "date" timestamp,
+                           "is_hidden" bool
 );
 
 CREATE TABLE "reservations" (
                                 "reservation_id" serial PRIMARY KEY,
                                 "client_id" integer,
                                 "offer_id" integer,
-                                "date_start" timestamp,
-                                "date_end" timestamp,
+                                "start_date" timestamp,
+                                "end_date" timestamp,
                                 "additional_info" timestamp,
                                 "paid_amount" float,
-                                "status" varchar
+                                "status" varchar,
+                                "is_active" bool
 );
 
 CREATE TABLE "favourite_hotels" (
@@ -116,7 +119,8 @@ CREATE TABLE "penalties" (
                              "penalty_id" serial PRIMARY KEY,
                              "reservation_id" integer,
                              "reason" varchar,
-                             "amount" float
+                             "amount" float,
+                             "is_paid" bool
 );
 
 CREATE TABLE "discounts" (
@@ -126,14 +130,15 @@ CREATE TABLE "discounts" (
                              "type" integer,
                              "description" varchar,
                              "value" float,
-                             "hotel_id" integer
+                             "hotel_id" integer,
+                             "is_active" bool
 );
 
 ALTER TABLE offers
     ADD CONSTRAINT fk_offers_hotels FOREIGN KEY (hotel_id) REFERENCES hotels (hotel_id);
 
-ALTER TABLE payments
-    ADD CONSTRAINT fk_payments_clients FOREIGN KEY (client_id) REFERENCES clients (client_id);
+ALTER TABLE payment_methods
+    ADD CONSTRAINT fk_payment_methods_clients FOREIGN KEY (client_id) REFERENCES clients (client_id);
 
 ALTER TABLE clients
     ADD CONSTRAINT fk_clients_addresses FOREIGN KEY (address_id) REFERENCES addresses (address_id);
@@ -142,7 +147,7 @@ ALTER TABLE owners
     ADD CONSTRAINT fk_owners_addresses FOREIGN KEY (address_id) REFERENCES addresses (address_id);
 
 ALTER TABLE hotels
-    ADD CONSTRAINT fk_hotels_owners FOREIGN KEY (manager_id) REFERENCES owners (owner_id);
+    ADD CONSTRAINT fk_hotels_owners FOREIGN KEY (owner_id) REFERENCES owners (owner_id);
 
 ALTER TABLE hotels
     ADD CONSTRAINT fk_hotels_addresses FOREIGN KEY (address_id) REFERENCES addresses (address_id);
