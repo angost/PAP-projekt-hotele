@@ -1,7 +1,7 @@
-package pap;
+package pap.app;
 
-import db.*;
-import db.entities.*;
+import pap.db.*;
+import pap.db.entities.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
