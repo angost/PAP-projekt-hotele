@@ -1,6 +1,6 @@
-package db;
+package pap.db;
 
-import db.entities.*;
+import pap.db.entities.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 

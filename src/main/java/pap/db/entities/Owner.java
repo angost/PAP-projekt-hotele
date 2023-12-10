@@ -1,4 +1,4 @@
-package db.entities;
+package pap.db.entities;
 
 import lombok.Getter;
 import lombok.Setter;
