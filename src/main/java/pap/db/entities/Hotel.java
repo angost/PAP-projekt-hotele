@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -17,10 +18,6 @@ public class Hotel {
     private int hotelId;
 
     @Basic
-    @Column(name = "owner_id", nullable = false)
-    private int ownerId;
-
-    @Basic
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -31,10 +28,6 @@ public class Hotel {
     @Basic
     @Column(name = "description", nullable = false)
     private String description;
-
-    @Basic
-    @Column(name = "address_id", nullable = false)
-    private int addressId;
 
     @Basic
     @Column(name = "email", nullable = false)
@@ -55,4 +48,24 @@ public class Hotel {
     @Basic
     @Column(name = "is_active", nullable = false)
     private int isActive;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
+
+    @OneToMany
+    @JoinColumn(name = "hotel_id")
+    private List<Offer> offers;
+
+    @OneToMany
+    @JoinColumn(name = "hotel_id")
+    private List<FavouriteHotel> favouriteHotels;
+
+    @OneToMany
+    @JoinColumn(name = "hotel_id")
+    private List<Discount> discounts;
 }

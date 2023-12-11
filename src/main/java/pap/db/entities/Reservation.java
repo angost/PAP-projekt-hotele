@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -15,14 +16,6 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id", nullable = false)
     private int reservationId;
-
-    @Basic
-    @Column(name = "offer_id", nullable = false)
-    private int offerId;
-
-    @Basic
-    @Column(name = "client_id", nullable = false)
-    private int clientId;
 
     @Basic
     @Column(name = "start_date", nullable = false)
@@ -47,4 +40,16 @@ public class Reservation {
     @Basic
     @Column(name = "is_paid", nullable = false)
     private boolean isPaid;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "offer_id")
+    private Offer offer;
+
+    @OneToMany
+    @JoinColumn(name = "reservation_id")
+    private List<Penalty> penalties;
 }

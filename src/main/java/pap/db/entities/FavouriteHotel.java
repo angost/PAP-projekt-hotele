@@ -15,11 +15,11 @@ public class FavouriteHotel {
     @Column(name = "favourite_hotel_id", nullable = false)
     private int favouriteHotelId;
 
-    @Basic
-    @Column(name = "client_id", nullable = false)
-    private int clientId;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    @Basic
-    @Column(name = "hotel_id", nullable = false)
-    private int hotelId;
+    @ManyToOne
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
 }

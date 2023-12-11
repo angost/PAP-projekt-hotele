@@ -16,10 +16,6 @@ public class Penalty {
     private int penaltyId;
 
     @Basic
-    @Column(name = "reservation_id", nullable = false)
-    private int reservationId;
-
-    @Basic
     @Column(name = "reason", nullable = false)
     private String reason;
 
@@ -30,4 +26,8 @@ public class Penalty {
     @Basic
     @Column(name = "is_paid", nullable = false)
     private boolean isPaid;
+
+    @ManyToOne
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 }

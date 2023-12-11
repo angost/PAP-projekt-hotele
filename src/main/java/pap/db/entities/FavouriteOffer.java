@@ -15,11 +15,11 @@ public class FavouriteOffer {
     @Column(name = "favourite_offer_id", nullable = false)
     private int favouriteOfferId;
 
-    @Basic
-    @Column(name = "client_id", nullable = false)
-    private int clientId;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    @Basic
-    @Column(name = "offer_id", nullable = false)
-    private int offerId;
+    @ManyToOne
+    @JoinColumn(name = "offer_id")
+    private Offer offer;
 }
