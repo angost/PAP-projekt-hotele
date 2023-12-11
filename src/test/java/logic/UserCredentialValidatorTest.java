@@ -257,5 +257,22 @@ public class UserCredentialValidatorTest {
         List <Integer> codes = vuc.validateCredentials();
         assertEquals(List.of(11, 12), codes);
     }
-}
 
+    @Test
+    public void testUserCredentialsValidator_ValidateCredentialsWrongAddress() {
+        UserCredentialValidator vuc = new UserCredentialValidator("ValidUsername", "ValidPassword1!", "Jan", "Kowalski",
+                "jankowalski@pw.edu.pl", "123456789", "P", "Warsaw", "Nowowiejska", "00", "1",
+                LocalDate.parse("2020-01-01"), "Polish", "Male");
+        List <Integer> codes = vuc.validateCredentials();
+        assertEquals(List.of(51, 57), codes);
+    }
+
+    @Test
+    public void testUserCredentialsValidator_ValidateCredentialsJoinCodes() {
+        UserCredentialValidator vuc = new UserCredentialValidator("ValidUsername", "ValidPassword!", "Jan", "Kowalski",
+                "jankowalski@pw.edu.pl", "123456789", "P", "Warsaw", "Nowowiejska", "00", "1",
+                LocalDate.parse("2020-01-01"), "Polish", "Male");
+        List <Integer> codes = vuc.validateCredentials();
+        assertEquals(List.of(11, 51, 57), codes);
+    }
+}

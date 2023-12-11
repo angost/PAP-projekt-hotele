@@ -103,7 +103,7 @@ public class UserCredentialValidator {
     }
 
     public static void validateAddress(AddressValidator addressValidator, List <Integer> codes) {
-//        validateAddress.validate(); // TODO
+        codes.addAll(addressValidator.validateCredentials());
     }
 
     public static void validateBirthDate(LocalDate birthDate, List <Integer> codes) {
