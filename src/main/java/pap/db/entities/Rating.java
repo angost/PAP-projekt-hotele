@@ -17,14 +17,6 @@ public class Rating {
     private int ratingId;
 
     @Basic
-    @Column(name = "offer_id", nullable = false)
-    private int reservationId;
-
-    @Basic
-    @Column(name = "client_id", nullable = false)
-    private int clientId;
-
-    @Basic
     @Column(name = "rating", nullable = false)
     private int rating;
 
@@ -39,4 +31,12 @@ public class Rating {
     @Basic
     @Column(name = "is_hidden", nullable = false)
     private boolean isHidden;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "offer_id")
+    private Offer offer;
 }

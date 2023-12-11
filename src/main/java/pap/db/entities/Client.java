@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -41,10 +42,6 @@ public class Client {
     private String phoneNumber;
 
     @Basic
-    @Column(name = "address_id", nullable = false)
-    private int addressId;
-
-    @Basic
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
@@ -58,5 +55,29 @@ public class Client {
 
     @Basic
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private boolean isActive = true;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<PaymentMethod> paymentMethods;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<Rating> ratings;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<FavouriteHotel> favouriteHotels;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<FavouriteOffer> favouriteOffers;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<Reservation> reservations;
 }
