@@ -44,6 +44,7 @@ public class DbConnectionTests {
 
         new ClientDAO().createWithNewAddress(c);
     }
+
     public static void main(String[] args) {
         getAllUsers();
         getUserById(45);
