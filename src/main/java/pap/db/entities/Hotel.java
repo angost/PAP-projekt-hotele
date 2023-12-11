@@ -47,7 +47,7 @@ public class Hotel {
 
     @Basic
     @Column(name = "is_active", nullable = false)
-    private int isActive;
+    private boolean isActive = true;
 
     @ManyToOne
     @JoinColumn(name = "address_id")

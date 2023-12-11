@@ -26,4 +26,8 @@ public class Admin {
     @Basic
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Basic
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
 }
