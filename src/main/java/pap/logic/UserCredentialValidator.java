@@ -183,16 +183,16 @@ public class UserCredentialValidator {
         if (phoneNumber.length() > MAX_PHONE_LENGTH) codes.add(21);
     }
     private static void checkInvalidBirthDate(LocalDate birthDate, List <Integer> codes) {
-        if (!birthDate.isBefore(LocalDate.now())) codes.add(31);
+        if (!birthDate.isBefore(LocalDate.now())) codes.add(22);
     }
     private static void checkTooShortNationality(String nationality, List <Integer> codes) {
-        if (nationality.length() < MIN_NATIONALITY_LENGTH) codes.add(32);
+        if (nationality.length() < MIN_NATIONALITY_LENGTH) codes.add(23);
     }
     private static void checkTooLongNationality(String nationality, List <Integer> codes) {
-        if (nationality.length() > MAX_NATIONALITY_LENGTH) codes.add(33);
+        if (nationality.length() > MAX_NATIONALITY_LENGTH) codes.add(24);
     }
     private static void checkGender(String gender, List <Integer> codes) {
         if (!gender.equalsIgnoreCase("male") && !gender.equalsIgnoreCase("female") && !gender.equalsIgnoreCase("other"))
-            codes.add(34);
+            codes.add(25);
     }
 }

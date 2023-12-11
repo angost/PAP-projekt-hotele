@@ -225,28 +225,28 @@ public class UserCredentialValidatorTest {
     public void testUserCredentialsValidator_InvalidBirthDate() {
         List<Integer> codes = new ArrayList<>();
         UserCredentialValidator.validateBirthDate(LocalDate.now(), codes);
-        assertEquals(List.of(31), codes);
+        assertEquals(List.of(22), codes);
     }
 
     @Test
     public void testUserCredentialsValidator_TooShortNationality() {
         List<Integer> codes = new ArrayList<>();
         UserCredentialValidator.validateNationality("U", codes);
-        assertEquals(List.of(32), codes);
+        assertEquals(List.of(23), codes);
     }
 
     @Test
     public void testUserCredentialsValidator_TooLongNationality() {
         List<Integer> codes = new ArrayList<>();
         UserCredentialValidator.validateNationality("a".repeat(65), codes);
-        assertEquals(List.of(33), codes);
+        assertEquals(List.of(24), codes);
     }
 
     @Test
     public void testUserCredentialsValidator_InvalidGender() {
         List<Integer> codes = new ArrayList<>();
         UserCredentialValidator.validateGender("unknown", codes);
-        assertEquals(List.of(34), codes);
+        assertEquals(List.of(25), codes);
     }
 
     @Test
