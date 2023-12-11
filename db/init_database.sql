@@ -61,8 +61,9 @@ CREATE TABLE "hotels" (
                           "description" varchar,
                           "address_id" integer,
                           "email" varchar,
+                          "website" varchar,
                           "phone_number" varchar,
-                          "account_number" varchar,
+                          "bank_account_number" varchar,
                           "is_active" bool
 );
 
