@@ -1,5 +1,8 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+
 
 public class ScrollGUITemplate extends BaseGUI{
     JPanel mainPanel, scrollPanel;
@@ -16,26 +19,23 @@ public class ScrollGUITemplate extends BaseGUI{
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 
         int logoPanelHeight = frameHeight/10;
+        int filtersPanelHeight = frameHeight/15;
+        int scrollPanelEnablerHeight = frameHeight - logoPanelHeight - filtersPanelHeight;
+
         LogoPanel logoPanel = new LogoPanel(logoColor, frameHeight, frameWidth, logoPanelHeight);
         mainPanel.add(logoPanel);
-//        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
-        int filtersPanelHeight = frameHeight/15;
-        filtersPanel = new FiltersPanel(helpingColor, frameHeight, frameWidth, filtersPanelHeight);
-        mainPanel.add(filtersPanel);
-
-        int scrollPanelEnablerHeight = frameHeight - logoPanelHeight - filtersPanelHeight;
         scrollPanel = new JPanel();
         scrollPanel.setBackground(bgColor);
         scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.PAGE_AXIS));
-//        scrollPanel.setPreferredSize(new Dimension(frameWidth, frameHeight/2));
-//        scrollPanel.setMaximumSize(new Dimension(frameWidth, frameHeight/2));
         scrollPanelEnabler = new JScrollPane(scrollPanel);
         scrollPanelEnabler.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPanelEnabler.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPanelEnabler.setPreferredSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
         scrollPanelEnabler.setMaximumSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
-//        scrollPanelEnabler.getViewport().setBackground(Color.black);
+
+        filtersPanel = new FiltersPanel(helpingColor, frameWidth, frameHeight, frameWidth, filtersPanelHeight, scrollPanelEnabler, scrollPanelEnablerHeight, frame);
+        mainPanel.add(filtersPanel);
         mainPanel.add(scrollPanelEnabler);
 
 
@@ -81,16 +81,89 @@ public class ScrollGUITemplate extends BaseGUI{
 
 class FiltersPanel extends JPanel {
 
-//    int frameHeight, imgWidth, imgHeight;
+    TwoImgsButton ShowHideFilterButton;
+    JScrollPane otherPanel;
+    JFrame frame;
+    int frameHeight, frameWidth, otherPanelHeight, panelWidth, panelHeight;
 
-    public FiltersPanel(Color panelColor, int frameHeight, int panelWidth, int panelHeight) {
-//        this.frameHeight = frameHeight;
-//        this.imgWidth = (int)(panelHeight*5/7*3.6);
-//        this.imgHeight = (int)(panelHeight*5/7);
+    public FiltersPanel(Color panelColor, int frameWidth, int frameHeight, int panelWidth, int panelHeight, JScrollPane otherPanel, int otherPanelHeight, JFrame frame) {
+
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         setBackground(panelColor);
         setPreferredSize(new Dimension(panelWidth, panelHeight));
         setMaximumSize(new Dimension(panelWidth, panelHeight));
+
+        this.add(Box.createRigidArea(new Dimension(frameHeight/20,0)));
+
+        ShowHideFilterButton = new TwoImgsButton(panelHeight, panelHeight, panelHeight*2, panelHeight, "res/show_more_128.png", "res/show_less_128.png");
+        ShowHideFilterButton.addActionListener(e->showHideFiltersClicked());
+        this.add(ShowHideFilterButton);
+
+        this.otherPanel = otherPanel;
+        this.frameHeight = frameHeight; this.frameWidth = frameWidth;
+        this.otherPanelHeight = otherPanelHeight;
+        this.panelHeight = panelHeight; this.panelWidth = panelWidth;
+        this.frame = frame;
+
     }
 
+    void showHideFiltersClicked() {
+        // Showing filters
+        if (ShowHideFilterButton.state.equals("base_state")) {
+            ShowHideFilterButton.changeState();
+            changePanelSizes(panelWidth, panelHeight + 100, frameWidth, otherPanelHeight - 100);
+        } else {
+            // Hiding filters
+            ShowHideFilterButton.changeState();
+            changePanelSizes(panelWidth, panelHeight, frameWidth, otherPanelHeight);
+        }
+    }
+
+    void changePanelSizes(int filterPanelWidth, int filterPanelHeight, int otherPanelWidth, int otherPanelHeight) {
+        this.setPreferredSize(new Dimension(filterPanelWidth, filterPanelHeight));
+        this.setMaximumSize(new Dimension(filterPanelWidth, filterPanelHeight));
+        otherPanel.setPreferredSize(new Dimension(otherPanelWidth, otherPanelHeight));
+        otherPanel.setMaximumSize(new Dimension(otherPanelWidth, otherPanelHeight));
+        frame.revalidate();
+        frame.repaint();
+        this.revalidate();
+        this.repaint();
+    }
+
+}
+
+class TwoImgsButton extends JButton{
+
+    Image baseImg, secondImg;
+    String state;
+    boolean imgUploadSuccess = false;
+
+    public TwoImgsButton(int buttonWidth, int buttonHeight, int imgWidth, int imgHeight, String baseImgPath, String secondImgPath) {
+        setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        try {
+            setContentAreaFilled(false); // Make the button transparent
+            Image baseImg = ImageIO.read(new File(baseImgPath));
+            baseImg = baseImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
+            Image secondImg = ImageIO.read(new File(secondImgPath));
+            secondImg = secondImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
+            setIcon(new ImageIcon(baseImg));
+            this.baseImg = baseImg;
+            this.secondImg = secondImg;
+            imgUploadSuccess = true;
+            state = "base_state";
+        } catch (Exception ex) {
+            setContentAreaFilled(true);
+        }
+    }
+
+    public void changeState() {
+        if (state.equals("base_state")) {
+            setIcon(new ImageIcon(secondImg));
+            state = "second_state";
+        } else {
+            setIcon(new ImageIcon(baseImg));
+            state = "base_state";
+        }
+    }
 }
