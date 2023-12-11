@@ -6,7 +6,7 @@ import java.time.Year;
 public class OwnerFormGUI extends FormGUITemplate {
 
     String[] getFieldLabels() {
-        String[] fieldLabels = {"Name", "Surname", "PESEL Number", "ID Number", "Company name", "NIP", "Country of Registration", "Headquarters City", "Headquarters Street", "Headquarters Street number", "Headquarters Postal Code"};
+        String[] fieldLabels = {"Username", "Password", "Company name", "Email", "Phone number", "NIP", "Country", "City", "Street", "Street number", "Postal Code"};
         return fieldLabels;
     }
 
@@ -32,7 +32,7 @@ public class OwnerFormGUI extends FormGUITemplate {
             years[i] = baseYear-i;
         }
 
-        Object[] fieldParameters = {20, 30, 20, 10, 30, 20, 20, 30, 30, 10, 10};
+        Object[] fieldParameters = {15, 15, 20, 20, 15, 10, 15, 15, 15, 6, 6};
 
         return fieldParameters;
     }

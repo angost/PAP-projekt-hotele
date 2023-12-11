@@ -58,11 +58,17 @@ public abstract class FormGUITemplate extends BaseGUI{
         }
 
         int fieldHeight = frameHeight/22;
-        String longestLabelText = Stream.of(fieldLabels).max(Comparator.comparingInt(String::length)).get();
-        JLabel longestLabel = new JLabel(longestLabelText);
+        JLabel longestLabel = new JLabel("");
         longestLabel.setFont(fontBigger);
-        int longestLabelWidth = longestLabel.getFontMetrics(fontBigger).stringWidth(String.valueOf(longestLabel.getText()));
+        int longestLabelWidth = 0;
+        for (String labelText : fieldLabels) {
+            int labelWidth = longestLabel.getFontMetrics(fontBigger).stringWidth(String.valueOf(labelText));
+            if (labelWidth > longestLabelWidth) {
+                longestLabelWidth = labelWidth;
+            }
+        }
         int minLabelInputGap = 20;
+        int characterWidth = longestLabel.getFontMetrics(fontBigger).stringWidth(String.valueOf("m"));
 
         // Creating all the form fields according to types
         for (int i = 0; i < nrOfFields; i++){
@@ -85,8 +91,8 @@ public abstract class FormGUITemplate extends BaseGUI{
             if (fieldTypes[i].equals("text")){
                 JTextField inputField = new JTextField();
                 inputField.setFont(fontMiddle);
-                inputField.setPreferredSize(new Dimension(frameWidth/5, fieldHeight));
-                inputField.setMaximumSize(new Dimension(frameWidth/5, fieldHeight));
+                inputField.setPreferredSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
+                inputField.setMaximumSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
                 fieldPanel.add(inputField);
 
             } else if (fieldTypes[i].startsWith("radioButton")) {

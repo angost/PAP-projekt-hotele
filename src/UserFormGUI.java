@@ -7,12 +7,12 @@ public class UserFormGUI extends FormGUITemplate {
 
 
     String[] getFieldLabels() {
-        String[] fieldLabels = {"Name", "Surname", "Gender", "Date of birth", "Country", "City", "Street", "Street number", "Postal Code", "Phone number", "Email address", "Payment option"};
+        String[] fieldLabels = {"Username", "Password", "Name", "Surname", "Date of birth", "Gender", "Nationality", "Email", "Phone number", "Country", "City", "Street", "Street number", "Postal Code"};
         return fieldLabels;
     }
 
     String[] getFieldTypes() {
-        String[] fieldTypes = {"text", "text", "radioButton", "comboBoxInteger", "text", "text", "text", "text", "text", "text", "text", "comboBoxString"};
+        String[] fieldTypes = {"text", "text", "text", "text", "comboBoxInteger",  "radioButton", "text", "text", "text", "text", "text", "text", "text", "text"};
         return fieldTypes;
     }
 
@@ -33,8 +33,8 @@ public class UserFormGUI extends FormGUITemplate {
             years[i] = baseYear-i;
         }
 
-        Object[] fieldParameters = {20, 30, new String[]{"Male", "Female"}, new Integer[][]{days, months, years}, 20, 20, 30, 10, 10, 15, 30, new String[][]{new String[]{"Credit card", "Debet card", "Bank transfer", "BLIK", "Cash"}}};
-
+        Object[] fieldParameters = {15, 15, 15, 15, new Integer[][]{days, months, years}, new String[]{"Male", "Female"}, 15, 20, 10, 15, 15, 15, 6, 6};
+        // new String[][]{new String[]{"Credit card", "Debet card", "Bank transfer", "BLIK", "Cash"}}
         return fieldParameters;
     }
 
