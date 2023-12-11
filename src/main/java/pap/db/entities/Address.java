@@ -40,4 +40,12 @@ public class Address {
     @OneToMany
     @JoinColumn(name = "address_id")
     private List<Client> clients;
+
+    @OneToMany
+    @JoinColumn(name = "address_id")
+    private List<Owner> owners;
+
+    @OneToMany
+    @JoinColumn(name = "address_id")
+    private List<Hotel> hotels;
 }

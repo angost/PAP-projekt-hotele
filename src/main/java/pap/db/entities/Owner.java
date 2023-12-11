@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Setter
 @Getter
@@ -36,10 +38,6 @@ public class Owner {
     private String phoneNumber;
 
     @Basic
-    @Column(name = "address_id", nullable = false)
-    private int addressId;
-
-    @Basic
     @Column(name = "nip", nullable = false)
     private String nip;
 
@@ -50,4 +48,12 @@ public class Owner {
     @Basic
     @Column(name = "is_active", nullable = false)
     private int isActive;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @OneToMany
+    @JoinColumn(name = "owner_id")
+    private List<Hotel> hotels;
 }

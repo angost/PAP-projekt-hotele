@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -59,4 +60,24 @@ public class Client {
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<PaymentMethod> paymentMethods;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<Rating> ratings;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<FavouriteHotel> favouriteHotels;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<FavouriteOffer> favouriteOffers;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<Reservation> reservations;
 }
