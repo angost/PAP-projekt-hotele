@@ -46,6 +46,7 @@ public class OwnerCredentialValidator {
         validateCompanyName(companyName, codes);
         validateEmail(email, codes);
         validatePhoneNumber(phoneNumber, codes);
+        validateAddress(addressValidator, codes);
         validateNip(nip, codes);
         return codes;
     }
