@@ -41,10 +41,6 @@ public class Client {
     private String phoneNumber;
 
     @Basic
-    @Column(name = "address_id", nullable = false)
-    private int addressId;
-
-    @Basic
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
@@ -59,4 +55,8 @@ public class Client {
     @Basic
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 }

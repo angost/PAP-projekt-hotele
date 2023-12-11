@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Setter
 @Getter
@@ -34,4 +36,8 @@ public class Address {
     @Basic
     @Column(name = "street_no", nullable = false)
     private String streetNumber;
+
+    @OneToMany
+    @JoinColumn(name = "address_id")
+    private List<Client> clients;
 }
