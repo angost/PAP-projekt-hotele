@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -15,10 +16,6 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "offer_id", nullable = false)
     private int offerId;
-
-    @Basic
-    @Column(name = "hotel_id", nullable = false)
-    private int hotelId;
 
     @Basic
     @Column(name = "room_type", nullable = false)
@@ -62,5 +59,21 @@ public class Offer {
 
     @Basic
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private boolean isActive = true;
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
+
+    @OneToMany
+    @JoinColumn(name = "offer_id")
+    private List<FavouriteOffer> favouriteOffers;
+
+    @OneToMany
+    @JoinColumn(name = "offer_id")
+    private List<Rating> ratings;
+
+    @OneToMany
+    @JoinColumn(name = "offer_id")
+    private List<Reservation> reservations;
 }

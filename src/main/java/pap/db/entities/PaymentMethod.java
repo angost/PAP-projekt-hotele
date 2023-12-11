@@ -16,10 +16,6 @@ public class PaymentMethod {
     private int paymentId;
 
     @Basic
-    @Column(name = "client_id", nullable = false)
-    private int clientId;
-
-    @Basic
     @Column(name = "card_number", nullable = false)
     private String cardNumber;
 
@@ -37,5 +33,9 @@ public class PaymentMethod {
 
     @Basic
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private boolean isActive = true;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 }
