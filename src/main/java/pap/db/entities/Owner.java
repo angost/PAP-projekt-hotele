@@ -43,7 +43,7 @@ public class Owner {
 
     @Basic
     @Column(name = "is_verified", nullable = false)
-    private int isVerified;
+    private boolean isVerified;
 
     @Basic
     @Column(name = "is_active", nullable = false)
