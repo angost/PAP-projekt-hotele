@@ -49,7 +49,8 @@ CREATE TABLE "admins" (
                           "admin_id" serial PRIMARY KEY,
                           "username" varchar,
                           "password" varchar,
-                          "name" varchar
+                          "name" varchar,
+                          "is_active" bool
 );
 
 CREATE TABLE "hotels" (
