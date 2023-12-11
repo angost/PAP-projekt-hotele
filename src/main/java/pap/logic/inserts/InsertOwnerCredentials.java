@@ -1,9 +1,10 @@
-package pap.logic;
+package pap.logic.inserts;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
 import pap.db.entities.*;
+import java.util.*;
 
 
 public class InsertOwnerCredentials {
@@ -12,7 +13,7 @@ public class InsertOwnerCredentials {
 
     public InsertOwnerCredentials(String username, String password, String companyName, String email, String phoneNumber,
                                   String country, String city, String street, String postalCode, String streetNo,
-                                  String nip, boolean isVerified, boolean activeStatus) {
+                                  String nip, boolean isVerified, boolean activeStatus, List <Hotel> hotels) {
         ownerAddress = new Address();
         ownerAddress.setCountry(country);
         ownerAddress.setCity(city);
@@ -26,9 +27,10 @@ public class InsertOwnerCredentials {
         owner.setEmail(email);
         owner.setPhoneNumber(phoneNumber);
         owner.setNip(nip);
-        owner.setIsVerified(isVerified);
-        owner.setIsActive(activeStatus);
+        owner.setVerified(isVerified);
+        owner.setActive(activeStatus);
         owner.setAddress(ownerAddress);
+        owner.setHotels(hotels);
     }
 
     public boolean insertIntoDatabase() {

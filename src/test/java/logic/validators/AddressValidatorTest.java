@@ -1,11 +1,11 @@
-package logic;
+package logic.validators;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import pap.logic.AddressValidator;
+import pap.logic.validators.AddressValidator;
 
 
 public class AddressValidatorTest {

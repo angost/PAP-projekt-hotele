@@ -1,9 +1,9 @@
-package logic;
+package logic.validators;
 import java.util.*;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import pap.logic.OwnerCredentialValidator;
+import pap.logic.validators.OwnerCredentialValidator;
 
 public class OwnerCredentialValidatorTest {
 

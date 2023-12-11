@@ -1,11 +1,11 @@
-package logic;
+package logic.validators;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import pap.logic.UserCredentialValidator;
+import pap.logic.validators.UserCredentialValidator;
 import java.time.LocalDate;
 
 public class UserCredentialValidatorTest {

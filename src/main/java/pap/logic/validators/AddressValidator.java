@@ -1,4 +1,4 @@
-package pap.logic;
+package pap.logic.validators;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;

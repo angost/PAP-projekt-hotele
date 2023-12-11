@@ -1,4 +1,4 @@
-package pap.logic;
+package pap.logic.inserts;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

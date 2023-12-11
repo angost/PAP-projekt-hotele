@@ -1,4 +1,4 @@
-package pap.logic;
+package pap.logic.validators;
 
 import java.util.*;
 import java.time.LocalDate;
