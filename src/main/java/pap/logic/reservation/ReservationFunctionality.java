@@ -14,7 +14,7 @@ public class ReservationFunctionality {
     }
     public void endReservationChecker(){
 
-        if (reservation.getStartDate().minusDays(3).isAfter(LocalDate.now())){
+        if (reservation.getStartDate().minusDays(3).isBefore(LocalDate.now())){
             changeStatus("returned");
             changePaidAmount((float) (reservation.getPaidAmount() * 0.4));
         }
