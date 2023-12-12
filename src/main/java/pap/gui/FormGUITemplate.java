@@ -2,9 +2,20 @@ package pap.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+import java.util.stream.Collectors;
+
+import pap.logic.validators.*;
 
 public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
+    List<JTextField> textFields = new ArrayList<JTextField>();
+    List<String> textFieldLabels = new ArrayList<String>();
+    JLabel statusLabel;
+
     //przeniesc tutaj niektore componenty
 
     abstract String[] getFieldLabels();
@@ -94,6 +105,8 @@ public abstract class FormGUITemplate extends BaseGUI{
                 inputField.setPreferredSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
                 inputField.setMaximumSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
                 fieldPanel.add(inputField);
+                textFields.add(inputField);
+                textFieldLabels.add(fieldLabels[i]);
 
             } else if (fieldTypes[i].startsWith("radioButton")) {
                 Object[] radioBtnOptions;
@@ -145,8 +158,17 @@ public abstract class FormGUITemplate extends BaseGUI{
             fieldsPanel.add(Box.createVerticalGlue());
         }
 
-        RoundedButton registerButton = new RoundedButton("Register", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
         registerPanel.add(Box.createVerticalGlue());
+        statusLabel = new JLabel("<html>Insert your data<br/></html>", JLabel.LEFT);
+        statusLabel.setFont(fontSmaller);
+        statusLabel.setForeground(Color.decode("#7a7373"));
+//        statusLabel.setPreferredSize(new Dimension(frameWidth/4, contentPanelSize/5));
+//        statusLabel.setMaximumSize(new Dimension(frameWidth/4, contentPanelSize/5));
+        registerPanel.add(statusLabel);
+        registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
+
+        RoundedButton registerButton = new RoundedButton("Register", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        registerButton.addActionListener(e->registerBtnClickedAction());
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
@@ -159,4 +181,38 @@ public abstract class FormGUITemplate extends BaseGUI{
         frame.setVisible(true);
     }
 
+    void registerBtnClickedAction(){
+        // Get values
+        HashMap<String, String> textFieldsValues = getTextFieldValues();
+        // Validate values
+        List <Integer> errorCodes = validateCredentials(textFieldsValues);
+        // Create user and open Home Page
+        if (errorCodes.isEmpty()) {
+            createUser(textFieldsValues);
+            new HomePageGUI().createGUI();
+            frame.setVisible(false);
+        }
+        // Errors occured, display them on screen
+        else {
+            String errorsString = "<html>";
+            errorsString = errorsString + errorCodes.stream().map(String::valueOf)
+                    .collect(Collectors.joining(" | "));
+            errorsString = errorsString + "</html>";
+            statusLabel.setText(errorsString);
+        }
+    }
+
+    HashMap<String, String> getTextFieldValues(){
+        int nrOfFields = textFields.size();
+        HashMap<String, String> textFieldsValues = new HashMap<String, String>();
+
+        for (int i = 0; i < nrOfFields; i++){
+            textFieldsValues.put(textFieldLabels.get(i), textFields.get(i).getText());
+        }
+        return textFieldsValues;
+    }
+
+    abstract List <Integer> validateCredentials(HashMap<String, String> textFieldsValues);
+
+    abstract void createUser(HashMap<String, String> textFieldsValues);
 }
