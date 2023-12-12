@@ -2,6 +2,8 @@ package pap.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import pap.db.dao.ClientDAO;
 import pap.db.dao.OwnerDAO;
@@ -79,15 +81,24 @@ public class HomePageGUI extends BaseGUI {
     }
 
     void desactivateAccountAction() {
-        JOptionPane.showMessageDialog(frame, "Your id " + userId + " your type " + userType);
-        // deactivateUserAccount albo deactivateOwnerAccount
-        // pobierac aktualne id
-//        if (DeactivateAccount.deactivateUserAccount(3)) {
-//            new LogInGUI().createGUI();
-//            frame.setVisible(false);
-//        } else {
-//            JOptionPane.showMessageDialog(frame, "Account cannot be desactivated");
-//        }
+
+        List<Integer> errorCodes = new ArrayList<>();
+
+        if (userType.equals("Client")){
+            errorCodes = DeactivateAccount.deactivateUserAccount(userId);
+        } else if (userType.equals("Owner")){
+            errorCodes = DeactivateAccount.deactivateOwnerAccount(userId);
+        } else {
+            errorCodes.add(-1);
+        }
+
+        if (errorCodes.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "Account desactivated");
+            new LogInGUI(-1, "None").createGUI();
+            frame.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Account cannot be desactivated");
+        }
     }
 
     void createGUI(){
