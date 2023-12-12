@@ -36,8 +36,8 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         buttonsPanel.setBackground(bgColor);
         userButton = new RoundedButton("User", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
         ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
-        userButton.addActionListener(e->createUserAccountAction());
-        ownerButton.addActionListener(e->createOwnerAccountAction());
+        userButton.addActionListener(e->goToUserCreationFormAction());
+        ownerButton.addActionListener(e->goToOwnerCreationFormAction());
         buttonsPanel.add(Box.createHorizontalGlue());
         buttonsPanel.add(userButton); buttonsPanel.add(Box.createRigidArea(new Dimension(userButton.preferredWidth/5,0))); buttonsPanel.add(ownerButton);
         buttonsPanel.add(Box.createHorizontalGlue());
@@ -46,12 +46,14 @@ public class ChooseAccountTypeGUI extends BaseGUI {
 
     }
 
-    void createUserAccountAction() {
-        JOptionPane.showMessageDialog(frame, "User account created");
+    void goToUserCreationFormAction() {
+        new UserFormGUI().createGUI();
+        frame.setVisible(false);
     }
 
-    void createOwnerAccountAction() {
-        JOptionPane.showMessageDialog(frame, "Owner account created");
+    void goToOwnerCreationFormAction() {
+        new OwnerFormGUI().createGUI();
+        frame.setVisible(false);
     }
 
 
