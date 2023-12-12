@@ -10,6 +10,10 @@ import java.util.List;
 
 public class OwnerFormGUI extends FormGUITemplate {
 
+    public OwnerFormGUI(int userId, String userType) {
+        super(userId, userType);
+    }
+
     String[] getFieldLabels() {
         String[] fieldLabels = {"Username", "Password", "Company name", "Email", "Phone number", "NIP", "Country", "City", "Street", "Street number", "Postal Code"};
         return fieldLabels;
@@ -57,6 +61,6 @@ public class OwnerFormGUI extends FormGUITemplate {
     }
 
     public static void main(String[] args) {
-        new OwnerFormGUI().createGUI();
+        new OwnerFormGUI(-1, "None").createGUI();
     }
 }
