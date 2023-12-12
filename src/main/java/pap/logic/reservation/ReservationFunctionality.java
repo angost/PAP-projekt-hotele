@@ -3,7 +3,6 @@ import pap.db.entities.*;
 import pap.db.dao.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class ReservationFunctionality {
 
