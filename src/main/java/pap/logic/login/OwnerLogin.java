@@ -17,7 +17,7 @@ public class OwnerLogin {
         this.codes = new ArrayList<>();
     }
 
-    public Owner getOwnerAccount(String username, String password) {
+    public Owner getOwnerAccount() {
         try {
             Owner owner = new OwnerDAO().findByUsername(username);
             if (password.equals(owner.getPassword())) return owner;
