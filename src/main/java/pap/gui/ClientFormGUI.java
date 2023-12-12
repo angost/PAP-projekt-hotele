@@ -1,6 +1,12 @@
 package pap.gui;
 
+import pap.logic.validators.UserCredentialValidator;
+import pap.logic.add.AddNewUser;
+
+import java.time.LocalDate;
 import java.time.Year;
+import java.util.HashMap;
+import java.util.List;
 
 public class ClientFormGUI extends FormGUITemplate {
 
@@ -11,7 +17,7 @@ public class ClientFormGUI extends FormGUITemplate {
     }
 
     String[] getFieldTypes() {
-        String[] fieldTypes = {"text", "text", "text", "text", "comboBoxInteger",  "radioButton", "text", "text", "text", "text", "text", "text", "text", "text"};
+        String[] fieldTypes = {"text", "text", "text", "text", "comboBoxInteger",  "text", "text", "text", "text", "text", "text", "text", "text", "text"};
         return fieldTypes;
     }
 
@@ -32,10 +38,27 @@ public class ClientFormGUI extends FormGUITemplate {
             years[i] = baseYear-i;
         }
 
-        Object[] fieldParameters = {15, 15, 15, 15, new Integer[][]{days, months, years}, new String[]{"Male", "Female"}, 15, 20, 10, 15, 15, 15, 6, 6};
+        Object[] fieldParameters = {15, 15, 15, 15, new Integer[][]{days, months, years}, 10, 15, 20, 10, 15, 15, 15, 6, 6};
         // new String[][]{new String[]{"Credit card", "Debet card", "Bank transfer", "BLIK", "Cash"}}
         return fieldParameters;
     }
+
+
+    List<Integer> validateCredentials(HashMap<String, String> textFieldsValues) {
+        List <Integer> errorCodes = new UserCredentialValidator(textFieldsValues.get("Username"), textFieldsValues.get("Password"), textFieldsValues.get("Name"), textFieldsValues.get("Surname"),
+                textFieldsValues.get("Email"), textFieldsValues.get("Phone number"), textFieldsValues.get("Country"), textFieldsValues.get("City"),
+                textFieldsValues.get("Street"), textFieldsValues.get("Postal Code"), textFieldsValues.get("Street number"), LocalDate.parse("2003-01-14"),
+                textFieldsValues.get("Nationality"), textFieldsValues.get("Gender")).validateCredentials();
+        return errorCodes;
+    }
+
+    void createUser(HashMap<String, String> textFieldsValues) {
+        new AddNewUser(textFieldsValues.get("Username"), textFieldsValues.get("Password"), textFieldsValues.get("Name"), textFieldsValues.get("Surname"),
+                textFieldsValues.get("Email"), textFieldsValues.get("Phone number"), textFieldsValues.get("Country"), textFieldsValues.get("City"),
+                textFieldsValues.get("Street"), textFieldsValues.get("Postal Code"), textFieldsValues.get("Street number"), LocalDate.parse("2003-01-14"),
+                textFieldsValues.get("Nationality"), textFieldsValues.get("Gender"), true).insertIntoDatabase();
+    }
+
 
     public static void main(String[] args) {
         new ClientFormGUI().createGUI();

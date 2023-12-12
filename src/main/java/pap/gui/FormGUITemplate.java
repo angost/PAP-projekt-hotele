@@ -2,14 +2,18 @@ package pap.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.stream.Collectors;
+
+import pap.logic.validators.*;
 
 public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
     List<JTextField> textFields = new ArrayList<JTextField>();
-
+    List<String> textFieldLabels = new ArrayList<String>();
 
     //przeniesc tutaj niektore componenty
 
@@ -101,6 +105,7 @@ public abstract class FormGUITemplate extends BaseGUI{
                 inputField.setMaximumSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
                 fieldPanel.add(inputField);
                 textFields.add(inputField);
+                textFieldLabels.add(fieldLabels[i]);
 
             } else if (fieldTypes[i].startsWith("radioButton")) {
                 Object[] radioBtnOptions;
@@ -168,25 +173,36 @@ public abstract class FormGUITemplate extends BaseGUI{
     }
 
     void registerBtnClickedAction(){
+        // Get values
         HashMap<String, String> textFieldsValues = getTextFieldValues();
-        for (String i : textFieldsValues.keySet()) {
-            System.out.println("key: " + i + " value: " + textFieldsValues.get(i));
+        // Validate values
+        List <Integer> errorCodes = validateCredentials(textFieldsValues);
+        // Create user and open Home Page
+        if (errorCodes.isEmpty()) {
+            createUser(textFieldsValues);
+            new HomePageGUI().createGUI();
+            frame.setVisible(false);
         }
-        System.out.println("\n");
-        new HomePageGUI().createGUI();
-        frame.setVisible(false);
+        // Errors occured, display them on screen
+        else {
+            String errorsString = errorCodes.stream().map(String::valueOf)
+                    .collect(Collectors.joining(","));
+            JOptionPane.showMessageDialog(frame, errorsString);
+
+        }
     }
 
     HashMap<String, String> getTextFieldValues(){
-        String[] fieldLabels = getFieldLabels();
-        int nrOfFields = fieldLabels.length;
+        int nrOfFields = textFields.size();
         HashMap<String, String> textFieldsValues = new HashMap<String, String>();
 
         for (int i = 0; i < nrOfFields; i++){
-            textFieldsValues.put(fieldLabels[i], textFields.get(i).getText());
+            textFieldsValues.put(textFieldLabels.get(i), textFields.get(i).getText());
         }
         return textFieldsValues;
     }
 
+    abstract List <Integer> validateCredentials(HashMap<String, String> textFieldsValues);
 
+    abstract void createUser(HashMap<String, String> textFieldsValues);
 }
