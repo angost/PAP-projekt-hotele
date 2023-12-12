@@ -124,10 +124,16 @@ public class ScrollGUITemplate extends BaseGUI{
 
             scrollPanel.add(offerPanel);
             scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));
-
         }
+
+        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction());
+
     }
 
+    void undoBtnClickedAction(){
+        new HomePageGUI().createGUI();
+        frame.setVisible(false);
+    }
 
     void createGUI(){
         super.createBaseGUI();
@@ -206,40 +212,4 @@ class FiltersPanel extends JPanel {
         this.repaint();
     }
 
-}
-
-class TwoImgsButton extends JButton{
-
-    Image baseImg, secondImg;
-    String state;
-    boolean imgUploadSuccess = false;
-
-    public TwoImgsButton(int buttonWidth, int buttonHeight, int imgWidth, int imgHeight, String baseImgPath, String secondImgPath) {
-        setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-        setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        try {
-            setContentAreaFilled(false); // Make the button transparent
-            Image baseImg = ImageIO.read(new File(getClass().getResource(baseImgPath).getPath()));
-            baseImg = baseImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
-            Image secondImg = ImageIO.read(new File(getClass().getResource(secondImgPath).getPath()));
-            secondImg = secondImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
-            setIcon(new ImageIcon(baseImg));
-            this.baseImg = baseImg;
-            this.secondImg = secondImg;
-            imgUploadSuccess = true;
-            state = "base_state";
-        } catch (Exception ex) {
-            setContentAreaFilled(true);
-        }
-    }
-
-    public void changeState() {
-        if (state.equals("base_state")) {
-            setIcon(new ImageIcon(secondImg));
-            state = "second_state";
-        } else {
-            setIcon(new ImageIcon(baseImg));
-            state = "base_state";
-        }
-    }
 }
