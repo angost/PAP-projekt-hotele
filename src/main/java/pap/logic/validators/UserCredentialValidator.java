@@ -3,9 +3,6 @@ package pap.logic.validators;
 import java.util.*;
 import java.time.LocalDate;
 import pap.db.dao.*;
-import pap.db.entities.*;
-
-import javax.persistence.NoResultException;
 
 public class UserCredentialValidator {
     private static final int MIN_USERNAME_LENGTH = 8;

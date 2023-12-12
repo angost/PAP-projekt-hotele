@@ -57,6 +57,5 @@ public class InsertUserCredentials {
         } else {
             new ClientDAO().create(user);
         }
-
     }
 }
