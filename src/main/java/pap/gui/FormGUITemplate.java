@@ -195,12 +195,15 @@ public abstract class FormGUITemplate extends BaseGUI{
         }
         // Errors occured, display them on screen
         else {
-            String statusLabelText = "<html>";
+            String statusLabelText = "<html>"; String spacingCharacter = "<br/>";
+            if (errorCodes.size() > 10) spacingCharacter = " | ";
             for (Integer code : errorCodes) {
-                statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(code) + " | ";
+                statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(code) + spacingCharacter;
             }
             statusLabelText = statusLabelText + "</html>";
             statusLabel.setText(statusLabelText);
+            statusLabel.setForeground(logoColor);
+
         }
     }
 
