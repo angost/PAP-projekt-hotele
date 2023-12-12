@@ -4,15 +4,44 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.HashMap;
 
+class SimulateLogic {
+
+    public Integer[] getfittingElementsIds() {
+        Integer[] ids = {0,3,7};
+        return ids;
+    }
+
+    public HashMap<String, String> getElementInfo(int id){
+        HashMap<String, String> elInfo = new HashMap<String, String>();
+
+        if (id == 0){
+            elInfo.put("name", "Pokój z widokiem na morze");
+            elInfo.put("info", "room type: standard, rooms: 1, bathrooms: 1 room type: standard, rooms: 1, bathrooms: 1 room type: standard, rooms: 1, bathrooms: 1");
+            elInfo.put("price", "440");
+        } else if (id == 3){
+            elInfo.put("name", "Pokój rodzinny");
+            elInfo.put("info", "room type: exclusive, rooms: 3, bathrooms: 2");
+            elInfo.put("price", "600");
+        } else{
+            elInfo.put("name", "Domek w górach");
+            elInfo.put("info", "room type: house, rooms: 6, bathrooms: 3");
+            elInfo.put("price", "1500");
+        }
+
+        return elInfo;
+    }
+}
 
 public class ScrollGUITemplate extends BaseGUI{
     JPanel mainPanel, scrollPanel;
     FiltersPanel filtersPanel;
     JScrollPane scrollPanelEnabler;
-
-
     // move some new components here
+
+    int nrOfElements;
+    Integer[] fittingElementsIds;
 
     void createCustomGUI() {
         mainPanel = new JPanel();
@@ -40,10 +69,10 @@ public class ScrollGUITemplate extends BaseGUI{
         mainPanel.add(filtersPanel);
         mainPanel.add(scrollPanelEnabler);
 
+        int offerHeight = frameHeight/4;
+        int offerWidth = frameWidth/3;
 
-        for (int i = 0; i<9; i++) {
-
-            int offerHeight = frameHeight/4;
+        for (int i = 0; i < nrOfElements; i++) {
 
             JPanel offerPanel = new JPanel();
             offerPanel.setBackground(neutralColor);
@@ -52,11 +81,33 @@ public class ScrollGUITemplate extends BaseGUI{
             offerPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
             offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
-            JPanel offerInfo = new JPanel();
-            offerInfo.setBackground(helpingColor);
-            offerInfo.setPreferredSize(new Dimension(frameWidth/3, offerHeight));
-            offerInfo.setMaximumSize(new Dimension(frameWidth/3, offerHeight));
-            offerPanel.add(offerInfo);
+            JPanel offerInfoPanel = new JPanel();
+            offerInfoPanel.setBackground(helpingColor);
+            offerInfoPanel.setLayout(new BoxLayout(offerInfoPanel, BoxLayout.PAGE_AXIS));
+            offerInfoPanel.setPreferredSize(new Dimension(offerWidth, offerHeight));
+            offerInfoPanel.setMaximumSize(new Dimension(offerWidth, offerHeight));
+
+            HashMap<String, String> offerInfo = new SimulateLogic().getElementInfo(fittingElementsIds[i]);
+            JLabel offerNameLabel = new JLabel(offerInfo.get("name"), JLabel.CENTER);
+            offerNameLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
+            offerNameLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
+            offerNameLabel.setFont(fontMiddle);
+            offerInfoPanel.add(offerNameLabel);
+
+            JLabel offerInfoLabel = new JLabel(offerInfo.get("info"), JLabel.CENTER);
+            offerInfoLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
+            offerInfoLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
+            offerInfoLabel.setFont(fontSmaller);
+            offerInfoPanel.add(offerInfoLabel);
+
+            JLabel offerPriceLabel = new JLabel(offerInfo.get("price"), JLabel.CENTER);
+            offerPriceLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
+            offerPriceLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
+            offerPriceLabel.setFont(fontMiddle);
+            offerPriceLabel.setForeground(Color.RED);
+            offerInfoPanel.add(offerPriceLabel);
+
+            offerPanel.add(offerInfoPanel);
             offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
             RoundedButton seeOfferBtn = new RoundedButton("See offer "+ i, frameHeight/7, frameHeight/7, secondColor, secondColorDarker, fontButtons, true);
@@ -74,6 +125,12 @@ public class ScrollGUITemplate extends BaseGUI{
         createCustomGUI();
         frame.setVisible(true);
     }
+
+    public ScrollGUITemplate(){
+        fittingElementsIds = new SimulateLogic().getfittingElementsIds();
+        nrOfElements = fittingElementsIds.length;
+    }
+
 
     public static void main(String[] args) {
         new ScrollGUITemplate().createGUI();
