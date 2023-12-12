@@ -1,6 +1,5 @@
+package pap.gui;
 
-import javax.swing.*;
-import java.awt.*;
 import java.time.Year;
 
 public class UserFormGUI extends FormGUITemplate {

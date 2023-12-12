@@ -1,7 +1,7 @@
+package pap.gui;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Comparator;
-import java.util.stream.Stream;
 
 public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
@@ -12,7 +12,7 @@ public abstract class FormGUITemplate extends BaseGUI{
     abstract Object[] getFieldParameters();
 
     void createCustomGUI() {
-        // Move this part to new BaseGUI function/to createBaseGUI function
+        // Move this part to new main.java.pap.gui.BaseGUI function/to createBaseGUI function
         // podzielic te funkcje na czesci
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
@@ -152,7 +152,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
     }
 
-    // make BaseGUI abstract, add createcustomgui as virtual method and createGUI with body as below
+    // make main.java.pap.gui.BaseGUI abstract, add createcustomgui as virtual method and createGUI with body as below
     void createGUI(){
         super.createBaseGUI();
         createCustomGUI();

@@ -1,10 +1,10 @@
+package pap.gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
-import java.io.InputStream;
-import java.util.logging.Logger;
 
 
 public class BaseGUI {
@@ -57,12 +57,12 @@ public class BaseGUI {
 
     void setFonts(){
         try {
-            File fontFile = new File("res/Montserrat-Regular.ttf");
+            File fontFile = new File(getClass().getResource("/Montserrat-Regular.ttf").getPath());
             Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             fontBigger = font.deriveFont(20f);
             fontMiddle = font.deriveFont(18f);
             fontSmaller = font.deriveFont(16f);
-            fontFile = new File("res/Montserrat-Bold.ttf");
+            fontFile = new File(getClass().getResource("/Montserrat-Bold.ttf").getPath());
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             fontButtons = font.deriveFont(12f);
 
@@ -145,7 +145,7 @@ class LogoPanel extends JPanel {
 
     void addLogoImage() {
         try {
-            logoImage = ImageIO.read(new File("res/logo_name_mixed.png"));
+            logoImage = ImageIO.read(new File(getClass().getResource("/logo_name_mixed.png").getPath()));
             scaledLogoImage = logoImage.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
             logoImageLabel = new JLabel(new ImageIcon(scaledLogoImage));
             this.add(Box.createRigidArea(new Dimension(20,0)));

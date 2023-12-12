@@ -1,4 +1,4 @@
-
+package pap.gui;
 
 import javax.swing.*;
 import java.awt.*;

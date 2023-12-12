@@ -1,3 +1,5 @@
+package pap.gui;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -95,7 +97,7 @@ class FiltersPanel extends JPanel {
 
         this.add(Box.createRigidArea(new Dimension(frameHeight/20,0)));
 
-        ShowHideFilterButton = new TwoImgsButton(panelHeight, panelHeight, panelHeight*2, panelHeight, "res/show_more_128.png", "res/show_less_128.png");
+        ShowHideFilterButton = new TwoImgsButton(panelHeight, panelHeight, panelHeight*2, panelHeight, "/show_more_128.png", "/show_less_128.png");
         ShowHideFilterButton.addActionListener(e->showHideFiltersClicked());
         this.add(ShowHideFilterButton);
 
@@ -143,9 +145,9 @@ class TwoImgsButton extends JButton{
         setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         try {
             setContentAreaFilled(false); // Make the button transparent
-            Image baseImg = ImageIO.read(new File(baseImgPath));
+            Image baseImg = ImageIO.read(new File(getClass().getResource(baseImgPath).getPath()));
             baseImg = baseImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
-            Image secondImg = ImageIO.read(new File(secondImgPath));
+            Image secondImg = ImageIO.read(new File(getClass().getResource(secondImgPath).getPath()));
             secondImg = secondImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
             setIcon(new ImageIcon(baseImg));
             this.baseImg = baseImg;
