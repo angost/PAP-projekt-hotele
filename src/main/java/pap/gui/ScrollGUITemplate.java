@@ -116,7 +116,7 @@ public class ScrollGUITemplate extends BaseGUI{
 
     public ScrollGUITemplate(int userId, String userType){
         super(userId, userType);
-        fittingElementsIds = new FindDisplayOffers().getfittingElementsIds();
+        fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
         nrOfElements = fittingElementsIds.length;
     }
 
