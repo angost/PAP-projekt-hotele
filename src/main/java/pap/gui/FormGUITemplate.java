@@ -172,7 +172,9 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerButton.addActionListener(e->registerBtnClickedAction());
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
-        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
+
+        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction());
+        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
     }
 
     // make main.java.pap.gui.BaseGUI abstract, add createcustomgui as virtual method and createGUI with body as below
@@ -180,6 +182,11 @@ public abstract class FormGUITemplate extends BaseGUI{
         super.createBaseGUI();
         createCustomGUI();
         frame.setVisible(true);
+    }
+
+    void undoBtnClickedAction(){
+        new ChooseAccountTypeGUI().createGUI();
+        frame.setVisible(false);
     }
 
     void registerBtnClickedAction(){
@@ -195,12 +202,15 @@ public abstract class FormGUITemplate extends BaseGUI{
         }
         // Errors occured, display them on screen
         else {
-            String statusLabelText = "<html>";
+            String statusLabelText = "<html>"; String spacingCharacter = "<br/>";
+            if (errorCodes.size() > 10) spacingCharacter = " | ";
             for (Integer code : errorCodes) {
-                statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(code) + " | ";
+                statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(code) + spacingCharacter;
             }
             statusLabelText = statusLabelText + "</html>";
             statusLabel.setText(statusLabelText);
+            statusLabel.setForeground(logoColor);
+
         }
     }
 
