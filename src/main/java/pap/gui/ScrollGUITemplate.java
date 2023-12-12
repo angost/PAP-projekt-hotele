@@ -134,7 +134,7 @@ public class ScrollGUITemplate extends BaseGUI{
     }
 
     void undoBtnClickedAction(){
-        new HomePageGUI().createGUI();
+        new HomePageGUI(userId, userType).createGUI();
         frame.setVisible(false);
     }
 
@@ -144,13 +144,14 @@ public class ScrollGUITemplate extends BaseGUI{
         frame.setVisible(true);
     }
 
-    public ScrollGUITemplate(){
+    public ScrollGUITemplate(int userId, String userType){
+        super(userId, userType);
         fittingElementsIds = new FindDisplayOffers().getfittingElementsIds();
         nrOfElements = fittingElementsIds.length;
     }
 
     public static void main(String[] args) {
-        new ScrollGUITemplate().createGUI();
+        new ScrollGUITemplate(-1, "None").createGUI();
     }
 
 }

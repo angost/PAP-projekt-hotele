@@ -10,6 +10,9 @@ import java.util.List;
 
 public class ClientFormGUI extends FormGUITemplate {
 
+    public ClientFormGUI(int userId, String userType) {
+        super(userId, userType);
+    }
 
     String[] getFieldLabels() {
         String[] fieldLabels = {"Username", "Password", "Name", "Surname", "Date of birth", "Gender", "Nationality", "Email", "Phone number", "Country", "City", "Street", "Street number", "Postal Code"};
@@ -61,6 +64,6 @@ public class ClientFormGUI extends FormGUITemplate {
 
 
     public static void main(String[] args) {
-        new ClientFormGUI().createGUI();
+        new ClientFormGUI(-1, "None").createGUI();
     }
 }

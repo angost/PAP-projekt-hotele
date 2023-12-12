@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+import pap.db.dao.ClientDAO;
+import pap.db.entities.Client;
 import pap.logic.ErrorCodes;
 import pap.logic.validators.*;
 
@@ -16,6 +18,10 @@ public abstract class FormGUITemplate extends BaseGUI{
     List<JTextField> textFields = new ArrayList<JTextField>();
     List<String> textFieldLabels = new ArrayList<String>();
     JLabel statusLabel;
+
+    public FormGUITemplate(int userId, String userType) {
+        super(userId, userType);
+    }
 
     //przeniesc tutaj niektore componenty
 
@@ -185,7 +191,7 @@ public abstract class FormGUITemplate extends BaseGUI{
     }
 
     void undoBtnClickedAction(){
-        new ChooseAccountTypeGUI().createGUI();
+        new ChooseAccountTypeGUI(-1, "None").createGUI();
         frame.setVisible(false);
     }
 
@@ -197,7 +203,8 @@ public abstract class FormGUITemplate extends BaseGUI{
         // Create user and open Home Page
         if (errorCodes.isEmpty()) {
             createUser(textFieldsValues);
-            new HomePageGUI().createGUI();
+            JOptionPane.showMessageDialog(frame, "Success! Created user!");
+            new LogInGUI(-1, "None").createGUI();
             frame.setVisible(false);
         }
         // Errors occured, display them on screen
@@ -210,7 +217,6 @@ public abstract class FormGUITemplate extends BaseGUI{
             statusLabelText = statusLabelText + "</html>";
             statusLabel.setText(statusLabelText);
             statusLabel.setForeground(logoColor);
-
         }
     }
 
