@@ -20,8 +20,15 @@ public class OwnerLogin {
     public Owner getOwnerAccount() {
         try {
             Owner owner = new OwnerDAO().findByUsername(username);
-            if (password.equals(owner.getPassword())) return owner;
-            codes.add(302);
+            if (password.equals(owner.getPassword())) {
+                if (owner.isActive()) {
+                    return owner;
+                } else {
+                    codes.add(303);
+                }
+            } else {
+                codes.add(302);
+            }
             return new Owner();
         } catch (Exception e) {
             codes.add(301);
