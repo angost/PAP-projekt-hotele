@@ -11,6 +11,10 @@ public class ChooseAccountTypeGUI extends BaseGUI {
     LogoPanel logoPanel;
     JLabel chooseUserLabel, loginLabel;
 
+    public ChooseAccountTypeGUI(int userId, String userType) {
+        super(userId, userType);
+    }
+
     void createCustomGUI(){
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
@@ -62,17 +66,17 @@ public class ChooseAccountTypeGUI extends BaseGUI {
     }
 
     void goToClientCreationFormAction() {
-        new ClientFormGUI().createGUI();
+        new ClientFormGUI(-1, "None").createGUI();
         frame.setVisible(false);
     }
 
     void goToOwnerCreationFormAction() {
-        new OwnerFormGUI().createGUI();
+        new OwnerFormGUI(-1, "None").createGUI();
         frame.setVisible(false);
     }
 
     void logInBtnClickedAction() {
-        new LogInGUI().createGUI();
+        new LogInGUI(-1, "None").createGUI();
         frame.setVisible(false);
     }
 
@@ -85,6 +89,6 @@ public class ChooseAccountTypeGUI extends BaseGUI {
 
 
     public static void main(String[] args) {
-        new ChooseAccountTypeGUI().createGUI();
+        new ChooseAccountTypeGUI(-1, "None").createGUI();
     }
 }
