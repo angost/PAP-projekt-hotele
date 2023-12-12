@@ -74,9 +74,11 @@ public class ErrorCodes {
         // Login Errors
         errorDescriptions.put(201, "No such user in database (not successful user login attempt)");
         errorDescriptions.put(202, "Wrong password (not successful user login attempt)");
+        errorDescriptions.put(203, "User account is not active (not successful login attempt)");
 
         errorDescriptions.put(301, "No such owner in database (not successful owner login attempt)");
         errorDescriptions.put(302, "Wrong password for owner (not successful owner login attempt)");
+        errorDescriptions.put(303, "Owner account is not active (not successful owner login attempt)");
     }
 
     public static String getErrorDescription(int errorCode) {
