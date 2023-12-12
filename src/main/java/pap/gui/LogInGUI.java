@@ -7,6 +7,7 @@ import java.util.List;
 import pap.db.entities.Client;
 import pap.db.entities.Owner;
 import pap.logic.login.*;
+import pap.logic.ErrorCodes;
 
 
 public class LogInGUI extends BaseGUI {
@@ -101,10 +102,9 @@ public class LogInGUI extends BaseGUI {
         textPanel3.setBackground(bgColor);
         textPanel3.add(Box.createHorizontalGlue());
         textPanel3.add(statusLabel);
-//        textPanel3.add(Box.createHorizontalGlue());
+        textPanel3.add(Box.createHorizontalGlue());
         loginPanel.add(textPanel3);
         loginPanel.add(Box.createVerticalGlue());
-
 
         createAccountPanel = new JPanel();
         createAccountPanel.setLayout(new BoxLayout(createAccountPanel, BoxLayout.LINE_AXIS));
@@ -136,7 +136,10 @@ public class LogInGUI extends BaseGUI {
             new HomePageGUI().createGUI();
             frame.setVisible(false);
         } else {
-            statusLabel.setText(String.valueOf(errorCodesUser.get(0)));
+            String statusLabelText = "<html>";
+            statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(errorCodesUser.get(0));
+            statusLabelText = statusLabelText + "</html>";
+            statusLabel.setText(statusLabelText);
         }
     }
 
@@ -153,7 +156,10 @@ public class LogInGUI extends BaseGUI {
             new HomePageGUI().createGUI();
             frame.setVisible(false);
         } else {
-            statusLabel.setText(String.valueOf(errorCodesOwner.get(0)));
+            String statusLabelText = "<html>";
+            statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(errorCodesOwner.get(0));
+            statusLabelText = statusLabelText + "</html>";
+            statusLabel.setText(statusLabelText);
         }
 
     }
