@@ -14,6 +14,7 @@ public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
     List<JTextField> textFields = new ArrayList<JTextField>();
     List<String> textFieldLabels = new ArrayList<String>();
+    JLabel statusLabel;
 
     //przeniesc tutaj niektore componenty
 
@@ -157,9 +158,17 @@ public abstract class FormGUITemplate extends BaseGUI{
             fieldsPanel.add(Box.createVerticalGlue());
         }
 
+        registerPanel.add(Box.createVerticalGlue());
+        statusLabel = new JLabel("<html>Insert your data<br/></html>", JLabel.LEFT);
+        statusLabel.setFont(fontSmaller);
+        statusLabel.setForeground(Color.decode("#7a7373"));
+//        statusLabel.setPreferredSize(new Dimension(frameWidth/4, contentPanelSize/5));
+//        statusLabel.setMaximumSize(new Dimension(frameWidth/4, contentPanelSize/5));
+        registerPanel.add(statusLabel);
+        registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
+
         RoundedButton registerButton = new RoundedButton("Register", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
         registerButton.addActionListener(e->registerBtnClickedAction());
-        registerPanel.add(Box.createVerticalGlue());
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
@@ -185,10 +194,11 @@ public abstract class FormGUITemplate extends BaseGUI{
         }
         // Errors occured, display them on screen
         else {
-            String errorsString = errorCodes.stream().map(String::valueOf)
-                    .collect(Collectors.joining(","));
-            JOptionPane.showMessageDialog(frame, errorsString);
-
+            String errorsString = "<html>";
+            errorsString = errorsString + errorCodes.stream().map(String::valueOf)
+                    .collect(Collectors.joining(" | "));
+            errorsString = errorsString + "</html>";
+            statusLabel.setText(errorsString);
         }
     }
 
