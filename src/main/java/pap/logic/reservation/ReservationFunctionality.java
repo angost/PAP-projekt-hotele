@@ -14,11 +14,17 @@ public class ReservationFunctionality {
     }
     public void endReservationChecker(){
 
-        if (reservation.getStartDate().minusDays(3).isBefore(LocalDate.now())){
-            changeStatus("returned");
-            changePaidAmount((float) (reservation.getPaidAmount() * 0.4));
+        if (reservation.getStartDate().minusDays(3).isBefore(LocalDate.now())) {
+            changePaidAmount((float) 0);
+            changeStatus("cancelled");
         }
-        else { changeStatus("cancelled"); }
+        if (reservation.getStartDate().isBefore(LocalDate.now())) {
+            changePaidAmount((float) (reservation.getPaidAmount() * 0.5));
+            changeStatus("cancelled");
+        }
+        else {
+            changeStatus("returned");
+        }
     }
 
     public void changeStartDate(LocalDate startDate){
