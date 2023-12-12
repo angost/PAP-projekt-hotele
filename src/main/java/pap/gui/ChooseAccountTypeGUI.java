@@ -53,6 +53,7 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         loginPanel.add(loginLabel);
         loginPanel.add(Box.createRigidArea(new Dimension(10,0)));
         loginButton = new RoundedButton("Log in", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        loginButton.addActionListener(e-> logInBtnClickedAction());
         loginPanel.add(loginButton);
         loginPanel.add(Box.createRigidArea(new Dimension(10,0)));
         mainPanel.add(loginPanel);
@@ -67,6 +68,11 @@ public class ChooseAccountTypeGUI extends BaseGUI {
 
     void goToOwnerCreationFormAction() {
         new OwnerFormGUI().createGUI();
+        frame.setVisible(false);
+    }
+
+    void logInBtnClickedAction() {
+        new LogInGUI().createGUI();
         frame.setVisible(false);
     }
 
