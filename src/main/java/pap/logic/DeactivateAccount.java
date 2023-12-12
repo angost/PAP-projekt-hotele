@@ -34,9 +34,4 @@ public class DeactivateAccount {
         new OwnerDAO().update(owner);
         return true;
     }
-
-    public static void main(String[] args) {
-        boolean success = deactivateOwnerAccount(11);
-        System.out.println(success);
-    }
 }
