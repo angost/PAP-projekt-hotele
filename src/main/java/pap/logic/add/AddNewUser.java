@@ -1,19 +1,19 @@
-package pap.logic.inserts;
+package pap.logic.add;
 
 import pap.db.entities.*;
 import pap.db.dao.*;
 
 import java.time.LocalDate;
 
-public class InsertUserCredentials {
+public class AddNewUser {
     private final Client user;
     private Address userAddress;
 
     boolean address;
 
-    public InsertUserCredentials(String username, String password, String name, String surname, String email, String phoneNumber,
-                                 String country, String city, String street, String postalCode, String streetNo,
-                                 LocalDate birthDate, String nationality, String gender, boolean activeStatus) {
+    public AddNewUser(String username, String password, String name, String surname, String email, String phoneNumber,
+                      String country, String city, String street, String postalCode, String streetNo,
+                      LocalDate birthDate, String nationality, String gender, boolean activeStatus) {
         userAddress = new Address();
         userAddress.setCountry(country);
         userAddress.setCity(city);
@@ -35,8 +35,8 @@ public class InsertUserCredentials {
         address = true;
     }
 
-    public InsertUserCredentials(String username, String password, String name, String surname, String email, String phoneNumber,
-                                 LocalDate birthDate, String nationality, String gender, boolean activeStatus) {
+    public AddNewUser(String username, String password, String name, String surname, String email, String phoneNumber,
+                      LocalDate birthDate, String nationality, String gender, boolean activeStatus) {
         user = new Client();
         user.setUsername(username);
         user.setPassword(password);

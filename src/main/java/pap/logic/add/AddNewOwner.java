@@ -1,17 +1,17 @@
-package pap.logic.inserts;
+package pap.logic.add;
 
 import pap.db.entities.*;
 import pap.db.dao.OwnerDAO;
 
 
-public class InsertOwnerCredentials {
+public class AddNewOwner {
     private final Owner owner;
     private Address ownerAddress;
     boolean address;
 
-    public InsertOwnerCredentials(String username, String password, String companyName, String email, String phoneNumber,
-                                  String country, String city, String street, String postalCode, String streetNo,
-                                  String nip, boolean isVerified, boolean activeStatus) {
+    public AddNewOwner(String username, String password, String companyName, String email, String phoneNumber,
+                       String country, String city, String street, String postalCode, String streetNo,
+                       String nip, boolean isVerified, boolean activeStatus) {
         ownerAddress = new Address();
         ownerAddress.setCountry(country);
         ownerAddress.setCity(city);
@@ -28,10 +28,11 @@ public class InsertOwnerCredentials {
         owner.setActive(isVerified);
         owner.setVerified(activeStatus);
         owner.setAddress(ownerAddress);
+        address = true;
     }
 
-    public InsertOwnerCredentials(String username, String password, String companyName, String email, String phoneNumber,
-                                  String nip, boolean isVerified, boolean activeStatus) {
+    public AddNewOwner(String username, String password, String companyName, String email, String phoneNumber,
+                       String nip, boolean isVerified, boolean activeStatus) {
         owner = new Owner();
         owner.setUsername(username);
         owner.setPassword(password);
@@ -41,6 +42,7 @@ public class InsertOwnerCredentials {
         owner.setNip(nip);
         owner.setActive(isVerified);
         owner.setVerified(activeStatus);
+        address = false;
     }
 
     public void insertIntoDatabase() {
