@@ -2,6 +2,10 @@ package pap.logic.validators;
 
 import java.util.*;
 import java.time.LocalDate;
+import pap.db.dao.*;
+import pap.db.entities.*;
+
+import javax.persistence.NoResultException;
 
 public class UserCredentialValidator {
     private static final int MIN_USERNAME_LENGTH = 8;
@@ -132,7 +136,10 @@ public class UserCredentialValidator {
         if (BANNED_KEYWORDS.stream().anyMatch(username.toLowerCase()::contains)) codes.add(4);
     }
     private static void checkUsernameIsUnique(String username, List <Integer> codes) {
-        // TODO
+        try {
+            new ClientDAO().findByUsername(username);
+            codes.add(5);
+        } catch (Exception ignored) {}
     }
     private static void checkTooShortPassword(String password, List <Integer> codes) {
         if (password.length() < MIN_PASSWORD_LENGTH) codes.add(6);
