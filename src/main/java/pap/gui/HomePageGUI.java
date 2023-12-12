@@ -13,9 +13,10 @@ import pap.logic.DeactivateAccount;
 public class HomePageGUI extends BaseGUI {
 
     RoundedButton findOffersButton, seeReservationsButton, desactivateAccountButton;
-    JPanel mainPanel, buttonsPanel, textPanel;
+    JPanel mainPanel, buttonsPanel, textPanel, logoutPanel;
     LogoPanel logoPanel;
     JLabel chooseActionLabel;
+    LogOutButton logOutButton;
 
     public HomePageGUI(int userId, String userType) {
         super(userId, userType);
@@ -29,6 +30,16 @@ public class HomePageGUI extends BaseGUI {
 
         logoPanel = new LogoPanel(logoColor, frameHeight,Integer.MAX_VALUE, frameHeight/5);
         mainPanel.add(logoPanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
+
+        logoutPanel = new JPanel();
+        logoutPanel.setLayout(new BoxLayout(logoutPanel, BoxLayout.LINE_AXIS));
+        logoutPanel.setBackground(bgColor);
+        logoutPanel.add(Box.createHorizontalGlue());
+        logOutButton = new LogOutButton(frameHeight/20, frameHeight/20, frameHeight/20, frameHeight/20);
+        logOutButton.addActionListener(e -> logOutBtnClickedAction());
+        logoutPanel.add(logOutButton); logoutPanel.add(Box.createRigidArea(new Dimension(frameHeight/40,0)));
+        mainPanel.add(logoutPanel);
 
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight*3/20)));
         textPanel = new JPanel();
@@ -56,15 +67,18 @@ public class HomePageGUI extends BaseGUI {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         buttonsPanel.setBackground(bgColor);
-        findOffersButton = new RoundedButton("Look for offers", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
-        seeReservationsButton = new RoundedButton("See your reservations", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
-        desactivateAccountButton = new RoundedButton("Desactivate account", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
-        findOffersButton.addActionListener(e->goToFindOffersAction());
-        seeReservationsButton.addActionListener(e->goToYourReservationsAction());
-        desactivateAccountButton.addActionListener(e->desactivateAccountAction());
         buttonsPanel.add(Box.createHorizontalGlue());
-        buttonsPanel.add(findOffersButton); buttonsPanel.add(Box.createRigidArea(new Dimension(findOffersButton.preferredWidth/5,0)));
-        buttonsPanel.add(seeReservationsButton); buttonsPanel.add(Box.createRigidArea(new Dimension(findOffersButton.preferredWidth/5,0)));
+        if (userType.equals("Client")){
+            findOffersButton = new RoundedButton("Look for offers", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+            seeReservationsButton = new RoundedButton("See your reservations", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+            findOffersButton.addActionListener(e->goToFindOffersAction());
+            seeReservationsButton.addActionListener(e->goToYourReservationsAction());
+
+            buttonsPanel.add(findOffersButton); buttonsPanel.add(Box.createRigidArea(new Dimension(findOffersButton.preferredWidth/5,0)));
+            buttonsPanel.add(seeReservationsButton); buttonsPanel.add(Box.createRigidArea(new Dimension(findOffersButton.preferredWidth/5,0)));
+        }
+        desactivateAccountButton = new RoundedButton("Desactivate account", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        desactivateAccountButton.addActionListener(e->desactivateAccountAction());
         buttonsPanel.add(desactivateAccountButton);
         buttonsPanel.add(Box.createHorizontalGlue());
         mainPanel.add(buttonsPanel);
@@ -99,6 +113,11 @@ public class HomePageGUI extends BaseGUI {
         } else {
             JOptionPane.showMessageDialog(frame, "Account cannot be desactivated");
         }
+    }
+
+    void logOutBtnClickedAction(){
+        new LogInGUI(-1, "None").createGUI();
+        frame.setVisible(false);
     }
 
     void createGUI(){
