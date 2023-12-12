@@ -6,11 +6,10 @@ import java.awt.*;
 
 public class ChooseAccountTypeGUI extends BaseGUI {
 
-    RoundedButton clientButton;
-    RoundedButton ownerButton;
-    JPanel mainPanel, buttonsPanel, textPanel;
+    RoundedButton clientButton, ownerButton, loginButton;
+    JPanel mainPanel, buttonsPanel, textPanel, loginPanel;
     LogoPanel logoPanel;
-    JLabel chooseUserLabel;
+    JLabel chooseUserLabel, loginLabel;
 
     void createCustomGUI(){
         mainPanel = new JPanel();
@@ -25,7 +24,7 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         textPanel = new JPanel();
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.LINE_AXIS));
         textPanel.setBackground(bgColor);
-        chooseUserLabel = new JLabel("Choose user type:", JLabel.CENTER);
+        chooseUserLabel = new JLabel("Create new account:", JLabel.CENTER);
         chooseUserLabel.setFont(fontMiddle);
         textPanel.add(Box.createHorizontalGlue()); textPanel.add(chooseUserLabel); textPanel.add(Box.createHorizontalGlue());
         mainPanel.add(textPanel);
@@ -42,7 +41,22 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         buttonsPanel.add(clientButton); buttonsPanel.add(Box.createRigidArea(new Dimension(clientButton.preferredWidth/5,0))); buttonsPanel.add(ownerButton);
         buttonsPanel.add(Box.createHorizontalGlue());
         mainPanel.add(buttonsPanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight*3/10)));
+//        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight*3/10)));
+
+        mainPanel.add(Box.createVerticalGlue());
+        loginPanel = new JPanel();
+        loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.LINE_AXIS));
+        loginPanel.setBackground(bgColor);
+        loginPanel.add(Box.createHorizontalGlue());
+        loginLabel = new JLabel("I already have an account...", JLabel.CENTER);
+        loginLabel.setFont(fontMiddle);
+        loginPanel.add(loginLabel);
+        loginPanel.add(Box.createRigidArea(new Dimension(10,0)));
+        loginButton = new RoundedButton("Log in", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        loginPanel.add(loginButton);
+        loginPanel.add(Box.createRigidArea(new Dimension(10,0)));
+        mainPanel.add(loginPanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0,10)));
 
     }
 
