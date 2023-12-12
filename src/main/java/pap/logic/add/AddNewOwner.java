@@ -25,8 +25,8 @@ public class AddNewOwner {
         owner.setPhoneNumber(phoneNumber);
         owner.setCompanyName(companyName);
         owner.setNip(nip);
-        owner.setActive(isVerified);
-        owner.setVerified(activeStatus);
+        owner.setActive(activeStatus);
+        owner.setVerified(isVerified);
         owner.setAddress(ownerAddress);
         address = true;
     }
