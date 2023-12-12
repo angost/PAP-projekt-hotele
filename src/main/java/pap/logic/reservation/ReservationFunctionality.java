@@ -33,4 +33,20 @@ public class ReservationFunctionality {
             //TODO
         }
     }
+
+    public void changeDescription(String description){
+        reservation.setDescription(description);
+    }
+
+    public void changePaidAmount(float paidAmount){
+        reservation.setPaidAmount(paidAmount);
+    }
+
+    public void changeStatus(String status){
+        reservation.setStatus(status);
+    }
+
+    public void changeIsPaid(boolean isPaid){
+        reservation.setPaid(isPaid);
+    }
 }
