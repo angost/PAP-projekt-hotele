@@ -2,7 +2,7 @@ package pap.gui;
 
 import java.time.Year;
 
-public class UserFormGUI extends FormGUITemplate {
+public class ClientFormGUI extends FormGUITemplate {
 
 
     String[] getFieldLabels() {
@@ -38,6 +38,6 @@ public class UserFormGUI extends FormGUITemplate {
     }
 
     public static void main(String[] args) {
-        new UserFormGUI().createGUI();
+        new ClientFormGUI().createGUI();
     }
 }

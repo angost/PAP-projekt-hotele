@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class ChooseAccountTypeGUI extends BaseGUI {
 
-    RoundedButton userButton;
+    RoundedButton clientButton;
     RoundedButton ownerButton;
     JPanel mainPanel, buttonsPanel, textPanel;
     LogoPanel logoPanel;
@@ -34,20 +34,20 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         buttonsPanel.setBackground(bgColor);
-        userButton = new RoundedButton("User", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        clientButton = new RoundedButton("Client", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
         ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
-        userButton.addActionListener(e->goToUserCreationFormAction());
+        clientButton.addActionListener(e->goToClientCreationFormAction());
         ownerButton.addActionListener(e->goToOwnerCreationFormAction());
         buttonsPanel.add(Box.createHorizontalGlue());
-        buttonsPanel.add(userButton); buttonsPanel.add(Box.createRigidArea(new Dimension(userButton.preferredWidth/5,0))); buttonsPanel.add(ownerButton);
+        buttonsPanel.add(clientButton); buttonsPanel.add(Box.createRigidArea(new Dimension(clientButton.preferredWidth/5,0))); buttonsPanel.add(ownerButton);
         buttonsPanel.add(Box.createHorizontalGlue());
         mainPanel.add(buttonsPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight*3/10)));
 
     }
 
-    void goToUserCreationFormAction() {
-        new UserFormGUI().createGUI();
+    void goToClientCreationFormAction() {
+        new ClientFormGUI().createGUI();
         frame.setVisible(false);
     }
 
