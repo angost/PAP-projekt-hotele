@@ -2,9 +2,15 @@ package pap.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
 
 public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
+    List<JTextField> textFields = new ArrayList<JTextField>();
+
+
     //przeniesc tutaj niektore componenty
 
     abstract String[] getFieldLabels();
@@ -94,6 +100,7 @@ public abstract class FormGUITemplate extends BaseGUI{
                 inputField.setPreferredSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
                 inputField.setMaximumSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
                 fieldPanel.add(inputField);
+                textFields.add(inputField);
 
             } else if (fieldTypes[i].startsWith("radioButton")) {
                 Object[] radioBtnOptions;
@@ -146,6 +153,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         }
 
         RoundedButton registerButton = new RoundedButton("Register", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        registerButton.addActionListener(e->registerBtnClickedAction());
         registerPanel.add(Box.createVerticalGlue());
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
@@ -158,5 +166,26 @@ public abstract class FormGUITemplate extends BaseGUI{
         createCustomGUI();
         frame.setVisible(true);
     }
+
+    void registerBtnClickedAction(){
+        HashMap<String, String> textFieldsValues = getTextFieldValues();
+        for (String i : textFieldsValues.keySet()) {
+            System.out.println("key: " + i + " value: " + textFieldsValues.get(i));
+        }
+        System.out.println("\n");
+
+    }
+
+    HashMap<String, String> getTextFieldValues(){
+        String[] fieldLabels = getFieldLabels();
+        int nrOfFields = fieldLabels.length;
+        HashMap<String, String> textFieldsValues = new HashMap<String, String>();
+
+        for (int i = 0; i < nrOfFields; i++){
+            textFieldsValues.put(fieldLabels[i], textFields.get(i).getText());
+        }
+        return textFieldsValues;
+    }
+
 
 }
