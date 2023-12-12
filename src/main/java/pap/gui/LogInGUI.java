@@ -95,7 +95,7 @@ public class LogInGUI extends BaseGUI {
         }
 
         if (dataValid) {
-            new ScrollGUITemplate().createGUI();
+            new HomePageGUI().createGUI();
             frame.setVisible(false);
             // go to home page
         } else {

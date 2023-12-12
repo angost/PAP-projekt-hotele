@@ -173,7 +173,8 @@ public abstract class FormGUITemplate extends BaseGUI{
             System.out.println("key: " + i + " value: " + textFieldsValues.get(i));
         }
         System.out.println("\n");
-
+        new HomePageGUI().createGUI();
+        frame.setVisible(false);
     }
 
     HashMap<String, String> getTextFieldValues(){
