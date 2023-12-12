@@ -1,3 +1,6 @@
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
 CREATE TABLE "clients" (
                "client_id" serial PRIMARY KEY,
                "username" varchar,
