@@ -5,33 +5,45 @@ import pap.db.dao.*;
 import java.util.*;
 
 public class DeactivateAccount {
-    public static boolean deactivateUserAccount(int id) {
+    public static List <Integer> deactivateUserAccount(int id) {
+        List <Integer> codes = new ArrayList<>();
         Client user = new ClientDAO().findById(id);
+        if (user == null) {
+            codes.add(401);
+            return codes;
+        }
         List<Reservation> reservations = new ReservationDAO().findByClientId(id);
         if (!reservations.isEmpty()) {
             for (var reservation : reservations) {
                 if (reservation.getStatus().equals("active")) {
-                    return false;
+                    codes.add(401);
+                    return codes;
                 }
             }
         }
         user.setActive(false);
         new ClientDAO().update(user);
-        return true;
+        return codes;
     }
 
-    public static boolean deactivateOwnerAccount(int id) {
+    public static List <Integer> deactivateOwnerAccount(int id) {
+        List <Integer> codes = new ArrayList<>();
         Owner owner = new OwnerDAO().findById(id);
+        if (owner == null) {
+            codes.add(403);
+            return codes;
+        }
         List <Hotel> hotels = new HotelDAO().findByOwnerId(id);
         if (!hotels.isEmpty()) {
             for (var hotel : hotels) {
                 if (hotel.isActive()) {
-                    return false;
+                    codes.add(404);
+                    return codes;
                 }
             }
         }
         owner.setActive(false);
         new OwnerDAO().update(owner);
-        return true;
+        return codes;
     }
 }
