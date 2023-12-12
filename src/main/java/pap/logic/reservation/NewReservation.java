@@ -10,13 +10,13 @@ public class NewReservation {
     private final Reservation reservation;
 
     public NewReservation(LocalDate startDate, LocalDate endDate, String description, Float paidAmount,
-                          String status, boolean isPaid, Client client, Offer offer, List<Penalty> penalties){
+                          boolean isPaid, Client client, Offer offer, List<Penalty> penalties){
         reservation = new Reservation();
         reservation.setStartDate(startDate);
         reservation.setEndDate(endDate);
         reservation.setDescription(description);
         reservation.setPaidAmount(paidAmount);
-        reservation.setStatus(status);
+        reservation.setStatus("active");
         reservation.setPaid(isPaid);
         reservation.setClient(client);
         reservation.setOffer(offer);
