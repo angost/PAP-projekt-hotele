@@ -2,142 +2,142 @@ DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 
 CREATE TABLE "clients" (
-               "client_id" serial PRIMARY KEY,
-               "username" varchar,
-               "password" varchar,
-               "name" varchar,
-               "surname" varchar,
-               "email" varchar,
-               "phone_number" varchar,
-               "address_id" integer,
-               "birth_date" timestamp,
-               "nationality" varchar,
-               "gender" varchar,
-               "is_active" bool
-    );
+                           "client_id" serial PRIMARY KEY,
+                           "username" varchar,
+                           "password" varchar,
+                           "name" varchar,
+                           "surname" varchar,
+                           "email" varchar,
+                           "phone_number" varchar,
+                           "address_id" integer,
+                           "birth_date" timestamp,
+                           "nationality" varchar,
+                           "gender" varchar,
+                           "is_active" bool
+);
 
-    CREATE TABLE "addresses" (
-                 "address_id" serial PRIMARY KEY,
-                 "country" varchar,
-                 "city" varchar,
-                 "street" varchar,
-                 "postal_code" varchar,
-                 "street_no" varchar
-    );
+CREATE TABLE "addresses" (
+                             "address_id" serial PRIMARY KEY,
+                             "country" varchar,
+                             "city" varchar,
+                             "street" varchar,
+                             "postal_code" varchar,
+                             "street_no" varchar
+);
 
-    CREATE TABLE "payment_methods" (
-                       "payment_method_id" serial PRIMARY KEY,
-                       "client_id" integer,
-                       "card_number" varchar,
-                       "cvv" varchar,
-                       "expiration_date" timestamp,
-                       "card_holder" varchar,
-                       "is_active" bool
-    );
+CREATE TABLE "payment_methods" (
+                                   "payment_method_id" serial PRIMARY KEY,
+                                   "client_id" integer,
+                                   "card_number" varchar,
+                                   "cvv" varchar,
+                                   "expiration_date" timestamp,
+                                   "card_holder" varchar,
+                                   "is_active" bool
+);
 
-    CREATE TABLE "owners" (
-              "owner_id" serial PRIMARY KEY,
-              "username" varchar,
-              "password" varchar,
-              "company_name" varchar,
-              "email" varchar,
-              "phone_number" varchar,
-              "address_id" integer,
-              "nip" varchar,
-              "is_verified" bool,
-              "is_active" bool
-    );
+CREATE TABLE "owners" (
+                          "owner_id" serial PRIMARY KEY,
+                          "username" varchar,
+                          "password" varchar,
+                          "company_name" varchar,
+                          "email" varchar,
+                          "phone_number" varchar,
+                          "address_id" integer,
+                          "nip" varchar,
+                          "is_verified" bool,
+                          "is_active" bool
+);
 
-    CREATE TABLE "admins" (
-              "admin_id" serial PRIMARY KEY,
-              "username" varchar,
-              "password" varchar,
-              "name" varchar,
-              "is_active" bool
-    );
+CREATE TABLE "admins" (
+                          "admin_id" serial PRIMARY KEY,
+                          "username" varchar,
+                          "password" varchar,
+                          "name" varchar,
+                          "is_active" bool
+);
 
-    CREATE TABLE "hotels" (
-              "hotel_id" serial PRIMARY KEY,
-              "owner_id" integer,
-              "name" varchar,
-              "add_date" timestamp,
-              "description" varchar,
-              "address_id" integer,
-              "email" varchar,
-              "website" varchar,
-              "phone_number" varchar,
-              "bank_account_number" varchar,
-              "is_active" bool
-    );
+CREATE TABLE "hotels" (
+                          "hotel_id" serial PRIMARY KEY,
+                          "owner_id" integer,
+                          "name" varchar,
+                          "add_date" timestamp,
+                          "description" varchar,
+                          "address_id" integer,
+                          "email" varchar,
+                          "website" varchar,
+                          "phone_number" varchar,
+                          "bank_account_number" varchar,
+                          "is_active" bool
+);
 
-    CREATE TABLE "offers" (
-              "offer_id" serial PRIMARY KEY,
-              "hotel_id" integer,
-              "room_type" varchar,
-              "name" varchar,
-              "add_date" timestamp,
-              "description" varchar,
-              "bathroom_no" integer,
-              "room_no" integer,
-              "bed_no" integer,
-              "has_kitchen" bool,
-              "pet_friendly" bool,
-              "price" float,
-              "is_active" bool
-    );
+CREATE TABLE "offers" (
+                          "offer_id" serial PRIMARY KEY,
+                          "hotel_id" integer,
+                          "room_type" varchar,
+                          "name" varchar,
+                          "add_date" timestamp,
+                          "description" varchar,
+                          "bathroom_no" integer,
+                          "room_no" integer,
+                          "bed_no" integer,
+                          "has_kitchen" bool,
+                          "pet_friendly" bool,
+                          "price" float,
+                          "is_active" bool
+);
 
-    CREATE TABLE "ratings" (
-               "rating_id" serial PRIMARY KEY,
-               "offer_id" integer,
-               "client_id" integer,
-               "rating" integer,
-               "comment" varchar,
-               "date" timestamp,
-               "is_hidden" bool
-    );
+CREATE TABLE "ratings" (
+                           "rating_id" serial PRIMARY KEY,
+                           "offer_id" integer,
+                           "client_id" integer,
+                           "rating" integer,
+                           "comment" varchar,
+                           "date" timestamp,
+                           "is_hidden" bool
+);
 
-    CREATE TABLE "reservations" (
-                    "reservation_id" serial PRIMARY KEY,
-                    "client_id" integer,
-                    "offer_id" integer,
-                    "start_date" timestamp,
-                    "end_date" timestamp,
-                    "description" varchar,
-                    "paid_amount" float,
-                    "status" varchar,
-                    "is_active" bool
-    );
+CREATE TABLE "reservations" (
+                                "reservation_id" serial PRIMARY KEY,
+                                "client_id" integer,
+                                "offer_id" integer,
+                                "start_date" timestamp,
+                                "end_date" timestamp,
+                                "description" varchar,
+                                "paid_amount" float,
+                                "status" varchar,
+                                "is_paid" bool
+);
 
-    CREATE TABLE "favourite_hotels" (
-                        "id" serial PRIMARY KEY,
-                        "client_id" integer,
-                        "hotel_id" integer
-    );
+CREATE TABLE "favourite_hotels" (
+                                    "id" serial PRIMARY KEY,
+                                    "client_id" integer,
+                                    "hotel_id" integer
+);
 
-    CREATE TABLE "favourite_offers" (
-                        "id" serial PRIMARY KEY,
-                        "client_id" integer,
-                        "offer_id" integer
-    );
+CREATE TABLE "favourite_offers" (
+                                    "id" serial PRIMARY KEY,
+                                    "client_id" integer,
+                                    "offer_id" integer
+);
 
-    CREATE TABLE "penalties" (
-                 "penalty_id" serial PRIMARY KEY,
-                 "reservation_id" integer,
-                 "reason" varchar,
-                 "amount" float,
-                 "is_paid" bool
-    );
+CREATE TABLE "penalties" (
+                             "penalty_id" serial PRIMARY KEY,
+                             "reservation_id" integer,
+                             "reason" varchar,
+                             "amount" float,
+                             "is_paid" bool
+);
 
-    CREATE TABLE "discounts" (
-                 "discount_id" serial PRIMARY KEY,
-                 "code" varchar,
-                 "value_type" integer,
-                 "type" integer,
-                 "description" varchar,
-                 "value" float,
-                 "hotel_id" integer,
-                 "is_active" bool
-    );
+CREATE TABLE "discounts" (
+                             "discount_id" serial PRIMARY KEY,
+                             "code" varchar,
+                             "value_type" integer,
+                             "type" integer,
+                             "description" varchar,
+                             "value" float,
+                             "hotel_id" integer,
+                             "is_active" bool
+);
 
 ALTER TABLE offers
     ADD CONSTRAINT fk_offers_hotels FOREIGN KEY (hotel_id) REFERENCES hotels (hotel_id);
@@ -280,7 +280,7 @@ INSERT INTO ratings ("offer_id", "client_id", "rating", "comment", "date", "is_h
 (4, 4, 3, 'Nice suite, but service could be improved', '2023-04-30', false),
 (5, 5, 4, 'Great experience in the cabin retreat', '2023-05-05', false);
 
-INSERT INTO reservations ("client_id", "offer_id", "start_date", "end_date", "description", "paid_amount", "status", "is_active") VALUES
+INSERT INTO reservations ("client_id", "offer_id", "start_date", "end_date", "description", "paid_amount", "status", "is_paid") VALUES
 (1, 1, '2023-01-20', '2023-01-25', 'Late check-in requested', 250.00, 'Confirmed', true),
 (2, 2, '2023-02-25', '2023-03-05', 'Vegetarian meal preferences', 200.00, 'Confirmed', true),
 (3, 3, '2023-03-30', '2023-04-05', 'Airport transfer requested', 220.00, 'Confirmed', true),
@@ -315,8 +315,6 @@ INSERT INTO favourite_offers ("client_id", "offer_id") VALUES
 (9, 9),
 (10, 4);
 
-
--- Przykładowe rekordy dla tabeli "discounts"
 INSERT INTO discounts ("code", "value_type", "type", "description", "value", "hotel_id", "is_active") VALUES
 ('SUMMER25', 1, 1, 'Summer Promotion', 25.00, 1, true),
 ('WEEKEND10', 1, 2, 'Weekend Special', 10.00, 2, true),

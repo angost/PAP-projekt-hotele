@@ -7,30 +7,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
+import pap.logic.SearchOffers;
+import pap.db.entities.Offer;
+import java.util.List;
 
-class SimulateLogic {
+class FindDisplayOffers {
 
     public Integer[] getfittingElementsIds() {
-        Integer[] ids = {0,3,7};
+        Integer[] ids = {0,1,2};
         return ids;
+    }
+
+    public List <Offer> filterOffers(){
+        List <Offer> allOffers = SearchOffers.getAllOffers();
+        //TODO: filters
+        return allOffers;
     }
 
     public HashMap<String, String> getElementInfo(int id){
         HashMap<String, String> elInfo = new HashMap<String, String>();
 
-        if (id == 0){
-            elInfo.put("name", "Pokój z widokiem na morze");
-            elInfo.put("info", "room type: standard, rooms: 1, bathrooms: 1 room type: standard, rooms: 1, bathrooms: 1 room type: standard, rooms: 1, bathrooms: 1");
-            elInfo.put("price", "440");
-        } else if (id == 3){
-            elInfo.put("name", "Pokój rodzinny");
-            elInfo.put("info", "room type: exclusive, rooms: 3, bathrooms: 2");
-            elInfo.put("price", "600");
-        } else{
-            elInfo.put("name", "Domek w górach");
-            elInfo.put("info", "room type: house, rooms: 6, bathrooms: 3");
-            elInfo.put("price", "1500");
-        }
+        List <Offer> offers = filterOffers();
+        //TODO: Można potem dodać 3 kolejne id+page*3 jeśli przechodzi sie na kolejne strony wyszukiwań
+        Offer offer = offers.get(id);
+        elInfo.put("name", offer.getName());
+        elInfo.put("info", "room type: %s, rooms: %d, bathrooms: %d"
+                .formatted(offer.getRoomType(), offer.getRoomNumber(), offer.getBathroomNumber()));
+        elInfo.put("price", "" + offer.getPrice());
 
         return elInfo;
     }
@@ -89,7 +92,7 @@ public class ScrollGUITemplate extends BaseGUI{
             offerInfoPanel.setPreferredSize(new Dimension(offerWidth, offerHeight));
             offerInfoPanel.setMaximumSize(new Dimension(offerWidth, offerHeight));
 
-            HashMap<String, String> offerInfo = new SimulateLogic().getElementInfo(fittingElementsIds[i]);
+            HashMap<String, String> offerInfo = new FindDisplayOffers().getElementInfo(fittingElementsIds[i]);
             JLabel offerNameLabel = new JLabel(offerInfo.get("name"), JLabel.CENTER);
             offerNameLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
             offerNameLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
@@ -124,10 +127,16 @@ public class ScrollGUITemplate extends BaseGUI{
 
             scrollPanel.add(offerPanel);
             scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));
-
         }
+
+        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction());
+
     }
 
+    void undoBtnClickedAction(){
+        new HomePageGUI().createGUI();
+        frame.setVisible(false);
+    }
 
     void createGUI(){
         super.createBaseGUI();
@@ -136,7 +145,7 @@ public class ScrollGUITemplate extends BaseGUI{
     }
 
     public ScrollGUITemplate(){
-        fittingElementsIds = new SimulateLogic().getfittingElementsIds();
+        fittingElementsIds = new FindDisplayOffers().getfittingElementsIds();
         nrOfElements = fittingElementsIds.length;
     }
 
@@ -206,40 +215,4 @@ class FiltersPanel extends JPanel {
         this.repaint();
     }
 
-}
-
-class TwoImgsButton extends JButton{
-
-    Image baseImg, secondImg;
-    String state;
-    boolean imgUploadSuccess = false;
-
-    public TwoImgsButton(int buttonWidth, int buttonHeight, int imgWidth, int imgHeight, String baseImgPath, String secondImgPath) {
-        setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-        setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        try {
-            setContentAreaFilled(false); // Make the button transparent
-            Image baseImg = ImageIO.read(new File(getClass().getResource(baseImgPath).getPath()));
-            baseImg = baseImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
-            Image secondImg = ImageIO.read(new File(getClass().getResource(secondImgPath).getPath()));
-            secondImg = secondImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
-            setIcon(new ImageIcon(baseImg));
-            this.baseImg = baseImg;
-            this.secondImg = secondImg;
-            imgUploadSuccess = true;
-            state = "base_state";
-        } catch (Exception ex) {
-            setContentAreaFilled(true);
-        }
-    }
-
-    public void changeState() {
-        if (state.equals("base_state")) {
-            setIcon(new ImageIcon(secondImg));
-            state = "second_state";
-        } else {
-            setIcon(new ImageIcon(baseImg));
-            state = "base_state";
-        }
-    }
 }

@@ -2,6 +2,7 @@ package pap.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -156,3 +157,71 @@ class LogoPanel extends JPanel {
         }
     }
 }
+
+class TwoImgsButton extends JButton{
+
+    Image baseImg, secondImg;
+    String state;
+    boolean imgUploadSuccess = false;
+
+    public TwoImgsButton(int buttonWidth, int buttonHeight, int imgWidth, int imgHeight, String baseImgPath, String secondImgPath) {
+        setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        try {
+            setContentAreaFilled(false); // Make the button transparent
+            Image baseImg = ImageIO.read(new File(getClass().getResource(baseImgPath).getPath()));
+            baseImg = baseImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
+            Image secondImg = ImageIO.read(new File(getClass().getResource(secondImgPath).getPath()));
+            secondImg = secondImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
+            setIcon(new ImageIcon(baseImg));
+            this.baseImg = baseImg;
+            this.secondImg = secondImg;
+            imgUploadSuccess = true;
+            state = "base_state";
+        } catch (Exception ex) {
+            setContentAreaFilled(true);
+        }
+    }
+
+    public void changeState() {
+        if (state.equals("base_state")) {
+            setIcon(new ImageIcon(secondImg));
+            state = "second_state";
+        } else {
+            setIcon(new ImageIcon(baseImg));
+            state = "base_state";
+        }
+    }
+}
+
+class UndoButton extends JButton{
+    public UndoButton(int buttonWidth, int buttonHeight, int imgWidth, int imgHeight) {
+        setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        try {
+            setContentAreaFilled(false); // Make the button transparent
+            Image baseImg = ImageIO.read(new File(getClass().getResource("/undo_img.png").getPath()));
+            baseImg = baseImg.getScaledInstance(imgWidth, imgHeight, Image.SCALE_SMOOTH);
+            setIcon(new ImageIcon(baseImg));
+        } catch (Exception ex) {
+            setContentAreaFilled(true);
+        }
+    }
+}
+
+
+class UndoPanel extends JPanel{
+    public UndoPanel(JPanel mainPanel, int frameWidth, int btnHeight, Color bgColor, ActionListener actionListener) {
+        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+        setBackground(bgColor);
+        setPreferredSize(new Dimension(frameWidth, btnHeight));
+        setMaximumSize(new Dimension(frameWidth, btnHeight));
+        UndoButton undoBtn = new UndoButton(btnHeight, btnHeight, btnHeight, btnHeight);
+        undoBtn.addActionListener(actionListener);
+        add(Box.createRigidArea(new Dimension(btnHeight/2, 0)));
+        add(undoBtn);
+        mainPanel.add(this);
+    }
+}
+
+

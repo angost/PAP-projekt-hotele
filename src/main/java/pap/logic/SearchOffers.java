@@ -13,7 +13,7 @@ public class SearchOffers {
         return new OfferDAO().findById(id);
     }
 
-    public static List <Offer> geOfferByHotelId(int id) {
+    public static List <Offer> getOfferByHotelId(int id) {
         return new OfferDAO().findByHotelId(id);
     }
 }
