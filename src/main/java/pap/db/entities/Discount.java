@@ -36,10 +36,10 @@ public class Discount {
     private float value;
 
     @Basic
-    @Column(name = "hotel_id", nullable = false)
-    private int hotelId;
-
-    @Basic
     @Column(name = "is_active", nullable = false)
-    private int isActive;
+    private boolean isActive = true;
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
 }
