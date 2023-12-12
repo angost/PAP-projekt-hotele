@@ -3,6 +3,8 @@ package pap.gui;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
 
@@ -110,15 +112,22 @@ public class ScrollGUITemplate extends BaseGUI{
             offerPanel.add(offerInfoPanel);
             offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
-            RoundedButton seeOfferBtn = new RoundedButton("See offer "+ i, frameHeight/7, frameHeight/7, secondColor, secondColorDarker, fontButtons, true);
+            SeeOfferButton seeOfferBtn = new SeeOfferButton("See offer", frameHeight/7, frameHeight/7,secondColor, secondColorDarker, fontButtons, true, fittingElementsIds[i]);
+            ActionListener actionListener = new ActionListener() {
+                public void actionPerformed(ActionEvent actionEvent) {
+                    SeeOfferButton button = (SeeOfferButton)actionEvent.getSource();
+                    System.out.println(button.offerId);
+                }
+            };
+            seeOfferBtn.addActionListener(actionListener);
             offerPanel.add(seeOfferBtn);
 
             scrollPanel.add(offerPanel);
             scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));
 
         }
-
     }
+
 
     void createGUI(){
         super.createBaseGUI();
@@ -131,11 +140,19 @@ public class ScrollGUITemplate extends BaseGUI{
         nrOfElements = fittingElementsIds.length;
     }
 
-
     public static void main(String[] args) {
         new ScrollGUITemplate().createGUI();
     }
 
+}
+
+class SeeOfferButton extends RoundedButton {
+    int offerId;
+
+    public SeeOfferButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped, int offerId) {
+        super(text, preferredWidth, preferredHeight, fillColor, hoverColor, font, squareShaped);
+        this.offerId = offerId;
+    }
 }
 
 class FiltersPanel extends JPanel {
