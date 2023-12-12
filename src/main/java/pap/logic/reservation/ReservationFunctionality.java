@@ -3,6 +3,7 @@ import pap.db.entities.*;
 import pap.db.dao.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ReservationFunctionality {
 
@@ -40,7 +41,7 @@ public class ReservationFunctionality {
         new ReservationDAO().update(reservation);
     }
 
-    public void changePaidAmount(float paidAmount){
+    public void changePaidAmount(Float paidAmount){
         reservation.setPaidAmount(paidAmount);
         new ReservationDAO().update(reservation);
     }
@@ -50,8 +51,20 @@ public class ReservationFunctionality {
         new ReservationDAO().update(reservation);
     }
 
-    public void changeIsPaid(boolean isPaid){
+    public void changeIsPaid(Boolean isPaid){
         reservation.setPaid(isPaid);
+        new ReservationDAO().update(reservation);
+    }
+
+    public void setNewPenalties(String reason, Integer amount, Boolean isPaid){
+        List<Penalty> penalties = reservation.getPenalties();
+        Penalty penalty = new Penalty();
+        penalty.setReason(reason);
+        penalty.setAmount(amount);
+        penalty.setPaid(isPaid);
+        penalty.setReservation(reservation);
+        penalties.add(penalty);
+        reservation.setPenalties(penalties);
         new ReservationDAO().update(reservation);
     }
 }
