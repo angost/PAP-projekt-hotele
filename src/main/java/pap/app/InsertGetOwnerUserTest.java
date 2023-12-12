@@ -5,7 +5,6 @@ import pap.logic.login.*;
 import java.time.LocalDate;
 
 import pap.db.entities.*;
-import pap.db.dao.*;
 
 public class InsertGetOwnerUserTest {
     public static void insertNewUser() {
@@ -19,16 +18,7 @@ public class InsertGetOwnerUserTest {
     }
 
     public static void insertNewOwner() {
-        Owner owner = new Owner();
-        owner.setUsername("testUsername");
-        owner.setPassword("testPassword1!");
-        owner.setEmail("testemail@email.com");
-        owner.setPhoneNumber("123456789");
-        owner.setCompanyName("Test Company");
-        owner.setNip("1234567890");
-        owner.setActive(true);
-        owner.setVerified(true);
-        new OwnerDAO().create(owner);
+        new AddNewOwner("jason123", "testPassword1!", "Test Company", "testemail@email.com", "123456789", "1234567890", true, true).insertIntoDatabase();
     }
 
     public static void getUser() {
@@ -38,7 +28,7 @@ public class InsertGetOwnerUserTest {
     }
 
     public static void getOwner() {
-        OwnerLogin ol = new OwnerLogin("testUsername", "testPassword1!");
+        OwnerLogin ol = new OwnerLogin("jason123", "testPassword1!");
         Owner owner = ol.getOwnerAccount();
         System.out.println(owner.getEmail());
     }
