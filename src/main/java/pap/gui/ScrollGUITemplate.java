@@ -7,37 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
-import pap.logic.SearchOffers;
-import pap.db.entities.Offer;
-import java.util.List;
-
-class FindDisplayOffers {
-
-    public Integer[] getfittingElementsIds() {
-        Integer[] ids = {0,1,2};
-        return ids;
-    }
-
-    public List <Offer> filterOffers(){
-        List <Offer> allOffers = SearchOffers.getAllOffers();
-        //TODO: filters
-        return allOffers;
-    }
-
-    public HashMap<String, String> getElementInfo(int id){
-        HashMap<String, String> elInfo = new HashMap<String, String>();
-
-        List <Offer> offers = filterOffers();
-        //TODO: Można potem dodać 3 kolejne id+page*3 jeśli przechodzi sie na kolejne strony wyszukiwań
-        Offer offer = offers.get(id);
-        elInfo.put("name", offer.getName());
-        elInfo.put("info", "room type: %s, rooms: %d, bathrooms: %d"
-                .formatted(offer.getRoomType(), offer.getRoomNumber(), offer.getBathroomNumber()));
-        elInfo.put("price", "" + offer.getPrice());
-
-        return elInfo;
-    }
-}
+import pap.logic.guiAction.*;
 
 public class ScrollGUITemplate extends BaseGUI{
     JPanel mainPanel, scrollPanel;
