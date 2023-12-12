@@ -12,8 +12,13 @@ public class ReservationFunctionality {
     public ReservationFunctionality(Integer resId){
         reservation = new ReservationDAO().findById(resId);
     }
-    public void deleteReservation(){
-        new ReservationDAO().delete(reservation);
+    public void endReservationChecker(){
+
+        if (reservation.getStartDate().minusDays(3).isAfter(LocalDate.now())){
+            changeStatus("returned");
+            changePaidAmount((float) (reservation.getPaidAmount() * 0.4));
+        }
+        else { changeStatus("cancelled"); }
     }
 
     public void changeStartDate(LocalDate startDate){
