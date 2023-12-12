@@ -3,6 +3,7 @@ package pap.logic.validators;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import pap.db.dao.*;
 
 public class OwnerCredentialValidator {
     private static final int MIN_USERNAME_LENGTH = 8;
@@ -108,7 +109,10 @@ public class OwnerCredentialValidator {
         if (BANNED_KEYWORDS.stream().anyMatch(username.toLowerCase()::contains)) codes.add(104);
     }
     private static void checkUsernameIsUnique(String username, List <Integer> codes) {
-        // TODO
+        try {
+            new OwnerDAO().findByUsername(username);
+            codes.add(105);
+        } catch (Exception ignored) {}
     }
     private static void checkTooShortPassword(String password, List <Integer> codes) {
         if (password.length() < MIN_PASSWORD_LENGTH) codes.add(106);
