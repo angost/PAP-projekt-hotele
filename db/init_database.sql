@@ -102,7 +102,7 @@ CREATE TABLE "reservations" (
                                 "additional_info" timestamp,
                                 "paid_amount" float,
                                 "status" varchar,
-                                "is_active" bool
+                                "is_paid" bool
 );
 
 CREATE TABLE "favourite_hotels" (
