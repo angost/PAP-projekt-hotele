@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+import pap.logic.ErrorCodes;
 import pap.logic.validators.*;
 
 public abstract class FormGUITemplate extends BaseGUI{
@@ -194,11 +195,12 @@ public abstract class FormGUITemplate extends BaseGUI{
         }
         // Errors occured, display them on screen
         else {
-            String errorsString = "<html>";
-            errorsString = errorsString + errorCodes.stream().map(String::valueOf)
-                    .collect(Collectors.joining(" | "));
-            errorsString = errorsString + "</html>";
-            statusLabel.setText(errorsString);
+            String statusLabelText = "<html>";
+            for (Integer code : errorCodes) {
+                statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(code) + " | ";
+            }
+            statusLabelText = statusLabelText + "</html>";
+            statusLabel.setText(statusLabelText);
         }
     }
 
