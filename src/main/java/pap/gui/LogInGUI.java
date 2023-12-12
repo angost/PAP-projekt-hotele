@@ -18,6 +18,10 @@ public class LogInGUI extends BaseGUI {
     JTextField usernameInputField, passwordInputField;
     RoundedButton logInClientButton, logInOwnerButton, createAccountButton;
 
+    public LogInGUI(int userId, String userType) {
+        super(userId, userType);
+    }
+
     void createCustomGUI(){
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
@@ -132,8 +136,9 @@ public class LogInGUI extends BaseGUI {
         Client user = ul.getUserAccount();
         List<Integer> errorCodesUser = ul.getErrorCodes();
 
+        // Successfull log in
         if (errorCodesUser.isEmpty()) {
-            new HomePageGUI().createGUI();
+            new HomePageGUI(user.getClientId(), "Client").createGUI();
             frame.setVisible(false);
         } else {
             String statusLabelText = "<html>";
@@ -153,7 +158,7 @@ public class LogInGUI extends BaseGUI {
         List<Integer> errorCodesOwner = ol.getErrorCodes();
 
         if (errorCodesOwner.isEmpty()) {
-            new HomePageGUI().createGUI();
+            new HomePageGUI(owner.getOwnerId(), "Owner").createGUI();
             frame.setVisible(false);
         } else {
             String statusLabelText = "<html>";
@@ -166,7 +171,7 @@ public class LogInGUI extends BaseGUI {
 
 
     void createAccountBtnClickedAction() {
-        new ChooseAccountTypeGUI().createGUI();
+        new ChooseAccountTypeGUI(-1, "None").createGUI();
         frame.setVisible(false);
     }
 
@@ -178,6 +183,6 @@ public class LogInGUI extends BaseGUI {
 
 
     public static void main(String[] args) {
-        new LogInGUI().createGUI();
+        new LogInGUI(-1, "None").createGUI();
     }
 }

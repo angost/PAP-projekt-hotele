@@ -18,8 +18,8 @@ public class BaseGUI {
     Color helpingColor = Color.decode("#a89f9f");
     Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
     Color logoColor = Color.decode("#9e2a2b");
-    Font fontBigger, fontMiddle, fontSmaller, fontButtons ;
-
+    Font fontBigger, fontMiddle, fontSmaller, fontButtons;
+    int userId = -1; String userType = "None";
 
     void createFrame(){
         frame = new JFrame("Reservation System");
@@ -75,8 +75,13 @@ public class BaseGUI {
         }
     }
 
+    public BaseGUI(int userId, String userType){
+        this.userId = userId;
+        this.userType = userType;
+    }
+
     public static void main(String[] args) {
-        new BaseGUI().createBaseGUI();
+        new BaseGUI(-1, "None").createBaseGUI();
     }
 }
 
