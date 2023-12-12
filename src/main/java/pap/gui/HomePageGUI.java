@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import pap.db.dao.ClientDAO;
+import pap.db.dao.OwnerDAO;
 import pap.logic.DeactivateAccount;
 
 
@@ -33,12 +34,16 @@ public class HomePageGUI extends BaseGUI {
         textPanel.setBackground(bgColor);
 
         String name;
-        ClientDAO cd = new ClientDAO();
-        try {
+        if (userType.equals("Client")) {
+            ClientDAO cd = new ClientDAO();
             name = cd.findById(userId).getName();
-        } catch (NullPointerException e) {
-            name = "user";
+        } else if (userType.equals("Owner")) {
+            OwnerDAO od = new OwnerDAO();
+            name = od.findById(userId).getCompanyName();
+        } else {
+            name = "User";
         }
+
 
         chooseActionLabel = new JLabel("Hello " + name + "!", JLabel.CENTER);
         chooseActionLabel.setFont(fontMiddle);
