@@ -12,11 +12,12 @@ import pap.logic.DeactivateAccount;
 
 public class HomePageGUI extends BaseGUI {
 
-    RoundedButton findOffersButton, seeReservationsButton, desactivateAccountButton;
+    RoundedButton findOffersButton, seeReservationsButton, deactivateAccountButton;
     JPanel mainPanel, buttonsPanel, textPanel, logoutPanel;
     LogoPanel logoPanel;
     JLabel chooseActionLabel;
     LogOutButton logOutButton;
+    int menuButtonWidth = frameWidth*3/20; int menuButtonHeight = frameHeight/10;
 
     public HomePageGUI(int userId, String userType) {
         super(userId, userType);
@@ -57,7 +58,6 @@ public class HomePageGUI extends BaseGUI {
             name = "User";
         }
 
-
         chooseActionLabel = new JLabel("Hello " + name + "!", JLabel.CENTER);
         chooseActionLabel.setFont(fontMiddle);
         textPanel.add(Box.createHorizontalGlue()); textPanel.add(chooseActionLabel); textPanel.add(Box.createHorizontalGlue());
@@ -69,17 +69,17 @@ public class HomePageGUI extends BaseGUI {
         buttonsPanel.setBackground(bgColor);
         buttonsPanel.add(Box.createHorizontalGlue());
         if (userType.equals("Client")){
-            findOffersButton = new RoundedButton("Look for offers", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
-            seeReservationsButton = new RoundedButton("See your reservations", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+            findOffersButton = new MenuButton("Deactivate account Deactivate", "/icons/hotel.png");
+            seeReservationsButton = new MenuButton("Deactivate account Deactivate", "/icons/hotel.png");
             findOffersButton.addActionListener(e->goToFindOffersAction());
             seeReservationsButton.addActionListener(e->goToYourReservationsAction());
 
             buttonsPanel.add(findOffersButton); buttonsPanel.add(Box.createRigidArea(new Dimension(findOffersButton.preferredWidth/5,0)));
             buttonsPanel.add(seeReservationsButton); buttonsPanel.add(Box.createRigidArea(new Dimension(findOffersButton.preferredWidth/5,0)));
         }
-        desactivateAccountButton = new RoundedButton("Desactivate account", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
-        desactivateAccountButton.addActionListener(e->desactivateAccountAction());
-        buttonsPanel.add(desactivateAccountButton);
+        deactivateAccountButton = new MenuButton("Deactivate account Deactivate", "/icons/hotel.png");
+        deactivateAccountButton.addActionListener(e->deactivateAccountAction());
+        buttonsPanel.add(deactivateAccountButton);
         buttonsPanel.add(Box.createHorizontalGlue());
         mainPanel.add(buttonsPanel);
         mainPanel.add(Box.createVerticalGlue());
@@ -94,7 +94,7 @@ public class HomePageGUI extends BaseGUI {
         ;
     }
 
-    void desactivateAccountAction() {
+    void deactivateAccountAction() {
 
         List<Integer> errorCodes = new ArrayList<>();
 
@@ -107,11 +107,11 @@ public class HomePageGUI extends BaseGUI {
         }
 
         if (errorCodes.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Account desactivated");
+            JOptionPane.showMessageDialog(frame, "Account deactivated");
             new LogInGUI(-1, "None").createGUI();
             frame.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(frame, "Account cannot be desactivated");
+            JOptionPane.showMessageDialog(frame, "Account cannot be deactivated");
         }
     }
 
@@ -126,8 +126,14 @@ public class HomePageGUI extends BaseGUI {
         frame.setVisible(true);
     }
 
+    class MenuButton extends TextIconButton {
+        public MenuButton(String text, String imgPath){
+            super(text, menuButtonWidth, menuButtonHeight, secondColor, secondColorDarker, fontButtons, false, imgPath);
+    }
+}
 
     public static void main(String[] args) {
-        new HomePageGUI(-1, "None").createGUI();
+//        new HomePageGUI(-1, "None").createGUI();
+        new HomePageGUI(7, "Client").createGUI();
     }
 }

@@ -87,10 +87,9 @@ public class BaseGUI {
 
 
 class RoundedButton extends JButton {
-    Color fillColor, hoverColor; //, borderColor;
+    Color fillColor, hoverColor;
     int preferredWidth, preferredHeight;
     boolean squareShaped;
-//    int borderSize = 3;
 
     public RoundedButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped){//, String hexBorderColor) {
         super(text);
@@ -98,7 +97,6 @@ class RoundedButton extends JButton {
         this.fillColor = fillColor;
         this.hoverColor = hoverColor;
         this.squareShaped = squareShaped;
-//        this.borderColor = Color.decode(hexBorderColor);
         setContentAreaFilled(false); // Make the button transparent
         setFocusPainted(false); // Remove the focus border
         setBorderPainted(false); // Make border transparent
@@ -113,21 +111,17 @@ class RoundedButton extends JButton {
         // Draw the rounded button
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//        g2.setColor(borderColor);
-//        g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight);
 
         if (getModel().isArmed() || getModel().isRollover()) {
             g2.setColor(hoverColor);
         } else {
             g2.setColor(fillColor);
         }
-//        g2.fillRoundRect(borderSize, borderSize, getWidth()-borderSize*2, getHeight()-borderSize*2, preferredWidth/2, preferredHeight);
         if (squareShaped) {
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight/2);
         } else {
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight);
         }
-
         super.paintComponent(g);
     }
 }
@@ -198,6 +192,30 @@ class TwoImgsButton extends JButton{
         }
     }
 }
+
+class TextIconButton extends RoundedButton {
+    public TextIconButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped, String imgPath) {
+        super("<html><b>" + text + "</b></html>", preferredWidth, preferredHeight, fillColor, hoverColor, font, squareShaped);
+        try {
+            Image img = ImageIO.read(new File(getClass().getResource(imgPath).getPath()));
+            img = img.getScaledInstance(preferredHeight/3, preferredHeight/3, Image.SCALE_SMOOTH);
+            setIcon(new ImageIcon(img));
+        } catch (Exception e) {
+            ;
+        }
+//        setMargin(new Insets(1,1,1,1));
+    }
+
+//    @Override
+//    public void doLayout()
+//    {
+//        super.doLayout();
+//        int gap = 10;
+//        gap = Math.max(gap, UIManager.getInt("Button.iconTextGap"));
+//        setIconTextGap(gap);
+//    }
+}
+
 
 class UndoButton extends JButton{
     public UndoButton(int buttonWidth, int buttonHeight, int imgWidth, int imgHeight) {
