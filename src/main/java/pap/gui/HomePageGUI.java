@@ -34,21 +34,11 @@ public class HomePageGUI extends BaseGUI {
 
         logoPanel = new LogoPanel(logoColor, frameHeight,Integer.MAX_VALUE, frameHeight/5);
         mainPanel.add(logoPanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
+        mainPanel.add(Box.createVerticalGlue());
 
         logoutPanel = new JPanel();
         logoutPanel.setLayout(new BoxLayout(logoutPanel, BoxLayout.LINE_AXIS));
         logoutPanel.setBackground(bgColor);
-        logoutPanel.add(Box.createHorizontalGlue());
-        logOutButton = new LogOutButton(frameHeight/20, frameHeight/20, frameHeight/20, frameHeight/20);
-        logOutButton.addActionListener(e -> logOutBtnClickedAction());
-        logoutPanel.add(logOutButton); logoutPanel.add(Box.createRigidArea(new Dimension(frameHeight/40,0)));
-        mainPanel.add(logoutPanel);
-
-        mainPanel.add(Box.createVerticalGlue());
-        textPanel = new JPanel();
-        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.LINE_AXIS));
-        textPanel.setBackground(bgColor);
 
         String name;
         if (userType.equals("Client")) {
@@ -60,12 +50,15 @@ public class HomePageGUI extends BaseGUI {
         } else {
             name = "User";
         }
-
         chooseActionLabel = new JLabel("Hello " + name + "!", JLabel.CENTER);
         chooseActionLabel.setFont(fontMiddle);
-        textPanel.add(Box.createHorizontalGlue()); textPanel.add(chooseActionLabel); textPanel.add(Box.createHorizontalGlue());
-        mainPanel.add(textPanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0,40)));
+        logoutPanel.add(Box.createRigidArea(new Dimension(menuButtonGap*3/2,0))); logoutPanel.add(chooseActionLabel); logoutPanel.add(Box.createHorizontalGlue());
+
+        logOutButton = new LogOutButton(frameHeight/20, frameHeight/20, frameHeight/20, frameHeight/20);
+        logOutButton.addActionListener(e -> logOutBtnClickedAction());
+        logoutPanel.add(logOutButton); logoutPanel.add(Box.createRigidArea(new Dimension(frameHeight/40,0)));
+        mainPanel.add(logoutPanel);
+        mainPanel.add(Box.createVerticalGlue());
 
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
@@ -73,7 +66,7 @@ public class HomePageGUI extends BaseGUI {
         buttonsRowsPanel = new JPanel();
         buttonsRowsPanel.setLayout(new BoxLayout(buttonsRowsPanel, BoxLayout.PAGE_AXIS));
         buttonsRowsPanel.setBackground(bgColor);
-        buttonsPanel.add(Box.createHorizontalGlue());
+//        buttonsPanel.add(Box.createHorizontalGlue());
         buttonsPanel.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
         buttonsPanel.add(buttonsRowsPanel);
 
@@ -166,6 +159,6 @@ public class HomePageGUI extends BaseGUI {
 
     public static void main(String[] args) {
 //        new HomePageGUI(-1, "None").createGUI();
-        new HomePageGUI(7, "Client").createGUI();
+        new HomePageGUI(-1, "None").createGUI();
     }
 }
