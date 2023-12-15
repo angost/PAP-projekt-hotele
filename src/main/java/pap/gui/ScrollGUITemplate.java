@@ -40,7 +40,7 @@ public class ScrollGUITemplate extends BaseGUI{
         scrollPanelEnabler.setPreferredSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
         scrollPanelEnabler.setMaximumSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
 
-        filtersPanel = new FiltersPanel(helpingColor, frameWidth, frameHeight, frameWidth, filtersPanelHeight, scrollPanelEnabler, scrollPanelEnablerHeight, frame);
+        filtersPanel = new FiltersPanel(neutralGray, frameWidth, frameHeight, frameWidth, filtersPanelHeight, scrollPanelEnabler, scrollPanelEnablerHeight, frame);
         mainPanel.add(filtersPanel);
         mainPanel.add(scrollPanelEnabler);
 
@@ -50,14 +50,14 @@ public class ScrollGUITemplate extends BaseGUI{
         for (int i = 0; i < nrOfElements; i++) {
 
             JPanel offerPanel = new JPanel();
-            offerPanel.setBackground(neutralColor);
+            offerPanel.setBackground(neutralBlue);
             offerPanel.setLayout(new BoxLayout(offerPanel, BoxLayout.LINE_AXIS));
             offerPanel.setPreferredSize(new Dimension(frameWidth, offerHeight));
             offerPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
             offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
             JPanel offerInfoPanel = new JPanel();
-            offerInfoPanel.setBackground(helpingColor);
+            offerInfoPanel.setBackground(neutralGray);
             offerInfoPanel.setLayout(new BoxLayout(offerInfoPanel, BoxLayout.PAGE_AXIS));
             offerInfoPanel.setPreferredSize(new Dimension(offerWidth, offerHeight));
             offerInfoPanel.setMaximumSize(new Dimension(offerWidth, offerHeight));

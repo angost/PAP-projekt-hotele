@@ -14,10 +14,11 @@ public class BaseGUI {
     JMenu FileMenu, EditMenu, HelpMenu;
     JMenuItem NewMenuItem, UndoMenuItem, ContactMenuItem;
     int frameWidth = 1080; int frameHeight = 720;
-    Color bgColor = Color.decode("#e3e3e3"); Color neutralColor = Color.decode("#d6d9df");
-    Color helpingColor = Color.decode("#a89f9f");
-    Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
+    Color bgColor = Color.decode("#e3e3e3");
     Color logoColor = Color.decode("#9e2a2b");
+    Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
+    Color neutralBlue = Color.decode("#d6d9df"); Color neutralGray = Color.decode("#a89f9f");
+    Color statusNeutral = Color.decode("#7a7373"); Color statusWrong = logoColor;
     Font fontBigger, fontMiddle, fontSmaller, fontButtons;
     int userId = -1; String userType = "None";
 

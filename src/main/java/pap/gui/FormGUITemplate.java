@@ -168,7 +168,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(Box.createVerticalGlue());
         statusLabel = new JLabel("<html>Insert your data<br/></html>", JLabel.LEFT);
         statusLabel.setFont(fontSmaller);
-        statusLabel.setForeground(Color.decode("#7a7373"));
+        statusLabel.setForeground(statusNeutral);
 //        statusLabel.setPreferredSize(new Dimension(frameWidth/4, contentPanelSize/5));
 //        statusLabel.setMaximumSize(new Dimension(frameWidth/4, contentPanelSize/5));
         registerPanel.add(statusLabel);
@@ -216,7 +216,7 @@ public abstract class FormGUITemplate extends BaseGUI{
             }
             statusLabelText = statusLabelText + "</html>";
             statusLabel.setText(statusLabelText);
-            statusLabel.setForeground(logoColor);
+            statusLabel.setForeground(statusWrong);
         }
     }
 
