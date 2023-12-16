@@ -18,6 +18,7 @@ public abstract class FormGUITemplate extends BaseGUI{
     List<JTextField> textFields = new ArrayList<JTextField>();
     List<String> textFieldLabels = new ArrayList<String>();
     JLabel statusLabel;
+    String pageName = "";
 
     public FormGUITemplate(int userId, String userType) {
         super(userId, userType);
@@ -179,7 +180,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
-        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction());
+        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
     }
 

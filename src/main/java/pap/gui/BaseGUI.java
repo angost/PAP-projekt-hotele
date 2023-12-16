@@ -251,7 +251,7 @@ class LogOutButton extends JButton{
 
 
 class UndoPanel extends JPanel{
-    public UndoPanel(JPanel mainPanel, int frameWidth, int btnHeight, Color bgColor, ActionListener actionListener) {
+    public UndoPanel(JPanel mainPanel, int frameWidth, int btnHeight, Color bgColor, ActionListener actionListener, String pageName, Font fontMiddle) {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         setBackground(bgColor);
         setPreferredSize(new Dimension(frameWidth, btnHeight));
@@ -260,6 +260,11 @@ class UndoPanel extends JPanel{
         undoBtn.addActionListener(actionListener);
         add(Box.createRigidArea(new Dimension(btnHeight/2, 0)));
         add(undoBtn);
+
+        JLabel pageNameLabel = new JLabel(pageName, JLabel.CENTER);
+        pageNameLabel.setFont(fontMiddle);
+        add(Box.createHorizontalGlue()); add(pageNameLabel); add(Box.createRigidArea(new Dimension(20, 0)));
+
         mainPanel.add(this);
     }
 }

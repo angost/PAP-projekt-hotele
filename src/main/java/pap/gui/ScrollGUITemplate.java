@@ -19,6 +19,7 @@ public abstract class ScrollGUITemplate extends BaseGUI{
     Integer[] fittingElementsIds;
     int offerHeight = frameHeight/4;
     int offerWidth = frameWidth/3;
+    String pageName = "";
 
     abstract void getElementsData();
     abstract HashMap<String, String> getElementData(int elementId);
@@ -58,7 +59,7 @@ public abstract class ScrollGUITemplate extends BaseGUI{
             scrollPanel.add(elementPanel);
             scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));
         }
-        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction());
+        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
     }
 
     void createGUI(){

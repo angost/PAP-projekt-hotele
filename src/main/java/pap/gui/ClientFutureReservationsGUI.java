@@ -14,6 +14,7 @@ public class ClientFutureReservationsGUI extends ClientReservationHistoryGUI {
 
     public ClientFutureReservationsGUI(int userId, String userType) {
         super(userId, userType);
+        pageName = "Future reservations";
     }
 
     // mock function

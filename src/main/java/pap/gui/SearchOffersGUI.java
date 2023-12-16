@@ -85,6 +85,7 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         getElementsData();
         offerHeight = frameHeight/4;
         offerWidth = frameWidth/3;
+        pageName = "Look for offers";
     }
 
     public static void main(String[] args) {

@@ -12,6 +12,7 @@ public class OwnerFormGUI extends FormGUITemplate {
 
     public OwnerFormGUI(int userId, String userType) {
         super(userId, userType);
+        pageName = "Create Owner Account";
     }
 
     String[] getFieldLabels() {

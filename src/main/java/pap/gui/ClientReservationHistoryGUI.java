@@ -138,6 +138,7 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         getElementsData();
         offerHeight = frameHeight/4;
         offerWidth = frameWidth/2;
+        pageName = "Reservation history";
     }
 
     public static void main(String[] args) {
