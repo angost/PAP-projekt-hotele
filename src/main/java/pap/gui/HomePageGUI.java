@@ -1,7 +1,9 @@
 package pap.gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +19,9 @@ public class HomePageGUI extends BaseGUI {
             deactivateAccountButton, yourHotelsButton, yourOffersButton,
             addHotelButton, addOfferButton, addManyOffersButton,
             discountsButton, bankInfoButton;
-    JPanel mainPanel, buttonsPanel, buttonsRowsPanel, textPanel, logoutPanel;
+    JPanel mainPanel, buttonsPanel, buttonsRowsPanel, infoPanel;
     LogoPanel logoPanel;
-    JLabel chooseActionLabel;
+    JLabel welcomeLabel;
     LogOutButton logOutButton;
     int menuButtonWidth = frameWidth*3/20; int menuButtonHeight = frameHeight/10;
     int menuButtonGap = menuButtonWidth/3;
@@ -38,28 +40,44 @@ public class HomePageGUI extends BaseGUI {
         mainPanel.add(logoPanel);
         mainPanel.add(Box.createVerticalGlue());
 
-        logoutPanel = new JPanel();
-        logoutPanel.setLayout(new BoxLayout(logoutPanel, BoxLayout.LINE_AXIS));
-        logoutPanel.setBackground(bgColor);
+        infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.LINE_AXIS));
+        infoPanel.setBackground(bgColor);
 
-        String name;
+        String name; String userImgPath = "";
         if (userType.equals("Client")) {
             ClientDAO cd = new ClientDAO();
             name = cd.findById(userId).getName();
+            userImgPath = "/tourist.png";
         } else if (userType.equals("Owner")) {
             OwnerDAO od = new OwnerDAO();
             name = od.findById(userId).getCompanyName();
+            userImgPath = "/business.png";
         } else {
             name = "User";
         }
-        chooseActionLabel = new JLabel("Hello " + name + "!", JLabel.CENTER);
-        chooseActionLabel.setFont(fontMiddle);
-        logoutPanel.add(Box.createRigidArea(new Dimension(menuButtonGap*3/2,0))); logoutPanel.add(chooseActionLabel); logoutPanel.add(Box.createHorizontalGlue());
+        welcomeLabel = new JLabel("Hello " + name + "!", JLabel.CENTER);
+        welcomeLabel.setFont(fontMiddle);
+        infoPanel.add(Box.createRigidArea(new Dimension(menuButtonGap*3/2,0))); infoPanel.add(welcomeLabel);
+
+        if (!userImgPath.isEmpty()) {
+            try {
+                Image userImg = ImageIO.read(new File(getClass().getResource(userImgPath).getPath()));
+                userImg = userImg.getScaledInstance(frameHeight/10, frameHeight/10, Image.SCALE_SMOOTH);
+                ImageIcon userImgIcon = new ImageIcon(userImg);
+                JLabel userImgLabel = new JLabel();
+                userImgLabel.setIcon(userImgIcon);
+                infoPanel.add(Box.createRigidArea(new Dimension(menuButtonGap/2,0))); infoPanel.add(userImgLabel);
+            } catch (Exception e) {
+                ;
+            }
+        }
+        infoPanel.add(Box.createHorizontalGlue());
 
         logOutButton = new LogOutButton(frameHeight/20, frameHeight/20, frameHeight/20, frameHeight/20);
         logOutButton.addActionListener(e -> logOutBtnClickedAction());
-        logoutPanel.add(logOutButton); logoutPanel.add(Box.createRigidArea(new Dimension(frameHeight/40,0)));
-        mainPanel.add(logoutPanel);
+        infoPanel.add(logOutButton); infoPanel.add(Box.createRigidArea(new Dimension(frameHeight/40,0)));
+        mainPanel.add(infoPanel);
         mainPanel.add(Box.createVerticalGlue());
 
         buttonsPanel = new JPanel();
@@ -202,7 +220,7 @@ public class HomePageGUI extends BaseGUI {
 
     public static void main(String[] args) {
 //        new HomePageGUI(-1, "None").createGUI();
-//        new HomePageGUI(1, "Owner").createGUI();
+        new HomePageGUI(1, "Owner").createGUI();
         new HomePageGUI(8, "Client").createGUI();
     }
 }
