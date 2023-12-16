@@ -12,7 +12,6 @@ public abstract class ScrollGUITemplate extends BaseGUI{
     FiltersPanel filtersPanel;
     JScrollPane scrollPanelEnabler;
     // move some new components here
-    // TODO: dodac offer panel jakos jako reusable klase
     // TODO: customizowalny filters panel (ratingi - po dacie/po ocenie; historia - po dacie; ...)
     // TODO: wgle filters panel i elementy w nim
 

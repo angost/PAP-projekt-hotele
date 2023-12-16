@@ -18,11 +18,11 @@ public class ReservationPanel extends OfferReservationPanel {
         addJLabel(detailsInfo.get("paid_amount"), Color.BLACK, fontMiddleBold, detailsPanel);
         Color statusColor; String statusText = detailsInfo.get("status");
         if (statusText.equals("Cancelled")) {
-            statusColor = Color.RED;
+            statusColor = Color.decode("#9E2A2B");
         } else if (statusText.equals("Active")) {
-            statusColor = Color.ORANGE;
+            statusColor = Color.decode("#B57008");
         } else if (statusText.equals("Finished")) {
-            statusColor = Color.GREEN;
+            statusColor = Color.decode("#2F750F");
         } else {
             statusColor = Color.BLACK;
         }
