@@ -12,9 +12,11 @@ import pap.logic.DeactivateAccount;
 
 public class HomePageGUI extends BaseGUI {
 
-    RoundedButton findOffersButton, seeReservationsButton, favouritesButton,
+    MenuButton findOffersButton, seeReservationsButton, favouritesButton,
             reservationHistoryButton, reviewsButton, paymentsButton,
-            deactivateAccountButton;
+            deactivateAccountButton, yourHotelsButton, yourOffersButton,
+            addHotelButton, addOfferButton, addManyOffersButton,
+            discountsButton, bankInfoButton;
     JPanel mainPanel, buttonsPanel, buttonsRowsPanel, textPanel, logoutPanel;
     LogoPanel logoPanel;
     JLabel chooseActionLabel;
@@ -104,6 +106,47 @@ public class HomePageGUI extends BaseGUI {
             buttonsRowsPanel.add(buttonsRow1); buttonsRowsPanel.add(Box.createVerticalGlue());
             buttonsRowsPanel.add(buttonsRow2); buttonsRowsPanel.add(Box.createVerticalGlue());
             buttonsRowsPanel.add(buttonsRow3); buttonsRowsPanel.add(Box.createVerticalGlue());
+        } else if (userType.equals("Owner")) {
+            JPanel buttonsRow1 = new JPanel();
+            buttonsRow1.setLayout(new BoxLayout(buttonsRow1, BoxLayout.LINE_AXIS));
+            buttonsRow1.setBackground(bgColor);
+            yourHotelsButton = new MenuButton("See your hotels", "/icons/hotel.png");
+            yourOffersButton = new MenuButton("See your offers", "/icons/offer.png");
+            buttonsRow1.add(yourHotelsButton); buttonsRow1.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
+            buttonsRow1.add(yourOffersButton); buttonsRow1.add(Box.createHorizontalGlue());
+
+            JPanel buttonsRow2 = new JPanel();
+            buttonsRow2.setLayout(new BoxLayout(buttonsRow2, BoxLayout.LINE_AXIS));
+            buttonsRow2.setBackground(bgColor);
+            addHotelButton = new MenuButton("Add hotel", "/icons/add_hotel.png");
+            addOfferButton = new MenuButton("Add offer", "/icons/add_offer.png");
+            addManyOffersButton = new MenuButton("Add multiple offers", "/icons/add_offers.png");
+            buttonsRow2.add(addHotelButton); buttonsRow2.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
+            buttonsRow2.add(addOfferButton); buttonsRow2.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
+            buttonsRow2.add(addManyOffersButton); buttonsRow2.add(Box.createHorizontalGlue());
+
+            JPanel buttonsRow3 = new JPanel();
+            buttonsRow3.setLayout(new BoxLayout(buttonsRow3, BoxLayout.LINE_AXIS));
+            buttonsRow3.setBackground(bgColor);
+            reservationHistoryButton = new MenuButton("See reservation history", "/icons/history.png");
+            reviewsButton = new MenuButton("See reviews", "/icons/reviews.png");
+            discountsButton = new MenuButton("Discount codes", "/icons/discount.png");
+            buttonsRow3.add(reservationHistoryButton); buttonsRow3.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
+            buttonsRow3.add(reviewsButton); buttonsRow3.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
+            buttonsRow3.add(discountsButton); buttonsRow3.add(Box.createHorizontalGlue());
+
+            JPanel buttonsRow4 = new JPanel();
+            buttonsRow4.setLayout(new BoxLayout(buttonsRow4, BoxLayout.LINE_AXIS));
+            buttonsRow4.setBackground(bgColor);
+            bankInfoButton = new MenuButton("Bank information", "/icons/bank.png");
+            deactivateAccountButton = new MenuButton("Deactivate account", "/icons/deactivate.png");
+            buttonsRow4.add(bankInfoButton); buttonsRow4.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
+            buttonsRow4.add(deactivateAccountButton); buttonsRow4.add(Box.createHorizontalGlue());
+
+            buttonsRowsPanel.add(buttonsRow1); buttonsRowsPanel.add(Box.createVerticalGlue());
+            buttonsRowsPanel.add(buttonsRow2); buttonsRowsPanel.add(Box.createVerticalGlue());
+            buttonsRowsPanel.add(buttonsRow3); buttonsRowsPanel.add(Box.createVerticalGlue());
+            buttonsRowsPanel.add(buttonsRow4); buttonsRowsPanel.add(Box.createVerticalGlue());
         }
 
         mainPanel.add(buttonsPanel);
@@ -159,6 +202,7 @@ public class HomePageGUI extends BaseGUI {
 
     public static void main(String[] args) {
 //        new HomePageGUI(-1, "None").createGUI();
-        new HomePageGUI(-1, "None").createGUI();
+//        new HomePageGUI(1, "Owner").createGUI();
+        new HomePageGUI(8, "Client").createGUI();
     }
 }
