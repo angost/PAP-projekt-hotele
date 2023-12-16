@@ -178,7 +178,8 @@ public class HomePageGUI extends BaseGUI {
     }
 
     void goToYourReservationsAction() {
-        ;
+        new ClientReservationHistoryGUI(userId, userType).createGUI();
+        frame.setVisible(false);
     }
 
     void deactivateAccountAction() {

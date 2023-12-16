@@ -16,10 +16,9 @@ public class SearchOffersGUI extends ScrollGUITemplate{
     }
 
     HashMap<String, String> getElementData(int elementId) {
-        HashMap<String, String> elementInfo = new FindDisplayOffers().getElementInfo(elementId);
-        return elementInfo;
+        HashMap<String, String> offerInfo = new FindDisplayOffers().getElementInfo(elementId);
+        return offerInfo;
     }
-
 
     JPanel createScrollElement(int elementId) {
 
@@ -71,6 +70,9 @@ public class SearchOffersGUI extends ScrollGUITemplate{
             public void actionPerformed(ActionEvent actionEvent) {
                 SeeOfferButton button = (SeeOfferButton)actionEvent.getSource();
                 System.out.println(button.offerId);
+
+//                new OfferPageGUI(-1, "None", button.offerId).createGUI();
+//                frame.setVisible(false);
             }
         };
         seeOfferBtn.addActionListener(actionListener);
