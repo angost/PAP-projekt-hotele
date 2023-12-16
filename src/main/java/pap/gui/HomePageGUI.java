@@ -158,6 +158,7 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow4.setBackground(bgColor);
             bankInfoButton = new MenuButton("Bank information", "/icons/bank.png");
             deactivateAccountButton = new MenuButton("Deactivate account", "/icons/deactivate.png");
+            deactivateAccountButton.addActionListener(e->deactivateAccountAction());
             buttonsRow4.add(bankInfoButton); buttonsRow4.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow4.add(deactivateAccountButton); buttonsRow4.add(Box.createHorizontalGlue());
 
@@ -172,7 +173,7 @@ public class HomePageGUI extends BaseGUI {
     }
 
     void goToFindOffersAction() {
-        new ScrollGUITemplate(userId, userType).createGUI();
+        new SearchOffersGUI(userId, userType).createGUI();
         frame.setVisible(false);
     }
 
@@ -220,7 +221,7 @@ public class HomePageGUI extends BaseGUI {
 
     public static void main(String[] args) {
 //        new HomePageGUI(-1, "None").createGUI();
-        new HomePageGUI(1, "Owner").createGUI();
+//        new HomePageGUI(1, "Owner").createGUI();
         new HomePageGUI(8, "Client").createGUI();
     }
 }

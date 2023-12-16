@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class SearchOffersGUI extends ScrollGUIREALTemplate{
+public class SearchOffersGUI extends ScrollGUITemplate{
 
     void getElementsData() {
         fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
