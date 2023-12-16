@@ -2,6 +2,7 @@ package pap.gui;
 
 import pap.db.dao.ClientDAO;
 import pap.db.dao.ReservationDAO;
+import pap.gui.usefulPanels.ReservationPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +33,8 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         reservationInfo.put("description", description);
         reservationInfo.put("paid_amount", paidAmount);
         reservationInfo.put("status", status);
+        reservationInfo.put("city", "Warsaw");
+        reservationInfo.put("img_path", "/room1.jpg");
 
         return reservationInfo;
     }
@@ -47,36 +50,10 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         reservationPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
         reservationPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
-        JPanel reservationInfoPanel = new JPanel();
-        reservationInfoPanel.setBackground(neutralGray);
-        reservationInfoPanel.setLayout(new BoxLayout(reservationInfoPanel, BoxLayout.PAGE_AXIS));
-        reservationInfoPanel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-        reservationInfoPanel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-
-        JLabel dateFromLabel = new JLabel("Date from: " + reservationInfo.get("date_from"), JLabel.CENTER);
-        dateFromLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-        dateFromLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-        dateFromLabel.setFont(fontMiddle);
-        reservationInfoPanel.add(dateFromLabel);
-
-        JLabel dateToLabel = new JLabel("Date to: " + reservationInfo.get("date_to"), JLabel.CENTER);
-        dateToLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-        dateToLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-        dateToLabel.setFont(fontMiddle);
-        reservationInfoPanel.add(dateToLabel);
-
-        JLabel descriptionLabel = new JLabel(reservationInfo.get("description"), JLabel.CENTER);
-        descriptionLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-        descriptionLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-        descriptionLabel.setFont(fontMiddle);
-        reservationInfoPanel.add(descriptionLabel);
-
-        JLabel paidAmountLabel = new JLabel(reservationInfo.get("paid_amount"), JLabel.CENTER);
-        paidAmountLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-        paidAmountLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-        paidAmountLabel.setFont(fontMiddle);
-        paidAmountLabel.setForeground(Color.RED);
-        reservationInfoPanel.add(paidAmountLabel);
+        String topPanelText = reservationInfo.get("city") + " from " + reservationInfo.get("date_from") +
+                " to " + reservationInfo.get("date_to");
+        ReservationPanel reservationInfoPanel = new ReservationPanel(neutralGray, fontBigger, fontMiddle, offerWidth,
+                offerHeight, topPanelText, reservationInfo.get("img_path"), reservationInfo);
 
         reservationPanel.add(reservationInfoPanel);
         reservationPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
@@ -146,7 +123,7 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         super(userId, userType);
         getElementsData();
         offerHeight = frameHeight/4;
-        offerWidth = frameWidth/3;
+        offerWidth = frameWidth/2;
     }
 
     public static void main(String[] args) {
