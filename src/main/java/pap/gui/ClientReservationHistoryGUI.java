@@ -28,13 +28,18 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         String description = rd.findById(elementId).getDescription();
         String paidAmount = String.valueOf(rd.findById(elementId).getPaidAmount());
         String status = String.valueOf(rd.findById(elementId).getStatus());
+        String name = rd.findById(elementId).getOffer().getName();
+        String city = rd.findById(elementId).getOffer().getHotel().getAddress().getCity();
+        String people = String.valueOf(rd.findById(elementId).getOffer().getBedNumber());
         reservationInfo.put("date_from", startDate);
         reservationInfo.put("date_to", endDate);
         reservationInfo.put("description", description);
         reservationInfo.put("paid_amount", paidAmount);
         reservationInfo.put("status", status);
-        reservationInfo.put("city", "Warsaw");
+        reservationInfo.put("name", name);
+        reservationInfo.put("city", city);
         reservationInfo.put("img_path", "/room1.jpg");
+        reservationInfo.put("people", people);
 
         return reservationInfo;
     }
@@ -52,7 +57,7 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
 
         String topPanelText = reservationInfo.get("city") + " from " + reservationInfo.get("date_from") +
                 " to " + reservationInfo.get("date_to");
-        ReservationPanel reservationInfoPanel = new ReservationPanel(neutralGray, fontBigger, fontMiddle, offerWidth,
+        ReservationPanel reservationInfoPanel = new ReservationPanel(neutralGray, fontBigger, fontMiddle, fontMiddleBold, offerWidth,
                 offerHeight, topPanelText, reservationInfo.get("img_path"), reservationInfo);
 
         reservationPanel.add(reservationInfoPanel);

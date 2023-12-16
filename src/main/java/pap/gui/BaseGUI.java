@@ -19,7 +19,7 @@ public class BaseGUI {
     Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
     Color neutralBlue = Color.decode("#d6d9df"); Color neutralGray = Color.decode("#a89f9f");
     Color statusNeutral = Color.decode("#7a7373"); Color statusWrong = logoColor;
-    Font fontBigger, fontMiddle, fontSmaller, fontButtons;
+    Font fontBigger, fontMiddle, fontSmaller, fontButtons, fontMiddleBold;
     int userId = -1; String userType = "None";
 
     void createFrame(){
@@ -67,6 +67,7 @@ public class BaseGUI {
             fontFile = new File(getClass().getResource("/Montserrat-Bold.ttf").getPath());
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             fontButtons = font.deriveFont(12f);
+            fontMiddleBold = font.deriveFont(18f);
 
         } catch (java.awt.FontFormatException | java.io.IOException ex) {
             fontBigger = new JLabel().getFont().deriveFont(20f);

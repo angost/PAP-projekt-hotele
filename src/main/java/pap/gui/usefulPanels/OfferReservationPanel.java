@@ -10,13 +10,13 @@ import java.util.HashMap;
 public abstract class OfferReservationPanel extends JPanel {
 
     int offerWidth, offerHeight;
-    Color bgColor; Font fontBigger, fontMiddle;
+    Color bgColor; Font fontBigger, fontMiddle, fontMiddleBold;
 
-    public OfferReservationPanel(Color bgColor, Font fontBigger, Font fontMiddle, int offerWidth, int offerHeight,
+    public OfferReservationPanel(Color bgColor, Font fontBigger, Font fontMiddle, Font fontMiddleBold, int offerWidth, int offerHeight,
                                  String topPanelText, String imgPath, HashMap<String, String> detailsInfo) {
 
         this.offerWidth = offerWidth; this.offerHeight = offerHeight;
-        this.bgColor = bgColor; this.fontBigger = fontBigger; this.fontMiddle = fontMiddle;
+        this.bgColor = bgColor; this.fontBigger = fontBigger; this.fontMiddle = fontMiddle; this.fontMiddleBold = fontMiddleBold;
         int bottomPanelHeight = offerHeight*3/4; int offerImgWidth = offerWidth/2;
 
         setBackground(bgColor);
