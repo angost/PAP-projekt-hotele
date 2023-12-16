@@ -9,6 +9,9 @@ public abstract class ScrollGUITemplate extends BaseGUI{
     FiltersPanel filtersPanel;
     JScrollPane scrollPanelEnabler;
     // move some new components here
+    // TODO: dodac offer panel jakos jako reusable klase
+    // TODO: customizowalny filters panel (ratingi - po dacie/po ocenie; historia - po dacie; ...)
+    // TODO: wgle filters panel i elementy w nim
 
     int nrOfElements;
     Integer[] fittingElementsIds;
@@ -73,12 +76,12 @@ public abstract class ScrollGUITemplate extends BaseGUI{
 }
 
 
-class SeeOfferButton extends RoundedButton {
-    int offerId;
+class ScrollElementButton extends RoundedButton {
+    int elementId;
 
-    public SeeOfferButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped, int offerId) {
-        super(text, preferredWidth, preferredHeight, fillColor, hoverColor, font, squareShaped);
-        this.offerId = offerId;
+    public ScrollElementButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped, int elementId) {
+        super("<html><b>"+text+"</b></html>", preferredWidth, preferredHeight, fillColor, hoverColor, font, squareShaped);
+        this.elementId = elementId;
     }
 }
 

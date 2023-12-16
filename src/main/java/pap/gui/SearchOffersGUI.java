@@ -65,11 +65,11 @@ public class SearchOffersGUI extends ScrollGUITemplate{
 
     void createScrollButtons(int elementId, JPanel offerPanel) {
 
-        SeeOfferButton seeOfferBtn = new SeeOfferButton("See offer", frameHeight/7, frameHeight/7,secondColor, secondColorDarker, fontButtons, true, elementId);
+        ScrollElementButton seeOfferBtn = new ScrollElementButton("See offer", frameHeight/7, frameHeight/7,secondColor, secondColorDarker, fontButtons, true, elementId);
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                SeeOfferButton button = (SeeOfferButton)actionEvent.getSource();
-                System.out.println(button.offerId);
+                ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
+                System.out.println(button.elementId);
 
 //                new OfferPageGUI(-1, "None", button.offerId).createGUI();
 //                frame.setVisible(false);

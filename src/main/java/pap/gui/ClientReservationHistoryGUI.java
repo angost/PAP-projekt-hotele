@@ -13,7 +13,7 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
 
     // mock function
     void getElementsData() {
-        fittingElementsIds = new Integer[]{4, 2, 1, 3, 5};
+        fittingElementsIds = new Integer[]{1,2,3,4,5};
         // fittingElementsIds = new ...()...(userId);
         nrOfElements = fittingElementsIds.length;
     }
@@ -26,10 +26,13 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         String endDate = String.valueOf(rd.findById(elementId).getEndDate());
         String description = rd.findById(elementId).getDescription();
         String paidAmount = String.valueOf(rd.findById(elementId).getPaidAmount());
+        String status = String.valueOf(rd.findById(elementId).getStatus());
         reservationInfo.put("date_from", startDate);
         reservationInfo.put("date_to", endDate);
         reservationInfo.put("description", description);
         reservationInfo.put("paid_amount", paidAmount);
+        reservationInfo.put("status", status);
+
         return reservationInfo;
     }
     
@@ -38,7 +41,7 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         HashMap<String, String> reservationInfo = getElementData(elementId);
 
         JPanel reservationPanel = new JPanel();
-        reservationPanel.setBackground(Color.magenta);
+        reservationPanel.setBackground(neutralBlue);
         reservationPanel.setLayout(new BoxLayout(reservationPanel, BoxLayout.LINE_AXIS));
         reservationPanel.setPreferredSize(new Dimension(frameWidth, offerHeight));
         reservationPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
@@ -83,18 +86,60 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
 
     void createScrollButtons(int elementId, JPanel reservationPanel) {
 
-        SeeOfferButton reviewButton = new SeeOfferButton("Rate your stay", frameHeight/7, frameHeight/7, Color.BLUE, Color.CYAN, fontButtons, true, elementId);
-        ActionListener actionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                SeeOfferButton button = (SeeOfferButton)actionEvent.getSource();
-                System.out.println(button.offerId);
+        // mock values
+        HashMap<Integer, Boolean> isElRated = new HashMap<>();
+        isElRated.put(1, true); isElRated.put(2, true); isElRated.put(3, false);
+        isElRated.put(4, false); isElRated.put(5, true);
+        HashMap<Integer, Boolean> hasElPenalty = new HashMap<>();
+        hasElPenalty.put(1, true); hasElPenalty.put(2, false); hasElPenalty.put(3, true);
+        hasElPenalty.put(4, false); hasElPenalty.put(5, true);
 
-//                new OfferPageGUI(-1, "None", button.offerId).createGUI();
+        boolean rated = isElRated.get(elementId); boolean penalty = hasElPenalty.get(elementId);
+
+        ScrollElementButton reviewButton;
+        ActionListener reviewActionListener;
+        if (rated == false) {
+            reviewButton = new ScrollElementButton("Rate your stay", frameHeight/7, frameHeight/7, secondColor, secondColorDarker, fontButtons, true, elementId);
+            reviewActionListener = new ActionListener() {
+                public void actionPerformed(ActionEvent actionEvent) {
+                    ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
+                    System.out.println("Rate reservation " + button.elementId);
+
+//                new OfferPageGUI(-1, "None", button.elementId).createGUI();
 //                frame.setVisible(false);
-            }
-        };
-        reviewButton.addActionListener(actionListener);
+                }
+            };
+        } else {
+            reviewButton = new ScrollElementButton("See your review", frameHeight/7,frameHeight/7, Color.decode("#E1B87B"), secondColor, fontButtons, true, elementId);
+            reviewActionListener = new ActionListener() {
+                public void actionPerformed(ActionEvent actionEvent) {
+                    ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
+                    System.out.println("See review of reservation " + button.elementId);
+
+//                new OfferPageGUI(-1, "None", button.elementId).createGUI();
+//                frame.setVisible(false);
+                }
+            };
+        }
+        reviewButton.addActionListener(reviewActionListener);
         reservationPanel.add(reviewButton);
+
+        if (penalty == true) {
+            reservationPanel.add(Box.createRigidArea(new Dimension(frameHeight/14,0)));
+
+            ScrollElementButton penaltiesButton = new ScrollElementButton("See penalties", frameHeight/7, frameHeight/7, Color.decode("#A84B4C"), statusWrong, fontButtons, true, elementId);
+            ActionListener penatlyActionListener = new ActionListener() {
+                public void actionPerformed(ActionEvent actionEvent) {
+                    ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
+                    System.out.println("Penalty for reservation " + button.elementId);
+
+//                new OfferPageGUI(-1, "None", button.elementId).createGUI();
+//                frame.setVisible(false);
+                }
+            };
+            penaltiesButton.addActionListener(penatlyActionListener);
+            reservationPanel.add(penaltiesButton);
+        }
     }
 
     public ClientReservationHistoryGUI(int userId, String userType){

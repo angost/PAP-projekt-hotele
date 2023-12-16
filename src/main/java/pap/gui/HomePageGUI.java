@@ -97,7 +97,7 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow1.setBackground(bgColor);
             findOffersButton = new MenuButton("Look for offers", "/icons/search_offers.png");
             findOffersButton.addActionListener(e->goToFindOffersAction());
-            seeReservationsButton = new MenuButton("See your reservations", "/icons/reservations.png");
+            seeReservationsButton = new MenuButton("See future reservations", "/icons/reservations.png");
             seeReservationsButton.addActionListener(e->goToYourReservationsAction());
             favouritesButton = new MenuButton("See your favourites", "/icons/favourite.png");
             buttonsRow1.add(findOffersButton); buttonsRow1.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
@@ -108,6 +108,7 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow2.setLayout(new BoxLayout(buttonsRow2, BoxLayout.LINE_AXIS));
             buttonsRow2.setBackground(bgColor);
             reservationHistoryButton = new MenuButton("See reservation history", "/icons/history.png");
+            reservationHistoryButton.addActionListener(e->goToClientHistoryAction());
             reviewsButton = new MenuButton("See your reviews", "/icons/reviews.png");
             buttonsRow2.add(reservationHistoryButton); buttonsRow2.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow2.add(reviewsButton); buttonsRow2.add(Box.createHorizontalGlue());
@@ -178,6 +179,10 @@ public class HomePageGUI extends BaseGUI {
     }
 
     void goToYourReservationsAction() {
+        ;
+    }
+
+    void goToClientHistoryAction() {
         new ClientReservationHistoryGUI(userId, userType).createGUI();
         frame.setVisible(false);
     }
