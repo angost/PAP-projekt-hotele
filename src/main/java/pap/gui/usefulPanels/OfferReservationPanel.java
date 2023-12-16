@@ -26,8 +26,10 @@ public abstract class OfferReservationPanel extends JPanel {
 
         JPanel topPanel = new JPanel();
         topPanel.setBackground(bgColor);
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.LINE_AXIS));
         topPanel.setPreferredSize(new Dimension(offerWidth, offerHeight - bottomPanelHeight));
         topPanel.setMaximumSize(new Dimension(offerWidth, offerHeight - bottomPanelHeight));
+        topPanel.add(Box.createRigidArea(new Dimension(10,0)));
         JLabel topPanelTextLabel = new JLabel(topPanelText, JLabel.LEFT);
         topPanelTextLabel.setFont(fontBigger);
         topPanelTextLabel.setPreferredSize(new Dimension(offerWidth, offerHeight - bottomPanelHeight-10));
@@ -59,6 +61,7 @@ public abstract class OfferReservationPanel extends JPanel {
             bottomPanel.add(imgPanel);
         }
 
+        bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
         JPanel detailsPanel = new JPanel();
         detailsPanel.setBackground(bgColor);
         detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.PAGE_AXIS));
