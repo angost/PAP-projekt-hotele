@@ -1,5 +1,6 @@
 package pap.gui;
 
+import pap.gui.usefulPanels.OfferPanel;
 import pap.logic.guiAction.FindDisplayOffers;
 
 import javax.swing.*;
@@ -13,6 +14,17 @@ public class SearchOffersGUI extends ScrollGUITemplate{
     void getElementsData() {
         fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
         nrOfElements = fittingElementsIds.length;
+    }
+
+    //mock function
+    String getImgPath(int offerId) {
+        HashMap<Integer, String> imgPathMap = new HashMap<Integer, String>();
+        imgPathMap.put(1, "/room1.jpg"); imgPathMap.put(2, "/room2.jpg");
+        imgPathMap.put(3, "/room3.jpg"); imgPathMap.put(4, "/room4.jpg");
+        imgPathMap.put(5, "/room5.jpg"); imgPathMap.put(6, "/room6.jpeg");
+        imgPathMap.put(7, "/room7.jpg"); imgPathMap.put(8, "/room8.jpg");
+        imgPathMap.put(9, "/room9.jpeg"); imgPathMap.put(10, "/room10.jpg");
+        return imgPathMap.get(offerId);
     }
 
     HashMap<String, String> getElementData(int elementId) {
@@ -31,30 +43,8 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         offerPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
         offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
 
-        JPanel offerInfoPanel = new JPanel();
-        offerInfoPanel.setBackground(neutralGray);
-        offerInfoPanel.setLayout(new BoxLayout(offerInfoPanel, BoxLayout.PAGE_AXIS));
-        offerInfoPanel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-        offerInfoPanel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-
-        JLabel offerNameLabel = new JLabel(offerInfo.get("name"), JLabel.CENTER);
-        offerNameLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-        offerNameLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-        offerNameLabel.setFont(fontMiddle);
-        offerInfoPanel.add(offerNameLabel);
-
-        JLabel offerInfoLabel = new JLabel(offerInfo.get("info"), JLabel.CENTER);
-        offerInfoLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-        offerInfoLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-        offerInfoLabel.setFont(fontSmaller);
-        offerInfoPanel.add(offerInfoLabel);
-
-        JLabel offerPriceLabel = new JLabel(offerInfo.get("price"), JLabel.CENTER);
-        offerPriceLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-        offerPriceLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-        offerPriceLabel.setFont(fontMiddle);
-        offerPriceLabel.setForeground(Color.RED);
-        offerInfoPanel.add(offerPriceLabel);
+        OfferPanel offerInfoPanel = new OfferPanel(neutralGray, fontBigger, fontMiddle, fontMiddleBold, offerWidth,
+                offerHeight, offerInfo.get("name"), getImgPath(elementId), offerInfo);
 
         offerPanel.add(offerInfoPanel);
         offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
@@ -84,7 +74,7 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         super(userId, userType);
         getElementsData();
         offerHeight = frameHeight/4;
-        offerWidth = frameWidth/3;
+        offerWidth = frameWidth/2;
         pageName = "Look for offers";
     }
 

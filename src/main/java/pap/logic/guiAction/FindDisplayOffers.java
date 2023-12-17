@@ -39,9 +39,10 @@ public class FindDisplayOffers {
         }
 
         elInfo.put("name", offer.getName());
-        elInfo.put("info", "room type: %s, rooms: %d, bathrooms: %d"
-                .formatted(offer.getRoomType(), offer.getRoomNumber(), offer.getBathroomNumber()));
-        elInfo.put("price", "" + offer.getPrice());
+        elInfo.put("room_type", offer.getRoomType());
+        elInfo.put("rooms", String.valueOf(offer.getRoomNumber()));
+        elInfo.put("bathrooms", String.valueOf(offer.getBathroomNumber()));
+        elInfo.put("price", String.valueOf(offer.getPrice()));
 
         return elInfo;
     }

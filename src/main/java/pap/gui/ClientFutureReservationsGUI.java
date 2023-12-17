@@ -1,14 +1,10 @@
 package pap.gui;
 
-import pap.db.dao.ClientDAO;
-import pap.db.dao.ReservationDAO;
-import pap.gui.usefulPanels.ReservationPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 public class ClientFutureReservationsGUI extends ClientReservationHistoryGUI {
 

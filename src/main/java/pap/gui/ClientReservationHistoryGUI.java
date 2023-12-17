@@ -20,12 +20,14 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
     }
 
     //mock function
-    String getImgPath(int elementId) {
+    String getImgPath(int offerId) {
         HashMap<Integer, String> imgPathMap = new HashMap<Integer, String>();
         imgPathMap.put(1, "/room1.jpg"); imgPathMap.put(2, "/room2.jpg");
         imgPathMap.put(3, "/room3.jpg"); imgPathMap.put(4, "/room4.jpg");
-        imgPathMap.put(5, "/room5.jpg");
-        return imgPathMap.get(elementId);
+        imgPathMap.put(5, "/room5.jpg"); imgPathMap.put(6, "/room6.jpeg");
+        imgPathMap.put(7, "/room7.jpg"); imgPathMap.put(8, "/room8.jpg");
+        imgPathMap.put(9, "/room9.jpeg"); imgPathMap.put(10, "/room10.jpg");
+        return imgPathMap.get(offerId);
     }
 
     // mock function
@@ -47,7 +49,7 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         reservationInfo.put("status", status);
         reservationInfo.put("name", name);
         reservationInfo.put("city", city);
-        reservationInfo.put("img_path", getImgPath(elementId));
+        reservationInfo.put("img_path", getImgPath(rd.findById(elementId).getOffer().getOfferId()));
         reservationInfo.put("people", people);
 
         return reservationInfo;
