@@ -96,9 +96,9 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow1.setLayout(new BoxLayout(buttonsRow1, BoxLayout.LINE_AXIS));
             buttonsRow1.setBackground(bgColor);
             findOffersButton = new MenuButton("Look for offers", "/icons/search_offers.png");
-            findOffersButton.addActionListener(e->goToFindOffersAction());
+            findOffersButton.addActionListener(e->findOffersAction());
             seeReservationsButton = new MenuButton("See future reservations", "/icons/reservations.png");
-            seeReservationsButton.addActionListener(e->goToYourReservationsAction());
+            seeReservationsButton.addActionListener(e->seeFutureReservationsAction());
             favouritesButton = new MenuButton("See your favourites", "/icons/favourite.png");
             buttonsRow1.add(findOffersButton); buttonsRow1.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow1.add(seeReservationsButton); buttonsRow1.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
@@ -108,7 +108,7 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow2.setLayout(new BoxLayout(buttonsRow2, BoxLayout.LINE_AXIS));
             buttonsRow2.setBackground(bgColor);
             reservationHistoryButton = new MenuButton("See reservation history", "/icons/history.png");
-            reservationHistoryButton.addActionListener(e->goToClientHistoryAction());
+            reservationHistoryButton.addActionListener(e->seeClientHistoryAction());
             reviewsButton = new MenuButton("See your reviews", "/icons/reviews.png");
             buttonsRow2.add(reservationHistoryButton); buttonsRow2.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow2.add(reviewsButton); buttonsRow2.add(Box.createHorizontalGlue());
@@ -173,16 +173,17 @@ public class HomePageGUI extends BaseGUI {
         mainPanel.add(Box.createVerticalGlue());
     }
 
-    void goToFindOffersAction() {
+    void findOffersAction() {
         new SearchOffersGUI(userId, userType).createGUI();
         frame.setVisible(false);
     }
 
-    void goToYourReservationsAction() {
-        ;
+    void seeFutureReservationsAction() {
+        new ClientFutureReservationsGUI(userId, userType).createGUI();
+        frame.setVisible(false);
     }
 
-    void goToClientHistoryAction() {
+    void seeClientHistoryAction() {
         new ClientReservationHistoryGUI(userId, userType).createGUI();
         frame.setVisible(false);
     }
