@@ -15,7 +15,8 @@ public class LogInGUI extends BaseGUI {
     JPanel mainPanel, centerPanel, loginPanel, createAccountPanel;
     LogoPanel logoPanel;
     JLabel usernameLabel, createAccountLabel, passwordLabel, statusLabel;
-    JTextField usernameInputField, passwordInputField;
+    JTextField usernameInputField;
+    JPasswordField passwordInputField;
     RoundedButton logInClientButton, logInOwnerButton, createAccountButton;
 
     public LogInGUI(int userId, String userType) {
@@ -74,7 +75,8 @@ public class LogInGUI extends BaseGUI {
         loginPanel.add(textPanel2);
         loginPanel.add(Box.createRigidArea(new Dimension(0,10)));
 
-        passwordInputField = new JTextField();
+        passwordInputField = new JPasswordField();
+        passwordInputField.setEchoChar('•');
         passwordInputField.setFont(fontMiddle);
         passwordInputField.setPreferredSize(new Dimension(frameWidth, 30));
         passwordInputField.setMaximumSize(new Dimension(frameWidth, 30));

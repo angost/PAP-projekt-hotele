@@ -23,7 +23,7 @@ public class HomePageGUI extends BaseGUI {
     LogoPanel logoPanel;
     JLabel welcomeLabel;
     LogOutButton logOutButton;
-    int menuButtonWidth = frameWidth*3/20; int menuButtonHeight = frameHeight/10;
+    int menuButtonWidth = frameWidth*4/20; int menuButtonHeight = frameHeight*4/40;
     int menuButtonGap = menuButtonWidth/3;
 
     public HomePageGUI(int userId, String userType) {
@@ -222,9 +222,9 @@ public class HomePageGUI extends BaseGUI {
 
     class MenuButton extends TextIconButton {
         public MenuButton(String text, String imgPath){
-            super(text, menuButtonWidth, menuButtonHeight, secondColor, secondColorDarker, fontButtons, false, imgPath, menuButtonHeight/2);
+            super(text, menuButtonWidth, menuButtonHeight, secondColor, secondColorDarker, fontButtons, false, imgPath, menuButtonHeight*2/3);
+        }
     }
-}
 
     public static void main(String[] args) {
 //        new HomePageGUI(-1, "None").createGUI();

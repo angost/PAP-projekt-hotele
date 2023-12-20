@@ -47,6 +47,7 @@ public abstract class ScrollGUITemplate extends BaseGUI{
         scrollPanelEnabler.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPanelEnabler.setPreferredSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
         scrollPanelEnabler.setMaximumSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
+        scrollPanelEnabler.getVerticalScrollBar().setUnitIncrement(10);
 
         filtersPanel = new FiltersPanel(neutralGray, frameWidth, frameHeight, frameWidth, filtersPanelHeight, scrollPanelEnabler, scrollPanelEnablerHeight, frame);
         mainPanel.add(filtersPanel);
