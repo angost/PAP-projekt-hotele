@@ -6,7 +6,7 @@ import java.io.File;
 
 public class RoundedButtonDefault extends RoundedButton{
 
-    public RoundedButtonDefault(String text, int preferredWidth, int preferredHeight, boolean squareShaped) {
+    public RoundedButtonDefault(String text, int preferredWidth, int preferredHeight, boolean squareShaped, boolean faded) {
         super(text, preferredWidth, preferredHeight, Color.YELLOW, Color.YELLOW, new JLabel().getFont().deriveFont(Font.BOLD, 12f), squareShaped);
         Font fontButtons;
         try {
@@ -15,10 +15,13 @@ public class RoundedButtonDefault extends RoundedButton{
         } catch (java.awt.FontFormatException | java.io.IOException ex) {
             fontButtons = new JLabel().getFont().deriveFont(Font.BOLD, 12f);
         }
-        Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
         this.setFont(fontButtons);
-        fillColor = secondColor;
-        hoverColor = secondColorDarker;
+        if (!faded) {
+            fillColor = Color.decode("#e09f3e");
+            hoverColor = Color.decode("#b88232");
+        } else {
+            fillColor = Color.decode("#e1b87b");;
+            hoverColor = Color.decode("#e09f3e");
+        }
     }
-
 }

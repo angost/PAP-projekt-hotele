@@ -94,11 +94,11 @@ public class LogInGUI extends BaseGUI {
         buttonsPanel.setBackground(bgColor);
         loginPanel.add(buttonsPanel);
 
-        logInClientButton = new RoundedButtonDefault("Log in as Client", frameWidth*3/20, btnHeight, false);
+        logInClientButton = new RoundedButtonDefault("Log in as Client", frameWidth*3/20, btnHeight, false, false);
         logInClientButton.addActionListener(e->logInClientClickedAction());
         buttonsPanel.add(logInClientButton);
         buttonsPanel.add(Box.createRigidArea(new Dimension(20,0)));
-        logInOwnerButton = new RoundedButtonDefault("Log in as Owner", frameWidth*3/20, btnHeight, false);
+        logInOwnerButton = new RoundedButtonDefault("Log in as Owner", frameWidth*3/20, btnHeight, false, true);
         logInOwnerButton.addActionListener(e->logInOwnerClickedAction());
         buttonsPanel.add(logInOwnerButton);
 
@@ -123,7 +123,7 @@ public class LogInGUI extends BaseGUI {
         createAccountLabel.setFont(fontMiddle);
         createAccountPanel.add(createAccountLabel);
         createAccountPanel.add(Box.createRigidArea(new Dimension(10,0)));
-        createAccountButton = new RoundedButtonDefault("Create account", frameWidth*3/20, btnHeight, false);
+        createAccountButton = new RoundedButtonDefault("Create account", frameWidth*3/20, btnHeight, false, false);
         createAccountButton.addActionListener(e->createAccountBtnClickedAction());
         createAccountPanel.add(createAccountButton);
         createAccountPanel.add(Box.createRigidArea(new Dimension(10,0)));

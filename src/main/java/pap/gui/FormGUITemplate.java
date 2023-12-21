@@ -173,7 +173,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(statusLabel);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
 
-        RoundedButtonDefault registerButton = new RoundedButtonDefault("Register", frameWidth*3/20, frameHeight/10, false);
+        RoundedButtonDefault registerButton = new RoundedButtonDefault("Register", frameWidth*3/20, frameHeight/10, false, false);
         registerButton.addActionListener(e->registerBtnClickedAction());
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
