@@ -180,7 +180,8 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
-        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
+        UndoPanel undoPanel = new UndoPanel(frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
+        mainPanel.add(undoPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
     }
 

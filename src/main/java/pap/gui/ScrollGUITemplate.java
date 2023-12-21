@@ -60,7 +60,8 @@ public abstract class ScrollGUITemplate extends BaseGUI{
             scrollPanel.add(elementPanel);
             scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));
         }
-        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
+        UndoPanel undoPanel = new UndoPanel(frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
+        mainPanel.add(undoPanel);
     }
 
     void createGUI(){
