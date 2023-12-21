@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.HashMap;
 
 import pap.gui.components.LogoPanel;
-import pap.gui.components.RoundedButton;
+import pap.gui.components.RoundedButtonDefault;
 import pap.gui.components.UndoPanel;
 import pap.logic.ErrorCodes;
 
@@ -173,7 +173,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(statusLabel);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
 
-        RoundedButton registerButton = new RoundedButton("Register", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        RoundedButtonDefault registerButton = new RoundedButtonDefault("Register", frameWidth*3/20, frameHeight/10, false);
         registerButton.addActionListener(e->registerBtnClickedAction());
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));

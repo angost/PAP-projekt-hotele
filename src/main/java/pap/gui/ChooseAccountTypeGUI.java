@@ -2,6 +2,7 @@ package pap.gui;
 
 import pap.gui.components.LogoPanel;
 import pap.gui.components.RoundedButton;
+import pap.gui.components.RoundedButtonDefault;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,8 @@ import java.awt.*;
 
 public class ChooseAccountTypeGUI extends BaseGUI {
 
-    RoundedButton clientButton, ownerButton, loginButton;
+    RoundedButtonDefault clientButton, ownerButton, loginButton;
+
     JPanel mainPanel, buttonsPanel, textPanel, loginPanel;
     LogoPanel logoPanel;
     JLabel chooseUserLabel, loginLabel;
@@ -40,8 +42,8 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
         buttonsPanel.setBackground(bgColor);
-        clientButton = new RoundedButton("Client", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
-        ownerButton = new RoundedButton("Owner", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        clientButton = new RoundedButtonDefault("Client", frameWidth*3/20, frameHeight/10, false);
+        ownerButton = new RoundedButtonDefault("Owner", frameWidth*3/20, frameHeight/10, false);
         clientButton.addActionListener(e->goToClientCreationFormAction());
         ownerButton.addActionListener(e->goToOwnerCreationFormAction());
         buttonsPanel.add(Box.createHorizontalGlue());
@@ -59,7 +61,7 @@ public class ChooseAccountTypeGUI extends BaseGUI {
         loginLabel.setFont(fontMiddle);
         loginPanel.add(loginLabel);
         loginPanel.add(Box.createRigidArea(new Dimension(10,0)));
-        loginButton = new RoundedButton("Log in", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        loginButton = new RoundedButtonDefault("Log in", frameWidth*3/20, frameHeight/10, false);
         loginButton.addActionListener(e-> logInBtnClickedAction());
         loginPanel.add(loginButton);
         loginPanel.add(Box.createRigidArea(new Dimension(10,0)));
