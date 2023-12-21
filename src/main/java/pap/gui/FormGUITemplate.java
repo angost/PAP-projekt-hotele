@@ -2,16 +2,14 @@ package pap.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
-import pap.db.dao.ClientDAO;
-import pap.db.entities.Client;
+import pap.gui.components.LogoPanel;
+import pap.gui.components.RoundedButton;
+import pap.gui.components.UndoPanel;
 import pap.logic.ErrorCodes;
-import pap.logic.validators.*;
 
 public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;

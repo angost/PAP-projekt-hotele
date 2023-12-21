@@ -1,5 +1,8 @@
 package pap.gui;
 
+import pap.gui.components.LogoPanel;
+import pap.gui.components.RoundedButton;
+
 import javax.swing.*;
 import java.awt.*;
 

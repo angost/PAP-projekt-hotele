@@ -1,4 +1,4 @@
-package pap.gui.usefulPanels;
+package pap.gui.components;
 
 import javax.swing.*;
 import java.awt.*;

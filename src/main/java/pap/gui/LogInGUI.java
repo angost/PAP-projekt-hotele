@@ -6,6 +6,8 @@ import java.util.List;
 
 import pap.db.entities.Client;
 import pap.db.entities.Owner;
+import pap.gui.components.LogoPanel;
+import pap.gui.components.RoundedButton;
 import pap.logic.login.*;
 import pap.logic.ErrorCodes;
 

@@ -1,6 +1,7 @@
 package pap.gui;
 
-import pap.gui.usefulPanels.OfferPanel;
+import pap.gui.components.OfferPanel;
+import pap.gui.components.ScrollElementButton;
 import pap.logic.guiAction.FindDisplayOffers;
 
 import javax.swing.*;

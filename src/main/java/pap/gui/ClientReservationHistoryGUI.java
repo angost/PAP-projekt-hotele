@@ -1,8 +1,8 @@
 package pap.gui;
 
-import pap.db.dao.ClientDAO;
 import pap.db.dao.ReservationDAO;
-import pap.gui.usefulPanels.ReservationPanel;
+import pap.gui.components.ReservationPanel;
+import pap.gui.components.ScrollElementButton;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,9 +1,8 @@
-package pap.gui.usefulPanels;
+package pap.gui.components;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
 
