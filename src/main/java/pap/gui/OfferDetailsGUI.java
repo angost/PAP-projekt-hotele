@@ -88,7 +88,8 @@ public class OfferDetailsGUI extends BaseGUI {
         offerInfo.put("rooms_nr", String.valueOf(offer.getRoomNumber()));
         offerInfo.put("bathrooms_nr", String.valueOf(offer.getBathroomNumber()));
         offerInfo.put("people_nr", "4");
-        offerInfo.put("review_score", "4");
+        offerInfo.put("review_score", "4.57");
+        offerInfo.put("reviews_nr", "30");
         offerInfo.put("facilities_yes", "Free Wi-Fi:  ✔    Air conditioning:  ✔    TV in room:  ✔    Breakfast included:  ✔    24/7 reception:  ✔    Laundry services:  ✔   Airport transfer:  ✔    Room service:  ✔    Meeting/conference rooms:  ✔    Family-friendly:  ✔    Close to city center:  ✔");
         offerInfo.put("facilities_no", "Parking availability:  ✘    Disability access:  ✘    Balcony:  ✘    Pet-friendly:  ✘    Gym access:  ✘    Security features:  ✘        Kitchen:  ✘    Private bathroom:  ✘    Smoking allowed:  ✘    Pool access:  ✘");
         //✘✖

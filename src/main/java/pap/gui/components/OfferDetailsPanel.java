@@ -88,8 +88,11 @@ public class OfferDetailsPanel extends JPanel {
             imgPanel.setMaximumSize(new Dimension(offerImgWidth, offerImgHeight));
             contentPanelLeft.add(imgPanel);
         }
-        addJLabel("<html><p style='font-family:verdana'>" + offerInfo.get("facilities_yes") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
-        addJLabel("<html><p style='font-family:verdana'>" + offerInfo.get("facilities_no") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
+        addJLabel("<html><p style='font-size:10px; font-family:verdana;'>" + offerInfo.get("facilities_yes") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
+        contentPanelLeft.add(Box.createRigidArea(new Dimension(0, contentPanelsHeight/30)));
+        addJLabel("<html><p style='font-size:10px; font-family:verdana;'>" + offerInfo.get("facilities_no") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
+//        addJLabel("<html><p style='font-family:verdana;'>" + offerInfo.get("facilities_no") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
+//        addJLabel("<html><p style='font-family:verdana;'><font size=-0.5>" + offerInfo.get("facilities_no") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
 
         // RIGHT PANEL
         JPanel groupPanel3 = new JPanel();
@@ -121,6 +124,25 @@ public class OfferDetailsPanel extends JPanel {
         addJLabel("<html><p style='font-family:verdana'>" + roomNrText + bathroomNrText +
                 peopleNrText + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4);
         contentPanelRight.add(Box.createVerticalGlue());
+
+
+        int reviewCount = Integer.parseInt(offerInfo.get("reviews_nr"));
+        float reviewScore = Float.parseFloat(offerInfo.get("review_score"));
+        int reviewStars = (int) reviewScore;
+        addJLabel("<html><p style='font-family:verdana'>" + "<b>Reviews:</b>" + "</p></html>", Color.BLACK, fontSmaller,  contentPanelRight);
+        try {
+            Image reviewScoreImage = ImageIO.read(new File(getClass().getResource("/" + reviewStars + "-star.png").getPath()));
+//            reviewScoreImage = reviewScoreImage.getScaledInstance(offerImgWidth, offerImgHeight, Image.SCALE_SMOOTH);
+            ImageIcon reviewScoreIcon = new ImageIcon(reviewScoreImage);
+            JLabel reviewScoreLabel = new JLabel();
+            reviewScoreLabel.setIcon(reviewScoreIcon);
+            contentPanelRight.add(reviewScoreLabel);
+        } catch (Exception e) {
+            addJLabel("<html><p style='font-family:verdana'>" + "★".repeat(reviewStars) + "☆".repeat(5-reviewStars) + "</p></html>", Color.BLACK, fontSmaller,  contentPanelRight);
+        }
+        addJLabel("<html><p style='font-family:verdana'>" + reviewScore + " (" + reviewCount + ")" + "</p></html>", Color.BLACK, fontSmaller,  contentPanelRight);
+
+
 
 //        JPanel bottomPanel = new JPanel();
 //        bottomPanel.setBackground(bgColor);
