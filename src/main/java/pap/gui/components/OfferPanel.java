@@ -16,6 +16,6 @@ public class OfferPanel extends OfferReservationPanel {
         addJLabel("Room type: " + detailsInfo.get("room_type"), Color.BLACK, fontMiddle, detailsPanel);
         addJLabel("Rooms: " + detailsInfo.get("rooms"), Color.BLACK, fontMiddle, detailsPanel);
         addJLabel("Bathrooms: " + detailsInfo.get("bathrooms"), Color.BLACK, fontMiddle, detailsPanel);
-        addJLabel( String.format("%.2f", Float.parseFloat(detailsInfo.get("price"))) + " PLN", Color.decode("#9E2A2B"), fontMiddleBold, detailsPanel);
+        addJLabel(detailsInfo.get("price"), Color.decode("#9E2A2B"), fontMiddleBold, detailsPanel);
     }
 }

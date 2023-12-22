@@ -114,7 +114,11 @@ public class OfferDetailsPanel extends JPanel {
         String locationTitle = "<b>Location:</b><br/>";
         String locationData = offerInfo.get("street") + " " + offerInfo.get("street_nr") + ",<br/>" + offerInfo.get("city") + ", " + offerInfo.get("country");
         addJLabel("<html><p style='font-family:verdana'>" + locationTitle + locationData + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4, -1, -1);
-        addJLabel("<html><p style='font-family:verdana'>" + "<b>Room type:</b><br/>" + offerInfo.get("room_type") + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4, -1, -1);
+
+        String roomTypeText = "<b>Room type:</b><br/>" + offerInfo.get("room_type") + "<br/>";
+        String priceText = "<b>Price per night:</b><br/>" + "<b style='color:#9e2a2b'>" + offerInfo.get("price")+ "</b><br/>";
+        addJLabel("<html><p style='font-family:verdana'>" + roomTypeText +
+                priceText + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4, -1, -1);
 
         String roomNrText = "<b>Nr of rooms: </b>" + offerInfo.get("rooms_nr") + "<br/>";
         String bathroomNrText = "<b>Nr of bathrooms: </b>" + offerInfo.get("bathrooms_nr") + "<br/>";
@@ -162,7 +166,7 @@ public class OfferDetailsPanel extends JPanel {
         groupPanel6.setMaximumSize(new Dimension(reviewsPanelWidth, contentPanelsHeight/3));
         contentPanelRight.add(Box.createRigidArea(new Dimension(0, contentPanelsHeight/30)));
         contentPanelRight.add(groupPanel6);
-
+        contentPanelRight.add(Box.createRigidArea(new Dimension(0, contentPanelsHeight/30)));
 
         groupPanel6.add(Box.createRigidArea(new Dimension(rightPanelGap, 0)));
         JPanel offerReviews = new JPanel();

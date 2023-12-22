@@ -15,7 +15,7 @@ public class ReservationPanel extends OfferReservationPanel {
     void populateDetailsPanel(JPanel detailsPanel, HashMap<String, String> detailsInfo) {
         addJLabel(detailsInfo.get("name"), Color.BLACK, fontMiddle, detailsPanel);
         addJLabel(detailsInfo.get("people") + " people", Color.BLACK, fontMiddle, detailsPanel);
-        addJLabel(String.format("%.2f", Float.parseFloat(detailsInfo.get("paid_amount"))) + " PLN", Color.BLACK, fontMiddleBold, detailsPanel);
+        addJLabel(detailsInfo.get("paid_amount"), Color.BLACK, fontMiddleBold, detailsPanel);
         Color statusColor; String statusText = detailsInfo.get("status");
         if (statusText.equals("Cancelled")) {
             statusColor = Color.decode("#9E2A2B");

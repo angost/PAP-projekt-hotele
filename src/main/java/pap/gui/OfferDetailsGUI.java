@@ -77,7 +77,7 @@ public class OfferDetailsGUI extends BaseGUI {
 
         offerInfo.put("name", offer.getName());
         offerInfo.put("hotel", offer.getHotel().getName());
-//        offerInfo.put("description", offer.getDescription());
+        offerInfo.put("price", String.format("%.2f", offer.getPrice()) + " PLN");
         offerInfo.put("description", "Welcome to our exquisite Luxury Suite located in the heart of Wrocław, offering a refined and indulgent experience for the discerning traveler. Immerse yourself in the lap of luxury with our meticulously designed suite that combines sophistication, comfort, and modern convenience.");
         offerInfo.put("img_path", getImgPath());
         offerInfo.put("street", offer.getHotel().getAddress().getStreet());

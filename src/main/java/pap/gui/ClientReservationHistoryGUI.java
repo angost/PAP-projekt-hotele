@@ -37,7 +37,7 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         String startDate = String.valueOf(rd.findById(elementId).getStartDate());
         String endDate = String.valueOf(rd.findById(elementId).getEndDate());
         String description = rd.findById(elementId).getDescription();
-        String paidAmount = String.valueOf(rd.findById(elementId).getPaidAmount());
+        String paidAmount = String.format("%.2f", rd.findById(elementId).getPaidAmount()) + " PLN";
         String status = String.valueOf(rd.findById(elementId).getStatus());
         String name = rd.findById(elementId).getOffer().getName();
         String city = rd.findById(elementId).getOffer().getHotel().getAddress().getCity();
