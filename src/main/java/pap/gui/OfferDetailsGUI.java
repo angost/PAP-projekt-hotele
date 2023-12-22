@@ -23,7 +23,7 @@ public class OfferDetailsGUI extends BaseGUI {
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 
         int logoPanelHeight = frameHeight / 10; int footerHeight = frameHeight/10;
-        int gap = frameHeight/30; int gap2 = frameHeight/40;
+        int gap = frameHeight/30; int gap2 = frameHeight/60;
         LogoPanel logoPanel = new LogoPanel(logoColor, frameHeight, frameWidth, logoPanelHeight);
         mainPanel.add(logoPanel);
 
@@ -32,7 +32,7 @@ public class OfferDetailsGUI extends BaseGUI {
         // Should be info passed to this class's constructor - hashmap<String,String>, which will be later passed to payment view
         HashMap<String, String> reservationInfo = new HashMap<>();
         OfferDetailsPanel offerPanel = new OfferDetailsPanel(neutralGray, fontBigger, fontBiggerBold, fontMiddle,
-                fontMiddleBold, fontSmaller, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2, offerInfo, reservationInfo);
+                fontMiddleBold, fontSmaller, fontSmallerBold, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2, offerInfo, reservationInfo);
         mainPanel.add(offerPanel);
 
         JPanel footerPanel = new JPanel();
@@ -77,7 +77,8 @@ public class OfferDetailsGUI extends BaseGUI {
 
         offerInfo.put("name", offer.getName());
         offerInfo.put("hotel", "Hotels United");
-        offerInfo.put("description", offer.getDescription());
+//        offerInfo.put("description", offer.getDescription());
+        offerInfo.put("description", "Welcome to our exquisite Luxury Suite located in the heart of Wrocław, offering a refined and indulgent experience for the discerning traveler. Immerse yourself in the lap of luxury with our meticulously designed suite that combines sophistication, comfort, and modern convenience.");
         offerInfo.put("img_path", getImgPath());
         offerInfo.put("street", "Kwiatowa");
         offerInfo.put("street_nr", "56");
