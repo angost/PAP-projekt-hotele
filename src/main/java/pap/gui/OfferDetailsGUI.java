@@ -76,14 +76,14 @@ public class OfferDetailsGUI extends BaseGUI {
         Offer offer = od.findById(offerId);
 
         offerInfo.put("name", offer.getName());
-        offerInfo.put("hotel", "Hotels United");
+        offerInfo.put("hotel", offer.getHotel().getName());
 //        offerInfo.put("description", offer.getDescription());
         offerInfo.put("description", "Welcome to our exquisite Luxury Suite located in the heart of Wrocław, offering a refined and indulgent experience for the discerning traveler. Immerse yourself in the lap of luxury with our meticulously designed suite that combines sophistication, comfort, and modern convenience.");
         offerInfo.put("img_path", getImgPath());
-        offerInfo.put("street", "Kwiatowa");
-        offerInfo.put("street_nr", "56");
-        offerInfo.put("city", "Warsaw");
-        offerInfo.put("country", "Poland");
+        offerInfo.put("street", offer.getHotel().getAddress().getStreet());
+        offerInfo.put("street_nr", offer.getHotel().getAddress().getStreetNumber());
+        offerInfo.put("city", offer.getHotel().getAddress().getCity());
+        offerInfo.put("country", offer.getHotel().getAddress().getCountry());
         offerInfo.put("room_type", offer.getRoomType());
         offerInfo.put("rooms_nr", String.valueOf(offer.getRoomNumber()));
         offerInfo.put("bathrooms_nr", String.valueOf(offer.getBathroomNumber()));

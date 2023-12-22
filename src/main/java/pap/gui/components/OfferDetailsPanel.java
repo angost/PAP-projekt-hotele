@@ -1,7 +1,5 @@
 package pap.gui.components;
 
-import pap.gui.components.RoundedButtonDefault;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +10,7 @@ public class OfferDetailsPanel extends JPanel {
 
     int panelWidth, panelHeight;
     Color bgColor; Font fontBigger, fontMiddle, fontMiddleBold, fontSmaller, fontSmallerBold;
-    RoundedButtonDefault seeHotelButton;
+    RoundedButtonDefault seeHotelButton, seeReviewsButton;
 
     public OfferDetailsPanel(Color bgColor, Font fontBigger, Font fontBiggerBold, Font fontMiddle, Font fontMiddleBold, Font fontSmaller, Font fontSmallerBold, int panelWidth, int panelHeight,
                              HashMap<String, String> offerInfo, HashMap<String, String> reservationInfo) {
@@ -88,19 +86,21 @@ public class OfferDetailsPanel extends JPanel {
             imgPanel.setMaximumSize(new Dimension(offerImgWidth, offerImgHeight));
             contentPanelLeft.add(imgPanel);
         }
-        addJLabel("<html><p style='font-size:10px; font-family:verdana;'>" + offerInfo.get("facilities_yes") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
         contentPanelLeft.add(Box.createRigidArea(new Dimension(0, contentPanelsHeight/30)));
-        addJLabel("<html><p style='font-size:10px; font-family:verdana;'>" + offerInfo.get("facilities_no") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
+        addJLabel("<html><p style='font-size:10px; font-family:verdana;'>" + offerInfo.get("facilities_yes") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft, -1, -1);
+        contentPanelLeft.add(Box.createRigidArea(new Dimension(0, contentPanelsHeight/30)));
+        addJLabel("<html><p style='font-size:10px; font-family:verdana;'>" + offerInfo.get("facilities_no") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft,-1, -1);
 //        addJLabel("<html><p style='font-family:verdana;'>" + offerInfo.get("facilities_no") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
 //        addJLabel("<html><p style='font-family:verdana;'><font size=-0.5>" + offerInfo.get("facilities_no") + "</p></html>", Color.BLACK, fontSmaller, contentPanelLeft);
 
         // RIGHT PANEL
+        int rightPanelGap = 40;
         JPanel groupPanel3 = new JPanel();
         groupPanel3.setBackground(bgColor);
         groupPanel3.setLayout(new BoxLayout(groupPanel3, BoxLayout.LINE_AXIS));
-        groupPanel3.add(Box.createRigidArea(new Dimension(contentPanelsHeight/30, 0)));
+        groupPanel3.add(Box.createRigidArea(new Dimension(rightPanelGap, 0)));
         contentPanelRight.add(groupPanel3);
-        addJLabel("<html><p style='font-family:verdana'>" + "<b>Description:</b><br/>" + offerInfo.get("description") + "</p></html>", Color.BLACK, fontSmaller, groupPanel3);
+        addJLabel("<html><p style='font-family:verdana'>" + "<b>Description:</b><br/>" + offerInfo.get("description") + "</p></html>", Color.BLACK, fontSmaller, groupPanel3, -1, -1);
         //        contentPanelRight.add(Box.createVerticalGlue());
 
         contentPanelRight.add(Box.createRigidArea(new Dimension(0, contentPanelsHeight/30)));
@@ -108,83 +108,81 @@ public class OfferDetailsPanel extends JPanel {
         JPanel  groupPanel4 = new JPanel();
         groupPanel4.setBackground(bgColor);
         groupPanel4.setLayout(new BoxLayout( groupPanel4, BoxLayout.LINE_AXIS));
-        groupPanel4.add(Box.createRigidArea(new Dimension(contentPanelsHeight/30, 0)));
+        groupPanel4.add(Box.createRigidArea(new Dimension(rightPanelGap, 0)));
         contentPanelRight.add(groupPanel4);
 
         String locationTitle = "<b>Location:</b><br/>";
         String locationData = offerInfo.get("street") + " " + offerInfo.get("street_nr") + ",<br/>" + offerInfo.get("city") + ", " + offerInfo.get("country");
-        addJLabel("<html><p style='font-family:verdana'>" + locationTitle + locationData + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4);
-
-        addJLabel("<html><p style='font-family:verdana'>" + "<b>Room type:</b><br/>" + offerInfo.get("room_type") + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4);
+        addJLabel("<html><p style='font-family:verdana'>" + locationTitle + locationData + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4, -1, -1);
+        addJLabel("<html><p style='font-family:verdana'>" + "<b>Room type:</b><br/>" + offerInfo.get("room_type") + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4, -1, -1);
 
         String roomNrText = "<b>Nr of rooms: </b>" + offerInfo.get("rooms_nr") + "<br/>";
         String bathroomNrText = "<b>Nr of bathrooms: </b>" + offerInfo.get("bathrooms_nr") + "<br/>";
         String peopleNrText = "<b>For people: </b>" + offerInfo.get("people_nr");
 
         addJLabel("<html><p style='font-family:verdana'>" + roomNrText + bathroomNrText +
-                peopleNrText + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4);
-        contentPanelRight.add(Box.createVerticalGlue());
+                peopleNrText + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4, -1, -1);
+//        contentPanelRight.add(Box.createVerticalGlue());
 
+        int reviewsPanelHeight = topPanelHeight/2; int reviewsPanelWidth = panelWidth - leftPanelWidth;
+        JPanel  groupPanel5 = new JPanel();
+        groupPanel5.setBackground(bgColor);
+        groupPanel5.setLayout(new BoxLayout( groupPanel5, BoxLayout.LINE_AXIS));
+        groupPanel5.setPreferredSize(new Dimension(panelWidth - leftPanelWidth, reviewsPanelHeight));
+        groupPanel5.setMaximumSize(new Dimension(panelWidth - leftPanelWidth, reviewsPanelHeight));
+        contentPanelRight.add(Box.createRigidArea(new Dimension(0, contentPanelsHeight/30)));
+        contentPanelRight.add(groupPanel5);
 
+        groupPanel5.add(Box.createRigidArea(new Dimension(rightPanelGap, 0)));
         int reviewCount = Integer.parseInt(offerInfo.get("reviews_nr"));
         float reviewScore = Float.parseFloat(offerInfo.get("review_score"));
         int reviewStars = (int) reviewScore;
-        addJLabel("<html><p style='font-family:verdana'>" + "<b>Reviews:</b>" + "</p></html>", Color.BLACK, fontSmaller,  contentPanelRight);
+        addJLabel("<html><p style='font-family:verdana'>" + "<b>Reviews:</b>" + "</p></html>", Color.BLACK, fontSmaller,  groupPanel5, reviewsPanelWidth/7, reviewsPanelHeight);
+
         try {
             Image reviewScoreImage = ImageIO.read(new File(getClass().getResource("/" + reviewStars + "-star.png").getPath()));
-//            reviewScoreImage = reviewScoreImage.getScaledInstance(offerImgWidth, offerImgHeight, Image.SCALE_SMOOTH);
+            reviewScoreImage = reviewScoreImage.getScaledInstance(panelWidth/10, reviewsPanelHeight/2, Image.SCALE_SMOOTH);
             ImageIcon reviewScoreIcon = new ImageIcon(reviewScoreImage);
             JLabel reviewScoreLabel = new JLabel();
             reviewScoreLabel.setIcon(reviewScoreIcon);
-            contentPanelRight.add(reviewScoreLabel);
+            groupPanel5.add(reviewScoreLabel);
         } catch (Exception e) {
-            addJLabel("<html><p style='font-family:verdana'>" + "★".repeat(reviewStars) + "☆".repeat(5-reviewStars) + "</p></html>", Color.BLACK, fontSmaller,  contentPanelRight);
+            addJLabel("<html><p style='font-family:verdana'>" + "★".repeat(reviewStars) + "☆".repeat(5-reviewStars) + "</p></html>", Color.BLACK, fontSmaller,  groupPanel5, reviewsPanelWidth/9, reviewsPanelHeight);
         }
-        addJLabel("<html><p style='font-family:verdana'>" + reviewScore + " (" + reviewCount + ")" + "</p></html>", Color.BLACK, fontSmaller,  contentPanelRight);
+        groupPanel5.add(Box.createRigidArea(new Dimension(contentPanelsHeight/30, 0)));
+        addJLabel("<html><p style='font-family:verdana'>" + reviewScore + " (" + reviewCount + ")" + "</p></html>", Color.BLACK, fontSmaller, groupPanel5, reviewsPanelWidth/7, reviewsPanelHeight);
+        seeReviewsButton = new RoundedButtonDefault("See all reviews", panelWidth/9, topPanelHeight/2, false, true);
+        groupPanel5.add(seeReviewsButton);
+        groupPanel5.add(Box.createRigidArea(new Dimension(rightPanelGap, 0)));
+
+        JPanel  groupPanel6 = new JPanel();
+        groupPanel6.setBackground(bgColor);
+        groupPanel6.setLayout(new BoxLayout( groupPanel6, BoxLayout.LINE_AXIS));
+        groupPanel6.setPreferredSize(new Dimension(reviewsPanelWidth, contentPanelsHeight/3));
+        groupPanel6.setMaximumSize(new Dimension(reviewsPanelWidth, contentPanelsHeight/3));
+        contentPanelRight.add(Box.createRigidArea(new Dimension(0, contentPanelsHeight/30)));
+        contentPanelRight.add(groupPanel6);
 
 
+        groupPanel6.add(Box.createRigidArea(new Dimension(rightPanelGap, 0)));
+        JPanel offerReviews = new JPanel();
+        offerReviews.setBackground(Color.decode("#e3e3e3"));
+        offerReviews.setLayout(new BoxLayout(offerReviews, BoxLayout.LINE_AXIS));
+        offerReviews.setPreferredSize(new Dimension(reviewsPanelWidth - rightPanelGap*2, contentPanelsHeight/3));
+        offerReviews.setMaximumSize(new Dimension(reviewsPanelWidth - rightPanelGap*2, contentPanelsHeight/3));
+        groupPanel6.add(offerReviews);
+        groupPanel6.add(Box.createRigidArea(new Dimension(rightPanelGap, 0)));
 
-//        JPanel bottomPanel = new JPanel();
-//        bottomPanel.setBackground(bgColor);
-//        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS));
-//        bottomPanel.setPreferredSize(new Dimension(panelWidth, bottomPanelHeight));
-//        bottomPanel.setMaximumSize(new Dimension(panelWidth, bottomPanelHeight));
-//
-//        try {
-//            Image offerImg = ImageIO.read(new File(getClass().getResource(imgPath).getPath()));
-////            int currHeight = offerImg.getHeight(); int currWidth = offerImg.getHeight();
-////            int goalHeight = bottomPanelHeight; int goalWidth = (currWidth*goalHeight)/currHeight;
-////            offerImg = (BufferedImage) offerImg.getScaledInstance(goalWidth, goalHeight, Image.SCALE_SMOOTH);
-//            offerImg = offerImg.getScaledInstance(offerImgWidth, bottomPanelHeight, Image.SCALE_SMOOTH);
-//            ImageIcon offerImgIcon = new ImageIcon(offerImg);
-//            JLabel offerImgLabel = new JLabel();
-//            offerImgLabel.setIcon(offerImgIcon);
-//            bottomPanel.add(offerImgLabel);
-//        } catch (Exception e) {
-//            JPanel imgPanel = new JPanel();
-//            imgPanel.setBackground(Color.RED);
-//            imgPanel.setPreferredSize(new Dimension(offerImgWidth, bottomPanelHeight));
-//            imgPanel.setMaximumSize(new Dimension(offerImgWidth, bottomPanelHeight));
-//            bottomPanel.add(imgPanel);
-//        }
-//
-//        bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
-//        JPanel detailsPanel = new JPanel();
-//        detailsPanel.setBackground(bgColor);
-//        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.PAGE_AXIS));
-//        detailsPanel.setPreferredSize(new Dimension(panelWidth - offerImgWidth, bottomPanelHeight));
-//        detailsPanel.setMaximumSize(new Dimension(panelWidth - offerImgWidth, bottomPanelHeight));
-//        populateDetailsPanel(detailsPanel, detailsInfo);
-//        bottomPanel.add(detailsPanel);
-//        add(bottomPanel);
     }
 
-    void addJLabel(String text, Color color, Font font, JPanel panel) {
+    void addJLabel(String text, Color color, Font font, JPanel panel, int panelWidth, int panelHeight) {
         JLabel textLabel = new JLabel(text, JLabel.LEFT);
-//        textLabel.setPreferredSize(new Dimension(panelWidth, panelHeight));
-//        textLabel.setMaximumSize(new Dimension(panelWidth, panelHeight));
         textLabel.setFont(font);
         textLabel.setForeground(color);
+        if (panelWidth != -1 && panelHeight != -1){
+            textLabel.setPreferredSize(new Dimension(panelWidth, panelHeight));
+            textLabel.setMaximumSize(new Dimension(panelWidth, panelHeight));
+        }
         panel.add(textLabel);
     }
 
