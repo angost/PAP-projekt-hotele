@@ -4,6 +4,7 @@ import pap.db.dao.OfferDAO;
 import pap.db.entities.Offer;
 import pap.gui.components.LogoPanel;
 import pap.gui.components.OfferDetailsPanel;
+import pap.gui.components.RoundedButtonDefault;
 import pap.gui.components.UndoButton;
 
 import javax.swing.*;
@@ -39,12 +40,19 @@ public class OfferDetailsGUI extends BaseGUI {
         footerPanel.setBackground(bgColor);
         footerPanel.setPreferredSize(new Dimension(frameWidth, footerHeight));
         footerPanel.setMaximumSize(new Dimension(frameWidth, footerHeight));
+
         int undoButtonSize = footerHeight/2;
         footerPanel.add(Box.createRigidArea(new Dimension(undoButtonSize/2, 0)));
         UndoButton undoButton = new UndoButton(undoButtonSize, undoButtonSize, undoButtonSize, undoButtonSize);
         undoButton.addActionListener(e->undoBtnClickedAction());
         footerPanel.add(undoButton);
         footerPanel.add(Box.createHorizontalGlue());
+
+        RoundedButtonDefault reserveButton = new RoundedButtonDefault("Reserve", frameWidth*3/20, frameHeight/10, false, false);
+        reserveButton.addActionListener(e-> reserveBtnClickedAction());
+        footerPanel.add(reserveButton);
+        footerPanel.add(Box.createRigidArea(new Dimension(undoButtonSize/2, 0)));
+
         mainPanel.add(Box.createRigidArea(new Dimension(0,gap2)));
         mainPanel.add(footerPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,gap2)));
@@ -86,21 +94,27 @@ public class OfferDetailsGUI extends BaseGUI {
         return offerInfo;
     }
 
+    void undoBtnClickedAction(){
+        // przechowywac jakos filtry jakie byly ustawione
+        new SearchOffersGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
+    void reserveBtnClickedAction(){
+        System.out.println("User " + userId + " reserved offer " + offerId);
+//        new PaymentGUI(userId, userType, offerId, reservationInfo).createGUI();
+//        frame.setVisible(false);
+    }
+
     void createGUI(){
         super.createBaseGUI();
         createCustomGUI();
         frame.setVisible(true);
     }
 
-    void undoBtnClickedAction(){
-        new SearchOffersGUI(userId, userType).createGUI();
-        frame.setVisible(false);
-    }
-
     public OfferDetailsGUI(int userId, String userType, int offerId){
         super(userId, userType);
         this.offerId = offerId;
-
     }
 
     public static void main(String[] args) {
