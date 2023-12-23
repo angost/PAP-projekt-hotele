@@ -12,6 +12,7 @@ public class ClientFormGUI extends FormGUITemplate {
 
     public ClientFormGUI(int userId, String userType) {
         super(userId, userType);
+        pageName = "Create Client Account";
     }
 
     String[] getFieldLabels() {
