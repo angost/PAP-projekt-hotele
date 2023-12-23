@@ -18,6 +18,7 @@ public abstract class FormGUITemplate extends BaseGUI{
     List<JTextField> textFields = new ArrayList<JTextField>();
     List<String> textFieldLabels = new ArrayList<String>();
     JLabel statusLabel;
+    String pageName = "";
 
     public FormGUITemplate(int userId, String userType) {
         super(userId, userType);
@@ -168,7 +169,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(Box.createVerticalGlue());
         statusLabel = new JLabel("<html>Insert your data<br/></html>", JLabel.LEFT);
         statusLabel.setFont(fontSmaller);
-        statusLabel.setForeground(Color.decode("#7a7373"));
+        statusLabel.setForeground(statusNeutral);
 //        statusLabel.setPreferredSize(new Dimension(frameWidth/4, contentPanelSize/5));
 //        statusLabel.setMaximumSize(new Dimension(frameWidth/4, contentPanelSize/5));
         registerPanel.add(statusLabel);
@@ -179,7 +180,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
-        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction());
+        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
     }
 
@@ -216,7 +217,7 @@ public abstract class FormGUITemplate extends BaseGUI{
             }
             statusLabelText = statusLabelText + "</html>";
             statusLabel.setText(statusLabelText);
-            statusLabel.setForeground(logoColor);
+            statusLabel.setForeground(statusWrong);
         }
     }
 

@@ -14,11 +14,12 @@ public class BaseGUI {
     JMenu FileMenu, EditMenu, HelpMenu;
     JMenuItem NewMenuItem, UndoMenuItem, ContactMenuItem;
     int frameWidth = 1080; int frameHeight = 720;
-    Color bgColor = Color.decode("#e3e3e3"); Color neutralColor = Color.decode("#d6d9df");
-    Color helpingColor = Color.decode("#a89f9f");
-    Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
+    Color bgColor = Color.decode("#e3e3e3");
     Color logoColor = Color.decode("#9e2a2b");
-    Font fontBigger, fontMiddle, fontSmaller, fontButtons;
+    Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
+    Color neutralBlue = Color.decode("#d6d9df"); Color neutralGray = Color.decode("#a89f9f");
+    Color statusNeutral = Color.decode("#7a7373"); Color statusWrong = logoColor;
+    Font fontBigger, fontMiddle, fontSmaller, fontButtons, fontMiddleBold;
     int userId = -1; String userType = "None";
 
     void createFrame(){
@@ -66,6 +67,7 @@ public class BaseGUI {
             fontFile = new File(getClass().getResource("/Montserrat-Bold.ttf").getPath());
             font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             fontButtons = font.deriveFont(12f);
+            fontMiddleBold = font.deriveFont(18f);
 
         } catch (java.awt.FontFormatException | java.io.IOException ex) {
             fontBigger = new JLabel().getFont().deriveFont(20f);
@@ -87,10 +89,9 @@ public class BaseGUI {
 
 
 class RoundedButton extends JButton {
-    Color fillColor, hoverColor; //, borderColor;
+    Color fillColor, hoverColor;
     int preferredWidth, preferredHeight;
     boolean squareShaped;
-//    int borderSize = 3;
 
     public RoundedButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped){//, String hexBorderColor) {
         super(text);
@@ -98,7 +99,6 @@ class RoundedButton extends JButton {
         this.fillColor = fillColor;
         this.hoverColor = hoverColor;
         this.squareShaped = squareShaped;
-//        this.borderColor = Color.decode(hexBorderColor);
         setContentAreaFilled(false); // Make the button transparent
         setFocusPainted(false); // Remove the focus border
         setBorderPainted(false); // Make border transparent
@@ -113,21 +113,17 @@ class RoundedButton extends JButton {
         // Draw the rounded button
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//        g2.setColor(borderColor);
-//        g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight);
 
         if (getModel().isArmed() || getModel().isRollover()) {
             g2.setColor(hoverColor);
         } else {
             g2.setColor(fillColor);
         }
-//        g2.fillRoundRect(borderSize, borderSize, getWidth()-borderSize*2, getHeight()-borderSize*2, preferredWidth/2, preferredHeight);
         if (squareShaped) {
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight/2);
         } else {
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), preferredWidth/2, preferredHeight);
         }
-
         super.paintComponent(g);
     }
 }
@@ -199,6 +195,30 @@ class TwoImgsButton extends JButton{
     }
 }
 
+class TextIconButton extends RoundedButton {
+    public TextIconButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped, String imgPath, int imgSize) {
+        super("<html><b>" + text + "</b></html>", preferredWidth, preferredHeight, fillColor, hoverColor, font, squareShaped);
+        try {
+            Image img = ImageIO.read(new File(getClass().getResource(imgPath).getPath()));
+            img = img.getScaledInstance(imgSize, imgSize, Image.SCALE_SMOOTH);
+            setIcon(new ImageIcon(img));
+        } catch (Exception e) {
+            ;
+        }
+//        setMargin(new Insets(1,1,1,1));
+    }
+
+//    @Override
+//    public void doLayout()
+//    {
+//        super.doLayout();
+//        int gap = 10;
+//        gap = Math.max(gap, UIManager.getInt("Button.iconTextGap"));
+//        setIconTextGap(gap);
+//    }
+}
+
+
 class UndoButton extends JButton{
     public UndoButton(int buttonWidth, int buttonHeight, int imgWidth, int imgHeight) {
         setPreferredSize(new Dimension(buttonWidth, buttonHeight));
@@ -231,7 +251,7 @@ class LogOutButton extends JButton{
 
 
 class UndoPanel extends JPanel{
-    public UndoPanel(JPanel mainPanel, int frameWidth, int btnHeight, Color bgColor, ActionListener actionListener) {
+    public UndoPanel(JPanel mainPanel, int frameWidth, int btnHeight, Color bgColor, ActionListener actionListener, String pageName, Font fontMiddle) {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         setBackground(bgColor);
         setPreferredSize(new Dimension(frameWidth, btnHeight));
@@ -240,6 +260,11 @@ class UndoPanel extends JPanel{
         undoBtn.addActionListener(actionListener);
         add(Box.createRigidArea(new Dimension(btnHeight/2, 0)));
         add(undoBtn);
+
+        JLabel pageNameLabel = new JLabel(pageName, JLabel.CENTER);
+        pageNameLabel.setFont(fontMiddle);
+        add(Box.createHorizontalGlue()); add(pageNameLabel); add(Box.createRigidArea(new Dimension(20, 0)));
+
         mainPanel.add(this);
     }
 }

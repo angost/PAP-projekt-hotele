@@ -3,20 +3,28 @@ package pap.gui;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
-import pap.logic.guiAction.*;
 
-public class ScrollGUITemplate extends BaseGUI{
+public abstract class ScrollGUITemplate extends BaseGUI{
     JPanel mainPanel, scrollPanel;
     FiltersPanel filtersPanel;
     JScrollPane scrollPanelEnabler;
     // move some new components here
+    // TODO: customizowalny filters panel (ratingi - po dacie/po ocenie; historia - po dacie; ...)
+    // TODO: wgle filters panel i elementy w nim
 
     int nrOfElements;
     Integer[] fittingElementsIds;
+    int offerHeight = frameHeight/4;
+    int offerWidth = frameWidth/3;
+    String pageName = "";
+
+    abstract void getElementsData();
+    abstract HashMap<String, String> getElementData(int elementId);
+    abstract JPanel createScrollElement(int elementId);
+    abstract void createScrollButtons(int elementId, JPanel elementPanel);
 
     void createCustomGUI() {
         mainPanel = new JPanel();
@@ -39,73 +47,20 @@ public class ScrollGUITemplate extends BaseGUI{
         scrollPanelEnabler.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPanelEnabler.setPreferredSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
         scrollPanelEnabler.setMaximumSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
+        scrollPanelEnabler.getVerticalScrollBar().setUnitIncrement(10);
 
-        filtersPanel = new FiltersPanel(helpingColor, frameWidth, frameHeight, frameWidth, filtersPanelHeight, scrollPanelEnabler, scrollPanelEnablerHeight, frame);
+        filtersPanel = new FiltersPanel(neutralGray, frameWidth, frameHeight, frameWidth, filtersPanelHeight, scrollPanelEnabler, scrollPanelEnablerHeight, frame);
         mainPanel.add(filtersPanel);
         mainPanel.add(scrollPanelEnabler);
 
-        int offerHeight = frameHeight/4;
-        int offerWidth = frameWidth/3;
-
         for (int i = 0; i < nrOfElements; i++) {
+            JPanel elementPanel = createScrollElement(fittingElementsIds[i]);
+            createScrollButtons(fittingElementsIds[i], elementPanel);
 
-            JPanel offerPanel = new JPanel();
-            offerPanel.setBackground(neutralColor);
-            offerPanel.setLayout(new BoxLayout(offerPanel, BoxLayout.LINE_AXIS));
-            offerPanel.setPreferredSize(new Dimension(frameWidth, offerHeight));
-            offerPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
-            offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
-
-            JPanel offerInfoPanel = new JPanel();
-            offerInfoPanel.setBackground(helpingColor);
-            offerInfoPanel.setLayout(new BoxLayout(offerInfoPanel, BoxLayout.PAGE_AXIS));
-            offerInfoPanel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-            offerInfoPanel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-
-            HashMap<String, String> offerInfo = new FindDisplayOffers().getElementInfo(fittingElementsIds[i]);
-            JLabel offerNameLabel = new JLabel(offerInfo.get("name"), JLabel.CENTER);
-            offerNameLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-            offerNameLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-            offerNameLabel.setFont(fontMiddle);
-            offerInfoPanel.add(offerNameLabel);
-
-            JLabel offerInfoLabel = new JLabel(offerInfo.get("info"), JLabel.CENTER);
-            offerInfoLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-            offerInfoLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-            offerInfoLabel.setFont(fontSmaller);
-            offerInfoPanel.add(offerInfoLabel);
-
-            JLabel offerPriceLabel = new JLabel(offerInfo.get("price"), JLabel.CENTER);
-            offerPriceLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-            offerPriceLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-            offerPriceLabel.setFont(fontMiddle);
-            offerPriceLabel.setForeground(Color.RED);
-            offerInfoPanel.add(offerPriceLabel);
-
-            offerPanel.add(offerInfoPanel);
-            offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
-
-            SeeOfferButton seeOfferBtn = new SeeOfferButton("See offer", frameHeight/7, frameHeight/7,secondColor, secondColorDarker, fontButtons, true, fittingElementsIds[i]);
-            ActionListener actionListener = new ActionListener() {
-                public void actionPerformed(ActionEvent actionEvent) {
-                    SeeOfferButton button = (SeeOfferButton)actionEvent.getSource();
-                    System.out.println(button.offerId);
-                }
-            };
-            seeOfferBtn.addActionListener(actionListener);
-            offerPanel.add(seeOfferBtn);
-
-            scrollPanel.add(offerPanel);
+            scrollPanel.add(elementPanel);
             scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));
         }
-
-        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction());
-
-    }
-
-    void undoBtnClickedAction(){
-        new HomePageGUI(userId, userType).createGUI();
-        frame.setVisible(false);
+        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
     }
 
     void createGUI(){
@@ -114,24 +69,23 @@ public class ScrollGUITemplate extends BaseGUI{
         frame.setVisible(true);
     }
 
+    void undoBtnClickedAction(){
+        new HomePageGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
     public ScrollGUITemplate(int userId, String userType){
         super(userId, userType);
-        fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
-        nrOfElements = fittingElementsIds.length;
     }
-
-    public static void main(String[] args) {
-        new ScrollGUITemplate(-1, "None").createGUI();
-    }
-
 }
 
-class SeeOfferButton extends RoundedButton {
-    int offerId;
 
-    public SeeOfferButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped, int offerId) {
-        super(text, preferredWidth, preferredHeight, fillColor, hoverColor, font, squareShaped);
-        this.offerId = offerId;
+class ScrollElementButton extends RoundedButton {
+    int elementId;
+
+    public ScrollElementButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped, int elementId) {
+        super("<html><b>"+text+"</b></html>", preferredWidth, preferredHeight, fillColor, hoverColor, font, squareShaped);
+        this.elementId = elementId;
     }
 }
 
