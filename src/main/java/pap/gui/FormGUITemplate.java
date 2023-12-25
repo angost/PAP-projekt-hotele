@@ -10,6 +10,7 @@ import pap.gui.components.LogoPanel;
 import pap.gui.components.RoundedButtonDefault;
 import pap.gui.components.UndoPanel;
 import pap.logic.ErrorCodes;
+import pap.logic.validators.*;
 
 public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
