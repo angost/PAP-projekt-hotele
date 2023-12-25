@@ -9,6 +9,9 @@ import java.util.List;
 
 import pap.db.dao.ClientDAO;
 import pap.db.dao.OwnerDAO;
+import pap.gui.components.LogOutButton;
+import pap.gui.components.LogoPanel;
+import pap.gui.components.TextIconButton;
 import pap.logic.DeactivateAccount;
 
 

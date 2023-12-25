@@ -1,6 +1,7 @@
 package pap.gui;
 
-import pap.gui.usefulPanels.OfferPanel;
+import pap.gui.components.OfferPanel;
+import pap.gui.components.ScrollElementButton;
 import pap.logic.guiAction.FindDisplayOffers;
 
 import javax.swing.*;
@@ -59,10 +60,8 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
-                System.out.println(button.elementId);
-
-//                new OfferPageGUI(-1, "None", button.offerId).createGUI();
-//                frame.setVisible(false);
+                new OfferDetailsGUI(userId, userType, button.elementId).createGUI();
+                frame.setVisible(false);
             }
         };
         seeOfferBtn.addActionListener(actionListener);

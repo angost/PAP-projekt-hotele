@@ -6,6 +6,8 @@ import java.util.List;
 
 import pap.db.entities.Client;
 import pap.db.entities.Owner;
+import pap.gui.components.LogoPanel;
+import pap.gui.components.RoundedButtonDefault;
 import pap.logic.login.*;
 import pap.logic.ErrorCodes;
 
@@ -17,7 +19,7 @@ public class LogInGUI extends BaseGUI {
     JLabel usernameLabel, createAccountLabel, passwordLabel, statusLabel;
     JTextField usernameInputField;
     JPasswordField passwordInputField;
-    RoundedButton logInClientButton, logInOwnerButton, createAccountButton;
+    RoundedButtonDefault logInClientButton, logInOwnerButton, createAccountButton;
 
     public LogInGUI(int userId, String userType) {
         super(userId, userType);
@@ -92,11 +94,11 @@ public class LogInGUI extends BaseGUI {
         buttonsPanel.setBackground(bgColor);
         loginPanel.add(buttonsPanel);
 
-        logInClientButton = new RoundedButton("Log in as Client", frameWidth*3/20, btnHeight, secondColor, secondColorDarker, fontButtons, false);
+        logInClientButton = new RoundedButtonDefault("Log in as Client", frameWidth*3/20, btnHeight, false, false);
         logInClientButton.addActionListener(e->logInClientClickedAction());
         buttonsPanel.add(logInClientButton);
         buttonsPanel.add(Box.createRigidArea(new Dimension(20,0)));
-        logInOwnerButton = new RoundedButton("Log in as Owner", frameWidth*3/20, btnHeight, secondColor, secondColorDarker, fontButtons, false);
+        logInOwnerButton = new RoundedButtonDefault("Log in as Owner", frameWidth*3/20, btnHeight, false, true);
         logInOwnerButton.addActionListener(e->logInOwnerClickedAction());
         buttonsPanel.add(logInOwnerButton);
 
@@ -121,7 +123,7 @@ public class LogInGUI extends BaseGUI {
         createAccountLabel.setFont(fontMiddle);
         createAccountPanel.add(createAccountLabel);
         createAccountPanel.add(Box.createRigidArea(new Dimension(10,0)));
-        createAccountButton = new RoundedButton("Create account", frameWidth*3/20, btnHeight, secondColor, secondColorDarker, fontButtons, false);
+        createAccountButton = new RoundedButtonDefault("Create account", frameWidth*3/20, btnHeight, false, false);
         createAccountButton.addActionListener(e->createAccountBtnClickedAction());
         createAccountPanel.add(createAccountButton);
         createAccountPanel.add(Box.createRigidArea(new Dimension(10,0)));

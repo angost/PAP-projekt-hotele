@@ -1,6 +1,8 @@
 package pap.gui;
 
 
+import pap.gui.components.ScrollElementButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
