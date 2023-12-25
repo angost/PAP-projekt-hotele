@@ -2,14 +2,13 @@ package pap.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
-import pap.db.dao.ClientDAO;
-import pap.db.entities.Client;
+import pap.gui.components.LogoPanel;
+import pap.gui.components.RoundedButtonDefault;
+import pap.gui.components.UndoPanel;
 import pap.logic.ErrorCodes;
 import pap.logic.validators.*;
 
@@ -175,12 +174,13 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(statusLabel);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
 
-        RoundedButton registerButton = new RoundedButton("Register", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
+        RoundedButtonDefault registerButton = new RoundedButtonDefault("Register", frameWidth*3/20, frameHeight/10, false, false);
         registerButton.addActionListener(e->registerBtnClickedAction());
         registerPanel.add(registerButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
-        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
+        UndoPanel undoPanel = new UndoPanel(frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
+        mainPanel.add(undoPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
     }
 

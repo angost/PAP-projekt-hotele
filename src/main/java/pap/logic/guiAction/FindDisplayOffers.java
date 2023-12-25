@@ -42,7 +42,7 @@ public class FindDisplayOffers {
         elInfo.put("room_type", offer.getRoomType());
         elInfo.put("rooms", String.valueOf(offer.getRoomNumber()));
         elInfo.put("bathrooms", String.valueOf(offer.getBathroomNumber()));
-        elInfo.put("price", String.valueOf(offer.getPrice()));
+        elInfo.put("price", String.format("%.2f", offer.getPrice()) + " PLN");
 
         return elInfo;
     }
