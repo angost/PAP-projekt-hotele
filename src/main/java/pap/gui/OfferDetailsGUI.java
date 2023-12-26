@@ -103,9 +103,8 @@ public class OfferDetailsGUI extends BaseGUI {
     }
 
     void reserveBtnClickedAction(){
-        System.out.println("User " + userId + " reserved offer " + offerId);
-//        new PaymentGUI(userId, userType, offerId, reservationInfo).createGUI();
-//        frame.setVisible(false);
+        new PaymentPageGUI(userId, userType, offerId).createGUI();
+        frame.setVisible(false);
     }
 
     void createGUI(){
