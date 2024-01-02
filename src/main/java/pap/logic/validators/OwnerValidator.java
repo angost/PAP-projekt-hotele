@@ -17,7 +17,7 @@ public class OwnerValidator extends UserValidator {
     }
 
 
-    public List <Integer> validateCredentials() {
+    public List <Integer> validateOwnerCredentials() {
         List <Integer> codes = super.validateCredentials();
         validateCompanyName(companyName, codes);
         validateNip(nip, codes);

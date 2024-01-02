@@ -15,7 +15,7 @@ class OwnerValidatorTest {
                 "validUsername", "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(), codes);
     }
@@ -26,7 +26,7 @@ class OwnerValidatorTest {
                 "z", "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(101), codes);
     }
@@ -37,7 +37,7 @@ class OwnerValidatorTest {
                 "a".repeat(65), "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(102), codes);
     }
@@ -48,7 +48,7 @@ class OwnerValidatorTest {
                 "user@name", "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(103), codes);
     }
@@ -59,7 +59,7 @@ class OwnerValidatorTest {
                 "adminUser", "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(104), codes);
     }
@@ -70,7 +70,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "Pwd1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(106), codes);
     }
@@ -81,7 +81,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "a".repeat(65) + "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(107), codes);
     }
@@ -92,7 +92,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidUsername1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(108), codes);
     }
@@ -103,7 +103,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "validpassword1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(109), codes);
     }
@@ -114,7 +114,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "VALIDPASSWORD1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(110), codes);
     }
@@ -125,7 +125,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(111), codes);
     }
@@ -136,7 +136,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(112), codes);
     }
@@ -147,7 +147,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "A", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(301), codes);
     }
@@ -158,7 +158,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "A".repeat(65), "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(302), codes);
     }
@@ -169,7 +169,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "a@b",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(113, 115), codes);
     }
@@ -180,7 +180,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "a".repeat(65) + "@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(114), codes);
     }
@@ -191,7 +191,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "invalidemail.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(115), codes);
     }
@@ -202,7 +202,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "123", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(116), codes);
     }
@@ -213,7 +213,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "1234567890123456", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(117), codes);
     }
@@ -224,7 +224,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "12345678"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(303), codes);
     }
@@ -235,7 +235,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "valid@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "12345678aa"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(304), codes);
     }
@@ -246,7 +246,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "a-@.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(115), codes);
     }
@@ -257,7 +257,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "v_-3d@example.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        List <Integer> codes = validator.validateCredentials();
+        List <Integer> codes = validator.validateOwnerCredentials();
         codes.remove(Integer.valueOf(1));
         assertEquals(List.of(), codes);
     }
