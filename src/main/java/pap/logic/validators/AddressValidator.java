@@ -94,9 +94,7 @@ public class AddressValidator {
     private static void checkTooLongStreetNo(String streetNo, List <Integer> codes) {
         if (streetNo.length() > MAX_STREET_NO_LENGTH) codes.add(510);
     }
-    private static void checkStreetNoFormat(String streetNo, List <Integer> codes) {
-        String regex = "\\d+[a-zA-Z]?";
-        String fullRegex = regex + "(\\/" + regex + ")*";
-        if (!Pattern.matches(fullRegex, streetNo)) codes.add(511);
+    private static void checkStreetNoFormat(String streetNo, List<Integer> codes) {
+        if (!streetNo.matches("\\d+[a-zA-Z]?(\\/\\d+[a-zA-Z]?)*")) codes.add(511);
     }
 }
