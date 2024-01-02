@@ -192,21 +192,70 @@ class ClientValidatorTest {
     void testClientValidator_TooShortEmail() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a@bc", codes);
-        assertEquals(List.of(113), codes);
+        assertEquals(List.of(113, 115), codes);
     }
 
     @Test
     void testClientValidator_TooLongEmail() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a".repeat(65) + "@", codes);
-        assertEquals(List.of(114), codes);
+        assertEquals(List.of(114, 115), codes);
     }
 
     @Test
-    void testClientValidator_EmailDoesNotContainAt() {
+    void testClientValidator_WrongEmailFormat() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("invalid-email", codes);
         assertEquals(List.of(115), codes);
+    }
+
+    @Test
+    void testClientValidator_WrongEmailFormatSecond() {
+        List<Integer> codes = new ArrayList<>();
+        ClientValidator.validateEmail("a@aa.", codes);
+        assertEquals(List.of(115), codes);
+    }
+
+    @Test
+    void testClientValidator_WrongEmailFormatThird() {
+        List<Integer> codes = new ArrayList<>();
+        ClientValidator.validateEmail("a@#.a", codes);
+        assertEquals(List.of(115), codes);
+    }
+
+    @Test
+    void testClientValidator_WrongEmailFormatFourth() {
+        List<Integer> codes = new ArrayList<>();
+        ClientValidator.validateEmail("a@a.$", codes);
+        assertEquals(List.of(115), codes);
+    }
+
+    @Test
+    void testClientValidator_WrongEmailFormatFifth() {
+        List<Integer> codes = new ArrayList<>();
+        ClientValidator.validateEmail("a@..a", codes);
+        assertEquals(List.of(115), codes);
+    }
+
+    @Test
+    void testClientValidator_ValidEmail() {
+        List<Integer> codes = new ArrayList<>();
+        ClientValidator.validateEmail("a@a.aa", codes);
+        assertEquals(List.of(), codes);
+    }
+
+    @Test
+    void testClientValidator_ValidEmailSecond() {
+        List<Integer> codes = new ArrayList<>();
+        ClientValidator.validateEmail("a@pw.edu.pl", codes);
+        assertEquals(List.of(), codes);
+    }
+
+    @Test
+    void testClientValidator_ValidEmailThird() {
+        List<Integer> codes = new ArrayList<>();
+        ClientValidator.validateEmail("a-b@a.aa", codes);
+        assertEquals(List.of(), codes);
     }
 
     @Test
@@ -227,6 +276,13 @@ class ClientValidatorTest {
     void testClientValidator_PhoneNumberWithLetters() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validatePhoneNumber("123456789a", codes);
+        assertEquals(List.of(118), codes);
+    }
+
+    @Test
+    void testClientValidator_PhoneNumberWithSpecialChars() {
+        List<Integer> codes = new ArrayList<>();
+        ClientValidator.validatePhoneNumber("123456789$", codes);
         assertEquals(List.of(118), codes);
     }
 

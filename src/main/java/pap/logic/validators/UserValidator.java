@@ -66,7 +66,7 @@ public class UserValidator {
     public static void validateEmail(String email, List <Integer> codes) {
         checkTooShortEmail(email, codes);
         checkTooLongEmail(email, codes);
-        checkEmailDoesntContainAt(email, codes);
+        checkEmailFormat(email, codes);
     }
 
     public static void validatePhoneNumber(String phoneNumber, List <Integer> codes) {
@@ -127,8 +127,8 @@ public class UserValidator {
     private static void checkTooLongEmail(String email, List <Integer> codes) {
         if (email.length() > MAX_EMAIL_LENGTH) codes.add(114);
     }
-    private static void checkEmailDoesntContainAt(String email, List <Integer> codes) {
-        if (!email.contains("@")) codes.add(115);
+    private static void checkEmailFormat(String email, List <Integer> codes) {
+        if (!email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$")) codes.add(115);
     }
     private static void checkTooShortPhoneNumber(String phoneNumber, List <Integer> codes) {
         if (phoneNumber.length() < MIN_PHONE_LENGTH) codes.add(116);
