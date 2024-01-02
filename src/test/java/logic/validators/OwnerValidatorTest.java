@@ -141,7 +141,7 @@ class OwnerValidatorTest {
                 "ValidUsername", "ValidPassword1!", "ValidCompany", "a@b",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
-        assertEquals(List.of(113), validator.validateCredentials());
+        assertEquals(List.of(113, 115), validator.validateCredentials());
     }
 
     @Test
@@ -201,7 +201,7 @@ class OwnerValidatorTest {
     @Test
     void testValidateCredentials_WrongEmail() {
         OwnerValidator validator = new OwnerValidator(
-                "ValidUsername", "ValidPassword1!", "ValidCompany", "a-@example.com",
+                "ValidUsername", "ValidPassword1!", "ValidCompany", "a-@.com",
                 "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
         );
         assertEquals(List.of(115), validator.validateCredentials());
