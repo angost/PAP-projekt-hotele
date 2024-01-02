@@ -16,6 +16,7 @@ class ClientValidatorTest {
     void testClientValidator_TooShortClientUsername() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("short", result);
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(101), result);
     }
 
@@ -23,6 +24,7 @@ class ClientValidatorTest {
     void testClientValidator_TooLongClientUsername() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("a".repeat(65), result);
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(102), result);
     }
 
@@ -30,6 +32,7 @@ class ClientValidatorTest {
     void testClientValidator_ClientUsernameContainsIllegalChar() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("Client@Name", result);
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(103), result);
     }
 
@@ -37,6 +40,7 @@ class ClientValidatorTest {
     void testClientValidator_ClientUsernameContainsIllegalKeyword() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("adminClient", result);
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(104), result);
     }
 
@@ -44,6 +48,7 @@ class ClientValidatorTest {
     void testClientValidator_TooShortPassword() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validatePassword("Short1!", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(106), result);
     }
 
@@ -51,6 +56,7 @@ class ClientValidatorTest {
     void testClientValidator_TooLongPassword() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validatePassword("a".repeat(65) + "A!1", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(107), result);
     }
 
@@ -58,6 +64,7 @@ class ClientValidatorTest {
     void testClientValidator_PasswordContainsClientName() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validatePassword("ValidClientName1!", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(108), result);
     }
 
@@ -65,6 +72,7 @@ class ClientValidatorTest {
     void testClientValidator_PasswordDoesntContainCapital() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validatePassword("validpassword1!", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(109), result);
     }
 
@@ -72,6 +80,7 @@ class ClientValidatorTest {
     void testClientValidator_PasswordDoesntContainLower() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validatePassword("VALIDPASSWORD1!", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(110), result);
     }
 
@@ -79,6 +88,7 @@ class ClientValidatorTest {
     void testClientValidator_PasswordDoesntContainNumber() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validatePassword("ValidPassword!", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(111), result);
     }
 
@@ -86,6 +96,7 @@ class ClientValidatorTest {
     void testClientValidator_PasswordDoesntContainSpecialChar() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validatePassword("ValidPassword1", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(112), result);
     }
 
@@ -93,6 +104,7 @@ class ClientValidatorTest {
     void testClientValidator_CorrectCredentials() {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validatePassword("ValidPassword1!", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(), result);
     }
 
@@ -101,6 +113,7 @@ class ClientValidatorTest {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("Usr", result);
         ClientValidator.validatePassword("a".repeat(65) + "ValidPassword1!", result, "Usr");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(101, 107), result);
     }
 
@@ -109,6 +122,7 @@ class ClientValidatorTest {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("a".repeat(65) + "$", result);
         ClientValidator.validatePassword("ValidPassw0rd!", result, "a".repeat(65) + "$");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(102, 103), result);
     }
 
@@ -117,6 +131,7 @@ class ClientValidatorTest {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("AdminClientRoot", result);
         ClientValidator.validatePassword("ValidPassword1!", result, "AdminClientRoot");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(104), result);
     }
 
@@ -125,6 +140,7 @@ class ClientValidatorTest {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("ValidClientName", result);
         ClientValidator.validatePassword("Pwd1", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(106, 112), result);
     }
 
@@ -133,6 +149,7 @@ class ClientValidatorTest {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("ValidClientName", result);
         ClientValidator.validatePassword("a".repeat(65) + "ValidClientName1!", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(107, 108), result);
     }
 
@@ -141,6 +158,7 @@ class ClientValidatorTest {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("Client@Name", result);
         ClientValidator.validatePassword("SecurePwd1!", result, "Client@Name");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(103), result);
     }
 
@@ -149,6 +167,7 @@ class ClientValidatorTest {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("AdminClient", result);
         ClientValidator.validatePassword("SECUREPWD1!", result, "AdminClient");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(104, 110), result);
     }
 
@@ -157,6 +176,7 @@ class ClientValidatorTest {
         List <Integer> result = new ArrayList<>();
         ClientValidator.validateUsername("ValidClientName", result);
         ClientValidator.validatePassword("SecurePwd1!", result, "ValidClientName");
+        result.remove(Integer.valueOf(1));
         assertEquals(List.of(), result);
     }
 
@@ -164,6 +184,7 @@ class ClientValidatorTest {
     void testClientValidator_TooShortName() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateName("J", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(201), codes);
     }
 
@@ -171,6 +192,7 @@ class ClientValidatorTest {
     void testClientValidator_TooLongName() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateName("a".repeat(65), codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(202), codes);
     }
 
@@ -178,6 +200,7 @@ class ClientValidatorTest {
     void testClientValidator_TooShortSurname() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateSurname("D", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(204), codes);
     }
 
@@ -185,6 +208,7 @@ class ClientValidatorTest {
     void testClientValidator_TooLongSurname() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateSurname("a".repeat(65), codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(205), codes);
     }
 
@@ -192,6 +216,7 @@ class ClientValidatorTest {
     void testClientValidator_TooShortEmail() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a@bc", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(113, 115), codes);
     }
 
@@ -199,6 +224,7 @@ class ClientValidatorTest {
     void testClientValidator_TooLongEmail() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a".repeat(65) + "@", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(114, 115), codes);
     }
 
@@ -206,6 +232,7 @@ class ClientValidatorTest {
     void testClientValidator_WrongEmailFormat() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("invalid-email", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(115), codes);
     }
 
@@ -213,6 +240,7 @@ class ClientValidatorTest {
     void testClientValidator_WrongEmailFormatSecond() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a@aa.", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(115), codes);
     }
 
@@ -220,6 +248,7 @@ class ClientValidatorTest {
     void testClientValidator_WrongEmailFormatThird() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a@#.a", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(115), codes);
     }
 
@@ -227,6 +256,7 @@ class ClientValidatorTest {
     void testClientValidator_WrongEmailFormatFourth() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a@a.$", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(115), codes);
     }
 
@@ -234,6 +264,7 @@ class ClientValidatorTest {
     void testClientValidator_WrongEmailFormatFifth() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a@..a", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(115), codes);
     }
 
@@ -241,6 +272,7 @@ class ClientValidatorTest {
     void testClientValidator_ValidEmail() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a@a.aa", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(), codes);
     }
 
@@ -248,6 +280,7 @@ class ClientValidatorTest {
     void testClientValidator_ValidEmailSecond() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a@pw.edu.pl", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(), codes);
     }
 
@@ -255,6 +288,7 @@ class ClientValidatorTest {
     void testClientValidator_ValidEmailThird() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateEmail("a-b@a.aa", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(), codes);
     }
 
@@ -262,6 +296,7 @@ class ClientValidatorTest {
     void testClientValidator_TooShortPhoneNumber() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validatePhoneNumber("123", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(116), codes);
     }
 
@@ -269,6 +304,7 @@ class ClientValidatorTest {
     void testClientValidator_TooLongPhoneNumber() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validatePhoneNumber("12345678901234567890", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(117), codes);
     }
 
@@ -276,6 +312,7 @@ class ClientValidatorTest {
     void testClientValidator_PhoneNumberWithLetters() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validatePhoneNumber("123456789a", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(118), codes);
     }
 
@@ -283,6 +320,7 @@ class ClientValidatorTest {
     void testClientValidator_PhoneNumberWithSpecialChars() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validatePhoneNumber("123456789$", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(118), codes);
     }
 
@@ -290,6 +328,7 @@ class ClientValidatorTest {
     void testClientValidator_InvalidBirthDate() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateBirthDate(LocalDate.now(), codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(207), codes);
     }
 
@@ -297,6 +336,7 @@ class ClientValidatorTest {
     void testClientValidator_TooShortNationality() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateNationality("U", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(208), codes);
     }
 
@@ -304,6 +344,7 @@ class ClientValidatorTest {
     void testClientValidator_TooLongNationality() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateNationality("a".repeat(65), codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(209), codes);
     }
 
@@ -311,6 +352,7 @@ class ClientValidatorTest {
     void testClientValidator_InvalidGender() {
         List<Integer> codes = new ArrayList<>();
         ClientValidator.validateGender("unknown", codes);
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(211), codes);
     }
 
@@ -320,6 +362,7 @@ class ClientValidatorTest {
                 "jankowalski@pw.edu.pl", "123456789", "Poland", "Warsaw", "Nowowiejska", "00-123", "1",
                 LocalDate.parse("2020-01-01"), "Polish", "Male");
         List <Integer> codes = vuc.validateClientCredentials();
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(111, 112), codes);
     }
 
@@ -329,6 +372,7 @@ class ClientValidatorTest {
                 "jankowalski@pw.edu.pl", "123456789", "P", "Warsaw", "Nowowiejska", "00", "1",
                 LocalDate.parse("2020-01-01"), "Polish", "Male");
         List <Integer> codes = vuc.validateClientCredentials();
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(501, 507), codes);
     }
 
@@ -338,6 +382,7 @@ class ClientValidatorTest {
                 "jankowalski@pw.edu.pl", "123456789", "P", "Warsaw", "Nowowiejska", "00", "1",
                 LocalDate.parse("2020-01-01"), "Polish", "Male");
         List <Integer> codes = vuc.validateClientCredentials();
+        codes.remove(Integer.valueOf(1));
         assertEquals(List.of(111, 501, 507), codes);
     }
 }

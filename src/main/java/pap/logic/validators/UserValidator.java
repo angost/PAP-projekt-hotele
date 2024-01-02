@@ -1,5 +1,6 @@
 package pap.logic.validators;
 
+import jakarta.persistence.NoResultException;
 import pap.db.dao.ClientDAO;
 
 import java.util.ArrayList;
@@ -95,8 +96,11 @@ public class UserValidator {
         try {
             new ClientDAO().findByUsername(username);
             codes.add(105);
-        } catch (Exception error) {
-//            codes.add(1);
+        } catch (NoResultException error) {
+            // expected situation, do nothing
+        }
+        catch (Exception anotherError) {
+            codes.add(1);
         }
     }
     private static void checkTooShortPassword(String password, List <Integer> codes) {
