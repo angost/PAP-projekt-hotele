@@ -1,6 +1,5 @@
 package pap.logic.validators;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OwnerValidator extends UserValidator {

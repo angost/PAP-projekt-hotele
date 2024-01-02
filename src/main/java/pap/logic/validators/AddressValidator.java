@@ -1,7 +1,6 @@
 package pap.logic.validators;
 
 import java.util.*;
-import java.util.regex.*;
 
 public class AddressValidator {
     private static final int MIN_COUNTRY_LENGTH = 2;

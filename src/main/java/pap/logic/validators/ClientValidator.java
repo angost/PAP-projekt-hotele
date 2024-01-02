@@ -1,7 +1,6 @@
 package pap.logic.validators;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientValidator extends UserValidator {
