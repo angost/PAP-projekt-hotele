@@ -1,7 +1,7 @@
 package pap.logic.validators;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
+import java.util.regex.*;
 
 public class AddressValidator {
     private static final int MIN_COUNTRY_LENGTH = 2;
@@ -61,40 +61,42 @@ public class AddressValidator {
     public static void validateStreetNo(String streetNo, List <Integer> codes) {
         checkTooShortStreetNo(streetNo, codes);
         checkTooLongStreetNo(streetNo, codes);
-        checkStreetNoDoesntContainNumber(streetNo, codes);
+        checkStreetNoFormat(streetNo, codes);
     }
 
     private static void checkTooShortCountry(String country, List <Integer> codes) {
-        if (country.length() < MIN_COUNTRY_LENGTH) codes.add(51);
+        if (country.length() < MIN_COUNTRY_LENGTH) codes.add(501);
     }
     private static void checkTooLongCountry(String country, List <Integer> codes) {
-        if (country.length() > MAX_COUNTRY_LENGTH) codes.add(52);
+        if (country.length() > MAX_COUNTRY_LENGTH) codes.add(502);
     }
     private static void checkTooShortCity(String city, List <Integer> codes) {
-        if (city.length() < MIN_CITY_LENGTH) codes.add(53);
+        if (city.length() < MIN_CITY_LENGTH) codes.add(503);
     }
     private static void checkTooLongCity(String city, List <Integer> codes) {
-        if (city.length() > MAX_CITY_LENGTH) codes.add(54);
+        if (city.length() > MAX_CITY_LENGTH) codes.add(504);
     }
     private static void checkTooShortStreet(String street, List <Integer> codes) {
-        if (street.length() < MIN_STREET_LENGTH) codes.add(55);
+        if (street.length() < MIN_STREET_LENGTH) codes.add(505);
     }
     private static void checkTooLongStreet(String street, List <Integer> codes) {
-        if (street.length() > MAX_STREET_LENGTH) codes.add(56);
+        if (street.length() > MAX_STREET_LENGTH) codes.add(506);
     }
     private static void checkTooShortPostalCode(String postalCode, List <Integer> codes) {
-        if (postalCode.length() < MIN_POSTAL_CODE_LENGTH) codes.add(57);
+        if (postalCode.length() < MIN_POSTAL_CODE_LENGTH) codes.add(507);
     }
     private static void checkTooLongPostalCode(String postalCode, List <Integer> codes) {
-        if (postalCode.length() > MAX_POSTAL_CODE_LENGTH) codes.add(58);
+        if (postalCode.length() > MAX_POSTAL_CODE_LENGTH) codes.add(508);
     }
     private static void checkTooShortStreetNo(String streetNo, List <Integer> codes) {
-        if (streetNo.length() < MIN_STREET_NO_LENGTH) codes.add(59);
+        if (streetNo.length() < MIN_STREET_NO_LENGTH) codes.add(509);
     }
     private static void checkTooLongStreetNo(String streetNo, List <Integer> codes) {
-        if (streetNo.length() > MAX_STREET_NO_LENGTH) codes.add(60);
+        if (streetNo.length() > MAX_STREET_NO_LENGTH) codes.add(510);
     }
-    private static void checkStreetNoDoesntContainNumber(String streetNo, List <Integer> codes) {
-        if (!streetNo.matches(".*\\d.*")) codes.add(61);
+    private static void checkStreetNoFormat(String streetNo, List <Integer> codes) {
+        String regex = "\\d+[a-zA-Z]?";
+        String fullRegex = regex + "(\\/" + regex + ")*";
+        if (!Pattern.matches(fullRegex, streetNo)) codes.add(511);
     }
 }
