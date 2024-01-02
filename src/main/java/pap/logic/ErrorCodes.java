@@ -71,7 +71,6 @@ public class ErrorCodes {
     }
 
     public static String getErrorDescription(int errorCode) {
-        System.out.println(errorCode);
         return errorDescriptions.getOrDefault(errorCode, "Unknown error");
     }
 }
