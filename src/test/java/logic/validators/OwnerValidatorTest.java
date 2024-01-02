@@ -197,4 +197,22 @@ class OwnerValidatorTest {
         );
         assertEquals(List.of(304), validator.validateCredentials());
     }
+
+    @Test
+    void testValidateCredentials_WrongEmail() {
+        OwnerValidator validator = new OwnerValidator(
+                "ValidUsername", "ValidPassword1!", "ValidCompany", "a-@example.com",
+                "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
+        );
+        assertEquals(List.of(115), validator.validateCredentials());
+    }
+
+    @Test
+    void testValidateCredentials_ValidEmail() {
+        OwnerValidator validator = new OwnerValidator(
+                "ValidUsername", "ValidPassword1!", "ValidCompany", "v_-3d@example.com",
+                "123456789", "Poland", "Warsaw", "Nowogrodzka", "00-000", "20/3", "1234567890"
+        );
+        assertEquals(List.of(), validator.validateCredentials());
+    }
 }

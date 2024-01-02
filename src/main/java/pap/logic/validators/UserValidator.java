@@ -129,6 +129,7 @@ public class UserValidator {
     }
     private static void checkEmailFormat(String email, List <Integer> codes) {
         if (!email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$")) codes.add(115);
+        if (!Character.isLetter(email.charAt(0)) || !Character.isLetter(email.charAt(email.indexOf('@') - 1))) codes.add(115);
     }
     private static void checkTooShortPhoneNumber(String phoneNumber, List <Integer> codes) {
         if (phoneNumber.length() < MIN_PHONE_LENGTH) codes.add(116);
