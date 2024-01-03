@@ -14,9 +14,9 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
 
     // mock function
     void getElementsData() {
-        fittingElementsIds = new Integer[]{1,2,3,4,5};
+        this.fittingElementsIds = new Integer[]{1,2,3,4,5};
         // fittingElementsIds = new ...()...(userId);
-        nrOfElements = fittingElementsIds.length;
+        this.nrOfElements = fittingElementsIds.length;
     }
 
     //mock function

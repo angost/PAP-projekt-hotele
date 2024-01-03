@@ -12,8 +12,8 @@ import java.util.HashMap;
 public class SearchOffersGUI extends ScrollGUITemplate{
 
     void getElementsData() {
-        fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
-        nrOfElements = fittingElementsIds.length;
+        this.fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
+        this.nrOfElements = fittingElementsIds.length;
     }
 
     HashMap<String, String> getElementData(int elementId) {

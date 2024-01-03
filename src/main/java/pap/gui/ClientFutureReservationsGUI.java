@@ -18,9 +18,9 @@ public class ClientFutureReservationsGUI extends ClientReservationHistoryGUI {
     // mock function
     @Override
     void getElementsData() {
-        fittingElementsIds = new Integer[]{2,3,5};
+        this.fittingElementsIds = new Integer[]{2,3,5};
         // fittingElementsIds = new ...()...(userId);
-        nrOfElements = fittingElementsIds.length;
+        this.nrOfElements = fittingElementsIds.length;
     }
 
     @Override

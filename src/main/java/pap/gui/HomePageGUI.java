@@ -136,6 +136,7 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow1.setLayout(new BoxLayout(buttonsRow1, BoxLayout.LINE_AXIS));
             buttonsRow1.setBackground(bgColor);
             yourHotelsButton = new MenuButton("See your hotels", "/icons/hotel.png");
+            yourHotelsButton.addActionListener(e->seeYourHotelsAction());
             yourOffersButton = new MenuButton("See your offers", "/icons/offer.png");
             buttonsRow1.add(yourHotelsButton); buttonsRow1.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow1.add(yourOffersButton); buttonsRow1.add(Box.createHorizontalGlue());
@@ -227,6 +228,11 @@ public class HomePageGUI extends BaseGUI {
         }
     }
 
+    void seeYourHotelsAction(){
+        new OwnerHotelsGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
     void logOutBtnClickedAction(){
         new LogInGUI(-1, "None").createGUI();
         frame.setVisible(false);
@@ -246,7 +252,7 @@ public class HomePageGUI extends BaseGUI {
 
     public static void main(String[] args) {
 //        new HomePageGUI(-1, "None").createGUI();
-//        new HomePageGUI(1, "Owner").createGUI();
-        new HomePageGUI(8, "Client").createGUI();
+        new HomePageGUI(1, "Owner").createGUI();
+//        new HomePageGUI(8, "Client").createGUI();
     }
 }
