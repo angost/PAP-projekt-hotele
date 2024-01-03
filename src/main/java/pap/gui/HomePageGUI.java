@@ -138,6 +138,7 @@ public class HomePageGUI extends BaseGUI {
             yourHotelsButton = new MenuButton("See your hotels", "/icons/hotel.png");
             yourHotelsButton.addActionListener(e->seeYourHotelsAction());
             yourOffersButton = new MenuButton("See your offers", "/icons/offer.png");
+            yourOffersButton.addActionListener(e->seeYourOffersAction());
             buttonsRow1.add(yourHotelsButton); buttonsRow1.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow1.add(yourOffersButton); buttonsRow1.add(Box.createHorizontalGlue());
 
@@ -230,6 +231,11 @@ public class HomePageGUI extends BaseGUI {
 
     void seeYourHotelsAction(){
         new OwnerHotelsGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
+    void seeYourOffersAction(){
+        new OwnerOffersGUI(userId, userType).createGUI();
         frame.setVisible(false);
     }
 
