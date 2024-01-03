@@ -8,7 +8,7 @@ import java.io.File;
 public class TwoImgsButton extends JButton {
 
     Image baseImg, secondImg;
-    String state;
+    public String state;
     boolean imgUploadSuccess = false;
 
     public TwoImgsButton(int buttonWidth, int buttonHeight, int imgWidth, int imgHeight, String baseImgPath, String secondImgPath) {

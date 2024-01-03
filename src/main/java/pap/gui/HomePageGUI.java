@@ -246,7 +246,7 @@ public class HomePageGUI extends BaseGUI {
 
     public static void main(String[] args) {
 //        new HomePageGUI(-1, "None").createGUI();
-        new HomePageGUI(1, "Owner").createGUI();
-//        new HomePageGUI(8, "Client").createGUI();
+//        new HomePageGUI(1, "Owner").createGUI();
+        new HomePageGUI(8, "Client").createGUI();
     }
 }

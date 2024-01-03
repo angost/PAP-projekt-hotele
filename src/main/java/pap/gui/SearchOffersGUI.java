@@ -1,7 +1,9 @@
 package pap.gui;
 
+import pap.gui.components.FavouritesButton;
 import pap.gui.components.OfferPanel;
 import pap.gui.components.ScrollElementButton;
+import pap.gui.components.TwoImgsButton;
 import pap.logic.guiAction.FindDisplayOffers;
 
 import javax.swing.*;
@@ -17,6 +19,11 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         nrOfElements = fittingElementsIds.length;
     }
 
+    HashMap<String, String> getElementData(int elementId) {
+        HashMap<String, String> offerInfo = new FindDisplayOffers().getElementInfo(elementId);
+        return offerInfo;
+    }
+
     //mock function
     String getImgPath(int offerId) {
         HashMap<Integer, String> imgPathMap = new HashMap<Integer, String>();
@@ -28,10 +35,10 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         return imgPathMap.get(offerId);
     }
 
-    HashMap<String, String> getElementData(int elementId) {
-        HashMap<String, String> offerInfo = new FindDisplayOffers().getElementInfo(elementId);
-        return offerInfo;
-    }
+    //mock functions
+    void addOfferToFavourites(int userId, int offerId) {};
+    void removeOfferFromFavourites(int userId, int offerId) {};
+    boolean isOfferInFavourites(int userId, int offerId) {if (offerId == 9) return true; return false;};
 
     JPanel createScrollElement(int elementId) {
 
@@ -56,7 +63,7 @@ public class SearchOffersGUI extends ScrollGUITemplate{
 
     void createScrollButtons(int elementId, JPanel offerPanel) {
 
-        ScrollElementButton seeOfferBtn = new ScrollElementButton("See offer", frameHeight/7, frameHeight/7,secondColor, secondColorDarker, fontButtons, true, elementId);
+        ScrollElementButton seeOfferBtn = new ScrollElementButton("See offer", scrollButtonSize, scrollButtonSize, secondColor, secondColorDarker, fontButtons, true, elementId);
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
@@ -66,6 +73,27 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         };
         seeOfferBtn.addActionListener(actionListener);
         offerPanel.add(seeOfferBtn);
+        offerPanel.add(Box.createRigidArea(new Dimension(scrollButtonSize,0)));
+
+        FavouritesButton favouritesButton = new FavouritesButton(scrollButtonSize/2, scrollButtonSize/2, elementId);
+        if (isOfferInFavourites(userId, elementId)) {
+            favouritesButton.changeState();
+        }
+        ActionListener favActionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                FavouritesButton button = (FavouritesButton)actionEvent.getSource();
+                if (button.state.equals("base_state")) {
+                    addOfferToFavourites(userId, button.elementId);
+                    System.out.println("Add " + button.elementId + " to favourites");
+                } else {
+                    removeOfferFromFavourites(userId, button.elementId);
+                    System.out.println("Remove " + button.elementId + " from favourites");
+                }
+                button.changeState();
+            }
+        };
+        favouritesButton.addActionListener(favActionListener);
+        offerPanel.add(favouritesButton);
 
     }
 
