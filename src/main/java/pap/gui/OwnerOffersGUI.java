@@ -53,8 +53,8 @@ public class OwnerOffersGUI extends ScrollGUITemplate{
         ScrollElementButton offerPageBtn = new ScrollElementButton("Offer page", buttonSize, buttonSize, secondColor, secondColorDarker, fontButtons, true, elementId);
         offerPageBtn.addActionListener(actionEvent -> {
             ScrollElementButton button = (ScrollElementButton) actionEvent.getSource();
-//            new OfferDetailsGUI(userId, userType, button.elementId).createGUI();
-//            frame.setVisible(false);
+            new OwnersOfferDetailsGUI(userId, userType, button.elementId).createGUI();
+            frame.setVisible(false);
         });
         offerPanel.add(offerPageBtn);
         offerPanel.add(Box.createRigidArea(new Dimension(gapSize,0)));
