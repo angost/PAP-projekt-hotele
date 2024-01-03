@@ -98,7 +98,7 @@ public class LogInGUI extends BaseGUI {
         logInClientButton.addActionListener(e->logInClientClickedAction());
         buttonsPanel.add(logInClientButton);
         buttonsPanel.add(Box.createRigidArea(new Dimension(20,0)));
-        logInOwnerButton = new RoundedButtonDefault("Log in as Owner", frameWidth*3/20, btnHeight, false, true);
+        logInOwnerButton = new RoundedButtonDefault("Log in as Owner", frameWidth*3/20, btnHeight, false, false);
         logInOwnerButton.addActionListener(e->logInOwnerClickedAction());
         buttonsPanel.add(logInOwnerButton);
 

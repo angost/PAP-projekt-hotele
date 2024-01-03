@@ -13,6 +13,7 @@ import pap.gui.components.LogOutButton;
 import pap.gui.components.LogoPanel;
 import pap.gui.components.TextIconButton;
 import pap.logic.DeactivateAccount;
+import pap.logic.ErrorCodes;
 
 
 public class HomePageGUI extends BaseGUI {
@@ -121,6 +122,8 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow3.setBackground(bgColor);
             paymentsButton = new MenuButton("See payment options", "/icons/payment.png");
             deactivateAccountButton = new MenuButton("Deactivate account", "/icons/deactivate.png");
+            deactivateAccountButton.fillColor = statusWrongLighter;
+            deactivateAccountButton.hoverColor = statusWrong;
             deactivateAccountButton.addActionListener(e->deactivateAccountAction());
             buttonsRow3.add(paymentsButton); buttonsRow3.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow3.add(deactivateAccountButton); buttonsRow3.add(Box.createHorizontalGlue());
@@ -162,6 +165,8 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow4.setBackground(bgColor);
             bankInfoButton = new MenuButton("Bank information", "/icons/bank.png");
             deactivateAccountButton = new MenuButton("Deactivate account", "/icons/deactivate.png");
+            deactivateAccountButton.fillColor = statusWrongLighter;
+            deactivateAccountButton.hoverColor = statusWrong;
             deactivateAccountButton.addActionListener(e->deactivateAccountAction());
             buttonsRow4.add(bankInfoButton); buttonsRow4.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow4.add(deactivateAccountButton); buttonsRow4.add(Box.createHorizontalGlue());
@@ -193,22 +198,32 @@ public class HomePageGUI extends BaseGUI {
 
     void deactivateAccountAction() {
 
-        List<Integer> errorCodes = new ArrayList<>();
+        String[] options = {"No", "Yes"};
+        int pickedOption = JOptionPane.showOptionDialog(null, "This action is irreversible. Are you sure you want to continue?",
+                "Confirm action", 0, 0, null, options, "No");
 
-        if (userType.equals("Client")){
-            errorCodes = DeactivateAccount.deactivateUserAccount(userId);
-        } else if (userType.equals("Owner")){
-            errorCodes = DeactivateAccount.deactivateOwnerAccount(userId);
-        } else {
-            errorCodes.add(-1);
-        }
+        if (pickedOption == 1) {
+            List<Integer> errorCodes = new ArrayList<>();
+            if (userType.equals("Client")){
+                errorCodes = DeactivateAccount.deactivateUserAccount(userId);
+            } else if (userType.equals("Owner")){
+                errorCodes = DeactivateAccount.deactivateOwnerAccount(userId);
+            } else {
+                errorCodes.add(-1);
+            }
 
-        if (errorCodes.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Account deactivated");
-            new LogInGUI(-1, "None").createGUI();
-            frame.setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(frame, "Account cannot be deactivated");
+            if (errorCodes.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Account deactivated");
+                new LogInGUI(-1, "None").createGUI();
+                frame.setVisible(false);
+            } else {
+                String errorText = "";
+                for (Integer errorCode : errorCodes) {
+                    errorText = errorText + ErrorCodes.getErrorDescription(errorCode) + " ";
+                }
+
+                JOptionPane.showMessageDialog(frame, errorText);
+            }
         }
     }
 
@@ -231,7 +246,7 @@ public class HomePageGUI extends BaseGUI {
 
     public static void main(String[] args) {
 //        new HomePageGUI(-1, "None").createGUI();
-//        new HomePageGUI(1, "Owner").createGUI();
-        new HomePageGUI(8, "Client").createGUI();
+        new HomePageGUI(1, "Owner").createGUI();
+//        new HomePageGUI(8, "Client").createGUI();
     }
 }
