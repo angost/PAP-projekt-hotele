@@ -68,25 +68,6 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         offerPanel.add(seeOfferBtn);
         offerPanel.add(Box.createRigidArea(new Dimension(scrollButtonSize,0)));
 
-//        FavouritesButton favouritesButton = new FavouritesButton(scrollButtonSize/2, scrollButtonSize/2, elementId);
-//        if (isOfferInFavourites(userId, elementId)) {
-//            favouritesButton.changeState();
-//        }
-//        ActionListener favActionListener = new ActionListener() {
-//            public void actionPerformed(ActionEvent actionEvent) {
-//                FavouritesButton button = (FavouritesButton)actionEvent.getSource();
-//                if (button.state.equals("base_state")) {
-//                    addOfferToFavourites(userId, button.elementId);
-//                    System.out.println("Add " + button.elementId + " to favourites");
-//                } else {
-//                    removeOfferFromFavourites(userId, button.elementId);
-//                    System.out.println("Remove " + button.elementId + " from favourites");
-//                }
-//                button.changeState();
-//            }
-//        };
-//        favouritesButton.addActionListener(favActionListener);
-
         FavouritesButton favouritesButton = FavouritesButtonCreator.createFavouritesButton(scrollButtonSize/2, scrollButtonSize/2, elementId, userId);
         ActionListener favActionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
