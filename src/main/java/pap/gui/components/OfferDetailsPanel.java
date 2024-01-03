@@ -13,7 +13,6 @@ public class OfferDetailsPanel extends JPanel {
     int panelWidth, panelHeight;
     Color bgColor; Font fontBigger, fontMiddle, fontMiddleBold, fontSmaller, fontSmallerBold;
     RoundedButtonDefault seeHotelButton, seeReviewsButton;
-    FavouritesButton favouritesButton;
 
     public OfferDetailsPanel(Color bgColor, Font fontBigger, Font fontBiggerBold, Font fontMiddle, Font fontMiddleBold, Font fontSmaller, Font fontSmallerBold, int panelWidth, int panelHeight,
                              HashMap<String, String> offerInfo, HashMap<String, String> reservationInfo, int offerId, int userId, String userType) {
@@ -48,9 +47,11 @@ public class OfferDetailsPanel extends JPanel {
         topPanel.add(seeHotelButton);
         topPanel.add(Box.createRigidArea(new Dimension(30,0)));
 
-        favouritesButton = FavouritesButtonCreator.createFavouritesButton(topPanelHeight/3, topPanelHeight/3, offerId, userId);
-        favouritesButton.addActionListener(e -> FavouritesButtonCreator.favouritesBtnClicked(favouritesButton, userId));
-        topPanel.add(favouritesButton);
+        if (userType.equals("Client")) {
+            FavouritesButton favouritesButton = FavouritesButtonCreator.createFavouritesButton(topPanelHeight/3, topPanelHeight/3, offerId, userId);
+            favouritesButton.addActionListener(e -> FavouritesButtonCreator.favouritesBtnClicked(favouritesButton, userId));
+            topPanel.add(favouritesButton);
+        }
         add(topPanel);
 
         int contentPanelsHeight = panelHeight - topPanelHeight;

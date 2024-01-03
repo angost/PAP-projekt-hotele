@@ -49,10 +49,12 @@ public class OfferDetailsGUI extends BaseGUI {
         footerPanel.add(undoButton);
         footerPanel.add(Box.createHorizontalGlue());
 
-        RoundedButtonDefault reserveButton = new RoundedButtonDefault("Reserve", frameWidth*3/20, frameHeight/10, false, false);
-        reserveButton.addActionListener(e-> reserveBtnClickedAction());
-        footerPanel.add(reserveButton);
-        footerPanel.add(Box.createRigidArea(new Dimension(undoButtonSize/2, 0)));
+        if (userType.equals("Client")) {
+            RoundedButtonDefault reserveButton = new RoundedButtonDefault("Reserve", frameWidth*3/20, frameHeight/10, false, false);
+            reserveButton.addActionListener(e-> reserveBtnClickedAction());
+            footerPanel.add(reserveButton);
+            footerPanel.add(Box.createRigidArea(new Dimension(undoButtonSize/2, 0)));
+        }
 
         mainPanel.add(Box.createRigidArea(new Dimension(0,gap2)));
         mainPanel.add(footerPanel);
