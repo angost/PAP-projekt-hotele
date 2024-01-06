@@ -4,8 +4,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
 import pap.db.entities.Offer;
-import pap.db.entities.Reservation;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.util.List;
 
 public class OfferDAO {
@@ -93,6 +96,20 @@ public class OfferDAO {
         try (Session session = factory.openSession()) {
             // it is not safe to use this method with user input
             return session.createNativeQuery(query, Offer.class).list();
+        }
+    }
+
+    // advanced methods
+    public Image getImageById(int id) {
+        Image image;
+        try {
+            if (new OfferDAO().findById(id).getImageData() == null)
+                image = ImageIO.read(new File("src/main/resources/no_image.jpg"));
+            else
+                image = ImageIO.read(new ByteArrayInputStream(new OfferDAO().findById(id).getImageData()));
+            return image;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
