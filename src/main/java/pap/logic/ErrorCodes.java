@@ -80,6 +80,10 @@ public class ErrorCodes {
         errorDescriptions.put(302, "Wrong password for owner (not successful owner login attempt)");
         errorDescriptions.put(303, "Owner account is not active (not successful owner login attempt)");
 
+        errorDescriptions.put(501, "No such admin in database (not successful admin login attempt)");
+        errorDescriptions.put(502, "Wrong password (not successful admin login attempt)");
+        errorDescriptions.put(503, "Admin account is not active (not successful admin login attempt)");
+
         // Deactivate Errors
         errorDescriptions.put(401, "User not found");
         errorDescriptions.put(402, "User has active reservations (not successful deactivate account)");
