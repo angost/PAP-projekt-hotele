@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
 import pap.db.entities.Admin;
+import pap.db.entities.Client;
 
 import java.util.List;
 
@@ -79,6 +80,14 @@ public class AdminDAO {
     public Admin findById(int id) {
         try (Session session = factory.openSession()) {
             return session.get(Admin.class, id);
+        }
+    }
+
+    public Admin findByUsername(String username) {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("select * from admins where username = :username", Admin.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
         }
     }
 }
