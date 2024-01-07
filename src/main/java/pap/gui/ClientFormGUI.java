@@ -21,7 +21,7 @@ public class ClientFormGUI extends FormGUITemplate {
     }
 
     String[] getFieldTypes() {
-        String[] fieldTypes = {"text", "text", "text", "text", "comboBoxInteger",  "text", "text", "text", "text", "text", "text", "text", "text", "text"};
+        String[] fieldTypes = {"text", "password", "text", "text", "comboBoxInteger",  "text", "text", "text", "text", "text", "text", "text", "text", "text"};
         return fieldTypes;
     }
 

@@ -24,7 +24,7 @@ public class ErrorCodes {
         errorDescriptions.put(112, "Password doesn't contain special character");
         errorDescriptions.put(113, "Email is too short");
         errorDescriptions.put(114, "Email is too long");
-        errorDescriptions.put(115, "Email doesn't contain @");
+        errorDescriptions.put(115, "Email format is incorrect");
         errorDescriptions.put(116, "Phone number is too short");
         errorDescriptions.put(117, "Phone number is too long");
         errorDescriptions.put(118, "Phone number doesn't contain only numbers");

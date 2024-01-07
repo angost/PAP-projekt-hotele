@@ -20,7 +20,7 @@ public class OwnerFormGUI extends FormGUITemplate {
     }
 
     String[] getFieldTypes() {
-        String[] fieldTypes = {"text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text"};
+        String[] fieldTypes = {"text", "password", "text", "text", "text", "text", "text", "text", "text", "text", "text"};
         return fieldTypes;
     }
 

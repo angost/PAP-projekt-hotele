@@ -114,7 +114,14 @@ public abstract class FormGUITemplate extends BaseGUI{
                 fieldPanel.add(inputField);
                 textFields.add(inputField);
                 textFieldLabels.add(fieldLabels[i]);
-
+            } else if (fieldTypes[i].equals("password")) {
+                JPasswordField inputField = new JPasswordField();
+                inputField.setFont(fontMiddle);
+                inputField.setPreferredSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
+                inputField.setMaximumSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
+                fieldPanel.add(inputField);
+                textFields.add(inputField);
+                textFieldLabels.add(fieldLabels[i]);
             } else if (fieldTypes[i].startsWith("radioButton")) {
                 Object[] radioBtnOptions;
                 if (fieldTypes[i].equals("radioButtonInteger")) {
