@@ -1,7 +1,9 @@
 package pap.logic.login;
 
+import jakarta.persistence.NoResultException;
 import pap.db.dao.AdminDAO;
 import pap.db.entities.Admin;
+import pap.logic.add.AddNewOwner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +32,11 @@ public class AdminLogin {
                 codes.add(502);
             }
             return new Admin();
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             codes.add(501);
+            return new Admin();
+        } catch (Exception exception) {
+            codes.add(1);
             return new Admin();
         }
     }

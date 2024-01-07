@@ -1,4 +1,5 @@
 package pap.logic.login;
+import jakarta.persistence.NoResultException;
 import pap.db.dao.ClientDAO;
 import pap.db.entities.Client;
 import java.util.*;
@@ -26,8 +27,11 @@ public class ClientLogin {
                 codes.add(202);
             }
             return new Client();
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             codes.add(201);
+            return new Client();
+        } catch (Exception exception) {
+            codes.add(1);
             return new Client();
         }
     }
