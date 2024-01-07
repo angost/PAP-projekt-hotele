@@ -5,7 +5,7 @@ import pap.db.dao.*;
 import java.util.*;
 
 public class DeactivateAccount {
-    public static List <Integer> deactivateUserAccount(int id) {
+    public static List <Integer> deactivateClientAccount(int id) {
         List <Integer> codes = new ArrayList<>();
         Client user = new ClientDAO().findById(id);
         if (user == null) {

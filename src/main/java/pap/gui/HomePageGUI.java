@@ -196,7 +196,7 @@ public class HomePageGUI extends BaseGUI {
         List<Integer> errorCodes = new ArrayList<>();
 
         if (userType.equals("Client")){
-            errorCodes = DeactivateAccount.deactivateUserAccount(userId);
+            errorCodes = DeactivateAccount.deactivateClientAccount(userId);
         } else if (userType.equals("Owner")){
             errorCodes = DeactivateAccount.deactivateOwnerAccount(userId);
         } else {
