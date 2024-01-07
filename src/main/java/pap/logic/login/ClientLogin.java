@@ -3,11 +3,11 @@ import pap.db.dao.ClientDAO;
 import pap.db.entities.Client;
 import java.util.*;
 
-public class UserLogin {
+public class ClientLogin {
     private final String username;
     private final String password;
     private List <Integer> codes;
-    public UserLogin(String username, String password) {
+    public ClientLogin(String username, String password) {
         this.username = username;
         this.password = password;
         this.codes = new ArrayList<>();
