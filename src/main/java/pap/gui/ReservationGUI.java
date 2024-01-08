@@ -4,11 +4,12 @@ package pap.gui;
 import pap.gui.components.*;
 import pap.logic.guiAction.OfferDetails;
 import pap.logic.guiAction.ReserveOffer;
+import pap.logic.validators.ReservationValidator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.Inet4Address;
 import java.util.HashMap;
+import java.util.List;
 
 public class ReservationGUI extends BaseGUI {
 
@@ -54,7 +55,7 @@ public class ReservationGUI extends BaseGUI {
         footerPanel.add(Box.createHorizontalGlue());
 
         RoundedButtonDefault reserveButton = new RoundedButtonDefault("Complete Reservation", frameWidth/5, frameHeight/10, false, false);
-        reserveButton.addActionListener(e-> makeReservationClickedAction());
+        reserveButton.addActionListener(e-> makeReservationClickedAction(reservationPanel));
         footerPanel.add(reserveButton);
         footerPanel.add(Box.createRigidArea(new Dimension(undoButtonSize/2, 0)));
 
@@ -68,8 +69,16 @@ public class ReservationGUI extends BaseGUI {
         frame.setVisible(false);
     }
 
-    void makeReservationClickedAction(){
-        System.out.println("User " + userId + " reserved offer " + offerId + "made res");
+    void makeReservationClickedAction(MakeReservationPanel panel){
+        ReservationValidator reservationValidator = new ReservationValidator(panel.getStartDate(), panel.getEndDate(), offerId);
+        List <Integer> errors = reservationValidator.validate();
+        if (errors.isEmpty()){
+            new ReserveOffer(panel.getStartDate(), panel.getEndDate(), offerId, userId);
+            System.out.println("Made Reservation!");
+        }
+        else {
+            new ErrorWindow(errors);
+        }
     }
 
     void createGUI(){
