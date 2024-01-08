@@ -1,5 +1,6 @@
 package pap.gui.components;
 
+import lombok.Getter;
 import pap.db.entities.PaymentMethod;
 import pap.gui.FormGUITemplate;
 
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.List;
 import java.io.File;
 import java.util.HashMap;
@@ -25,6 +27,7 @@ public class MakeReservationPanel extends JPanel {
     private JComboBox<Integer> endMonthComboBox;
     private JComboBox<Integer> endDayComboBox;
     Color bgColor; Font fontBigger, fontMiddle, fontMiddleBold, fontSmaller, fontSmallerBold;
+    LocalDate startDate, endDate;
 
     public MakeReservationPanel(Color bgColor, Font fontBigger, Font fontBiggerBold, Font fontMiddle, Font fontMiddleBold, Font fontSmaller, Font fontSmallerBold, int panelWidth, int panelHeight,
                              HashMap<String, String> offerInfo, HashMap<String, String> reservationInfo, Integer userId) {
@@ -288,5 +291,29 @@ public class MakeReservationPanel extends JPanel {
         return separatorPanel;
     }
 
+    private void returnSelectedDates() {
+        if (endDayComboBox.getSelectedItem() != null) {
+            int startYear = (int) startYearComboBox.getSelectedItem();
+            int startMonth = (int) startMonthComboBox.getSelectedItem();
+            int startDay = (int) startDayComboBox.getSelectedItem();
+
+            int endYear = (int) endYearComboBox.getSelectedItem();
+            int endMonth = (int) endMonthComboBox.getSelectedItem();
+            int endDay = (int) endDayComboBox.getSelectedItem();
+
+            this.startDate = LocalDate.of(startYear, startMonth, startDay);
+            this.endDate = LocalDate.of(endYear, endMonth, endDay);
+        }
+    }
+
+    public LocalDate getStartDate(){
+        returnSelectedDates();
+        return startDate;
+    }
+
+    public LocalDate getEndDate(){
+        returnSelectedDates();
+        return endDate;
+    }
 
 }
