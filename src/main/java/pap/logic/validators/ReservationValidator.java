@@ -10,13 +10,15 @@ public class ReservationValidator {
     private final LocalDate dateStart;
     private final LocalDate dateEnd;
     private final Integer offerId;
+    private final PaymentMethod creditCard;
 
     List<Integer> codes;
 
-    public ReservationValidator(LocalDate dateStart, LocalDate dateEnd, Integer offerId){
+    public ReservationValidator(LocalDate dateStart, LocalDate dateEnd, PaymentMethod creditCard, Integer offerId){
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.offerId = offerId;
+        this.creditCard = creditCard;
         this.codes = new ArrayList<>();
     }
 
@@ -24,6 +26,7 @@ public class ReservationValidator {
         checkOfferActive(offerId, codes);
         checkDateAvailable(offerId, dateStart, dateEnd, codes);
         checkDateCorrect(dateStart, dateEnd, codes);
+        checkCreditCard(creditCard, codes);
         return codes;
     }
 
@@ -36,11 +39,20 @@ public class ReservationValidator {
         } catch (Exception ignored) {}
     }
 
+    private static void checkCreditCard(PaymentMethod creditCard, List <Integer> codes){
+        try {
+            //TODO moneyCheck
+            if (creditCard == null){
+                codes.add(4);
+            }
+        } catch (Exception ignored) {}
+    }
+
     private static void checkDateAvailable(Integer offerId, LocalDate dateStart, LocalDate dateEnd, List<Integer> codes){
         try {
             List<Reservation> reservations = new ReservationDAO().findByOfferId(offerId);
             for (Reservation reservation: reservations){
-                if (reservation.getEndDate().isBefore(dateEnd) && reservation.getStartDate().isAfter(dateStart)){
+                if (!(reservation.getEndDate().isBefore(dateStart) || reservation.getStartDate().isAfter(dateEnd))){
                     codes.add(2);
                     return;
                 }
