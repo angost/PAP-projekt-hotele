@@ -23,9 +23,8 @@ public class ErrorWindow {
         for (int error: errors) {
             if (error == 1) {message += "Offer not Active.\n";}
             else if (error == 2) {message += "Date not Available.\n";}
-            else if (error == 3) {message += "Ending Date cannot be before Start Date.\n";
-
-            }
+            else if (error == 3) {message += "Ending Date cannot be before Start Date.\n";}
+            else if (error == 4) {message += "You have to choose payment option.\n";}
         }
         return message;
     }
