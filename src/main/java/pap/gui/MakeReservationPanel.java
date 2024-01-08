@@ -1,10 +1,12 @@
 package pap.gui;
 
 import lombok.Getter;
+import pap.db.entities.Discount;
 import pap.db.entities.PaymentMethod;
 import pap.gui.FormGUITemplate;
 
 import pap.db.dao.PaymentMethodDAO;
+import pap.db.dao.DiscountsDAO;
 import pap.gui.HomePageGUI;
 import pap.gui.components.RoundedButton;
 
@@ -35,6 +37,8 @@ public class MakeReservationPanel extends JPanel {
     Color bgColor; Font fontBigger, fontMiddle, fontMiddleBold, fontSmaller, fontSmallerBold;
     LocalDate startDate, endDate;
     String userType;
+    @Getter
+    private String discountCode;
 
     public MakeReservationPanel(Color bgColor, Font fontBigger, Font fontBiggerBold, Font fontMiddle, Font fontMiddleBold, Font fontSmaller, Font fontSmallerBold, int panelWidth, int panelHeight,
                              HashMap<String, String> offerInfo, HashMap<String, String> reservationInfo, Integer userId, JFrame frame, String userType) {
@@ -192,6 +196,7 @@ public class MakeReservationPanel extends JPanel {
         contentPanelRight.add(paymentMethodLabel);
 
         addCreditCardPanel(contentPanelRight);
+        addDiscountPanel(contentPanelRight);
 
     }
 
@@ -277,6 +282,68 @@ public class MakeReservationPanel extends JPanel {
                 panel.add(creditCardRadioButton);
             }
         }
+    }
+
+    void addDiscountPanel(JPanel panel) {
+        // Use a smaller font size for the label
+        JPanel newPanel = new JPanel();
+        JLabel addCreditCardLabel = new JLabel("Enter discount code:");
+        addCreditCardLabel.setFont(new Font(addCreditCardLabel.getFont().getName(), Font.PLAIN, 14));
+
+        JTextField discountCodeField = new JTextField(16);
+
+        // Smaller font size for the button
+        RoundedButton checkDiscountCodeButton = new RoundedButton("Check",
+                panelWidth * 5 / 6, panelHeight / 4, Color.ORANGE, Color.YELLOW, new Font("Arial", Font.PLAIN, 12), false);
+
+        // Set the layout manager to GridBagLayout
+        newPanel.setBackground(bgColor);
+        newPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        // Label
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        newPanel.add(addCreditCardLabel, gbc);
+
+        // Text field
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        newPanel.add(discountCodeField, gbc);
+
+        // Button
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.weightx = 0.0;
+        newPanel.add(checkDiscountCodeButton, gbc);
+        panel.add(newPanel);
+
+        checkDiscountCodeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String discountCode = discountCodeField.getText();
+                float discount = isValidDiscountCode(discountCode);
+                if (discount > 0) {
+                    JOptionPane.showMessageDialog(null, String.format("Discount code correct, adding %s%% discount", String.format("%.2f", discount)), "Discount Code Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Discount code incorrect!", "Error!", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+
+    private float isValidDiscountCode(String discountCode) {
+        List<Discount> discounts = new DiscountsDAO().findAll();
+        for (Discount discount: discounts){
+            if (discount.isActive() && discountCode.equals(discount.getCode())){
+                return discount.getValue();
+            }
+        }
+        return 0;
     }
 
     List<PaymentMethod> getCreditCards(){
