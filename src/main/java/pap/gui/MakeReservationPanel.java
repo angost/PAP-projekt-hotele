@@ -1,10 +1,13 @@
-package pap.gui.components;
+package pap.gui;
 
 import lombok.Getter;
 import pap.db.entities.PaymentMethod;
 import pap.gui.FormGUITemplate;
 
 import pap.db.dao.PaymentMethodDAO;
+import pap.gui.HomePageGUI;
+import pap.gui.components.RoundedButton;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -26,11 +29,15 @@ public class MakeReservationPanel extends JPanel {
     private JComboBox<Integer> endYearComboBox;
     private JComboBox<Integer> endMonthComboBox;
     private JComboBox<Integer> endDayComboBox;
+    private JFrame frame;
+    @Getter
+    PaymentMethod pickedCreditCard;
     Color bgColor; Font fontBigger, fontMiddle, fontMiddleBold, fontSmaller, fontSmallerBold;
     LocalDate startDate, endDate;
+    String userType;
 
     public MakeReservationPanel(Color bgColor, Font fontBigger, Font fontBiggerBold, Font fontMiddle, Font fontMiddleBold, Font fontSmaller, Font fontSmallerBold, int panelWidth, int panelHeight,
-                             HashMap<String, String> offerInfo, HashMap<String, String> reservationInfo, Integer userId) {
+                             HashMap<String, String> offerInfo, HashMap<String, String> reservationInfo, Integer userId, JFrame frame, String userType) {
 
         this.panelWidth = panelWidth;
         this.panelHeight = panelHeight;
@@ -42,6 +49,9 @@ public class MakeReservationPanel extends JPanel {
         this.fontSmallerBold = fontSmallerBold;
         int topPanelHeight = panelHeight / 6;
         this.userId = userId;
+        this.frame = frame;
+        this.userType = userType;
+        this.pickedCreditCard = null;
 
         setBackground(bgColor);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -185,17 +195,6 @@ public class MakeReservationPanel extends JPanel {
 
     }
 
-    void addJLabel(String text, Color color, Font font, JPanel panel, int panelWidth, int panelHeight) {
-        JLabel textLabel = new JLabel(text, JLabel.LEFT);
-        textLabel.setFont(font);
-        textLabel.setForeground(color);
-        if (panelWidth != -1 && panelHeight != -1){
-            textLabel.setPreferredSize(new Dimension(panelWidth, panelHeight));
-            textLabel.setMaximumSize(new Dimension(panelWidth, panelHeight));
-        }
-        panel.add(textLabel);
-    }
-
     private JComboBox<Integer> createComboBox(int start, int end) {
         Integer[] items = new Integer[end - start + 1];
         for (int i = 0; i < items.length; i++) {
@@ -246,8 +245,8 @@ public class MakeReservationPanel extends JPanel {
             addCreditCardButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //TODO
-                    System.out.println("User: " + userId);
+                    frame.setVisible(false);
+                    new HomePageGUI(userId, userType).createGUI();
                 }
             });
         } else {
@@ -269,7 +268,7 @@ public class MakeReservationPanel extends JPanel {
                 creditCardRadioButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // TODO: Handle the selected credit card, e.g., store it in a variable
+                        pickedCreditCard = creditCard;
                         System.out.println("Selected Credit Card: " + creditCard.getCardNumber());
                     }
                 });
