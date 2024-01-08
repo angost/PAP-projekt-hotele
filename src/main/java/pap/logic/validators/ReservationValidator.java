@@ -11,16 +11,19 @@ public class ReservationValidator {
     private final LocalDate dateEnd;
     private final Integer offerId;
 
+    List<Integer> codes;
+
     public ReservationValidator(LocalDate dateStart, LocalDate dateEnd, Integer offerId){
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.offerId = offerId;
+        this.codes = new ArrayList<>();
     }
 
     public List <Integer> validate(){
-        List <Integer> codes = new ArrayList<>();
         checkOfferActive(offerId, codes);
         checkDateAvailable(offerId, dateStart, dateEnd, codes);
+        checkDateCorrect(dateStart, dateEnd, codes);
         return codes;
     }
 
@@ -43,5 +46,12 @@ public class ReservationValidator {
                 }
             }
         } catch (Exception ignored) {}
+    }
+
+    private static void checkDateCorrect(LocalDate dateStart, LocalDate dateEnd, List<Integer> codes){
+        System.out.println(dateStart + " " + dateEnd);
+        if (dateEnd.isBefore(dateStart)){
+            codes.add(3);
+        }
     }
 }
