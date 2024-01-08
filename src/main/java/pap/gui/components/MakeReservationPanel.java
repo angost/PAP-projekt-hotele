@@ -253,10 +253,15 @@ public class MakeReservationPanel extends JPanel {
             panel.add(selectCreditCardLabel);
 
             ButtonGroup cardButtonGroup = new ButtonGroup();
-
+            Integer counter = 1;
             for (PaymentMethod creditCard : creditCards) {
-                JRadioButton creditCardRadioButton = new JRadioButton(creditCard.getCardNumber()); // Replace with the appropriate method to get card details
-                creditCardRadioButton.setFont(new Font(creditCardRadioButton.getFont().getName(), Font.PLAIN, 14));
+                JLabel cardCounter = new JLabel("Credit Card" + counter + ": ");
+                cardCounter.setFont(new Font(selectCreditCardLabel.getFont().getName(), Font.PLAIN, 16));
+                counter += 1;
+                String cardNumber = creditCard.getCardNumber();
+                cardNumber = cardNumber.substring(0, 4) + "-" + "#".repeat(cardNumber.length() - 8) + "-" + cardNumber.substring(cardNumber.length() - 4);
+                JRadioButton creditCardRadioButton = new JRadioButton(cardNumber);
+                creditCardRadioButton.setFont(new Font(selectCreditCardLabel.getFont().getName(), Font.BOLD, 16));
 
                 creditCardRadioButton.addActionListener(new ActionListener() {
                     @Override
@@ -265,7 +270,7 @@ public class MakeReservationPanel extends JPanel {
                         System.out.println("Selected Credit Card: " + creditCard.getCardNumber());
                     }
                 });
-
+                panel.add(cardCounter);
                 cardButtonGroup.add(creditCardRadioButton);
                 panel.add(creditCardRadioButton);
             }
