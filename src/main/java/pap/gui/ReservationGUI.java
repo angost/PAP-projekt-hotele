@@ -38,7 +38,7 @@ public class ReservationGUI extends BaseGUI {
         // Should be info passed to this class's constructor - hashmap<String,String>, which will be later passed to payment view
         HashMap<String, String> reservationInfo = new HashMap<>();
         MakeReservationPanel reservationPanel = new MakeReservationPanel(neutralGray, fontBigger, fontBiggerBold, fontMiddle,
-                fontMiddleBold, fontSmaller, fontSmallerBold, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2, offerInfo, reservationInfo, userId);
+                fontMiddleBold, fontSmaller, fontSmallerBold, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2, offerInfo, reservationInfo, userId, frame, userType);
         mainPanel.add(reservationPanel);
 
         JPanel footerPanel = new JPanel();
@@ -70,15 +70,22 @@ public class ReservationGUI extends BaseGUI {
     }
 
     void makeReservationClickedAction(MakeReservationPanel panel){
-        ReservationValidator reservationValidator = new ReservationValidator(panel.getStartDate(), panel.getEndDate(), offerId);
+        ReservationValidator reservationValidator = new ReservationValidator(panel.getStartDate(), panel.getEndDate(), panel.getPickedCreditCard(), offerId);
         List <Integer> errors = reservationValidator.validate();
         if (errors.isEmpty()){
+            showConfirmationDialog("Reservation made successfully!");
             new ReserveOffer(panel.getStartDate(), panel.getEndDate(), offerId, userId);
             System.out.println("Made Reservation!");
+            frame.setVisible(false);
+            new HomePageGUI(userId, userType).createGUI();
         }
         else {
             new ErrorWindow(errors);
         }
+    }
+
+    private void showConfirmationDialog(String message) {
+        JOptionPane.showMessageDialog(null, message, "Reservation Confirmation", JOptionPane.INFORMATION_MESSAGE);
     }
 
     void createGUI(){
