@@ -4,9 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
 import pap.db.entities.Hotel;
-import pap.db.entities.Offer;
 
-import javax.security.auth.login.CredentialException;
 import java.util.List;
 
 public class HotelDAO {

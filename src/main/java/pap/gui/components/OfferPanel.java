@@ -7,8 +7,8 @@ import java.util.HashMap;
 public class OfferPanel extends OfferReservationPanel {
 
     public OfferPanel(Color bgColor, Font fontBigger, Font fontMiddle, Font fontMiddleBold, int offerWidth, int offerHeight,
-                      String topPanelText, String imgPath, HashMap<String, String> detailsInfo) {
-        super(bgColor, fontBigger, fontMiddle, fontMiddleBold, offerWidth, offerHeight, topPanelText, imgPath, detailsInfo);
+                      String topPanelText, HashMap<String, String> detailsInfo, Image offerImg) {
+        super(bgColor, fontBigger, fontMiddle, fontMiddleBold, offerWidth, offerHeight, topPanelText, detailsInfo, offerImg);
     }
 
     @Override
