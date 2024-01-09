@@ -7,15 +7,15 @@ import java.util.List;
 
 public class HotelValidator {
     private static final int MIN_NAME_LENGTH = 2;
-    private static final int MAX_NAME_LENGTH = 30;
+    private static final int MAX_NAME_LENGTH = 32;
     private static final int MIN_DESC_LENGTH = 10;
     private static final int MAX_DESC_LENGTH = 100;
-    private static final int MIN_EMAIL_LENGTH = 2;
+    private static final int MIN_EMAIL_LENGTH = 5;
     private static final int MAX_EMAIL_LENGTH = 30;
-    private static final int MIN_WEBSITE_LENGTH = 20;
-    private static final int MAX_WEBSITE_LENGTH = 30;
-    private static final int MIN_PHONE_NUMBER_LENGTH = 2;
-    private static final int MAX_PHONE_NUMBER_LENGTH = 3;
+    private static final int MIN_WEBSITE_LENGTH = 4;
+    private static final int MAX_WEBSITE_LENGTH = 64;
+    private static final int MIN_PHONE_NUMBER_LENGTH = 9;
+    private static final int MAX_PHONE_NUMBER_LENGTH = 14;
     private static final int MIN_BANK_ACCOUNT_NUMBER = 15;
     private static final int MAX_BANK_ACCOUNT_NUMBER = 32;
 
@@ -72,7 +72,7 @@ public class HotelValidator {
     public static void validateEmail(String email, List <Integer> codes) {
         if (email.length() < MIN_EMAIL_LENGTH) codes.add(706);
         if (email.length() > MAX_EMAIL_LENGTH) codes.add(707);
-        if (!email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$")) codes.add(718);
+        if (!email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$")) codes.add(708);
     }
 
     public static void validateWebsite(String website, List <Integer> codes) {
