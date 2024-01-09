@@ -33,7 +33,8 @@ public class OfferDetailsGUI extends BaseGUI {
         // Should be info passed to this class's constructor - hashmap<String,String>, which will be later passed to payment view
         HashMap<String, String> reservationInfo = new HashMap<>();
         OfferDetailsPanel offerPanel = new OfferDetailsPanel(neutralGray, fontBigger, fontBiggerBold, fontMiddle,
-                fontMiddleBold, fontSmaller, fontSmallerBold, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2, offerInfo, image, reservationInfo);
+                fontMiddleBold, fontSmaller, fontSmallerBold, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2,
+                offerInfo, image, reservationInfo, offerId, userId, userType);
         mainPanel.add(offerPanel);
 
         JPanel footerPanel = new JPanel();
@@ -49,10 +50,12 @@ public class OfferDetailsGUI extends BaseGUI {
         footerPanel.add(undoButton);
         footerPanel.add(Box.createHorizontalGlue());
 
-        RoundedButtonDefault reserveButton = new RoundedButtonDefault("Reserve", frameWidth*3/20, frameHeight/10, false, false);
-        reserveButton.addActionListener(e-> reserveBtnClickedAction());
-        footerPanel.add(reserveButton);
-        footerPanel.add(Box.createRigidArea(new Dimension(undoButtonSize/2, 0)));
+        if (userType.equals("Client")) {
+            RoundedButtonDefault reserveButton = new RoundedButtonDefault("Reserve", frameWidth*3/20, frameHeight/10, false, false);
+            reserveButton.addActionListener(e-> reserveBtnClickedAction());
+            footerPanel.add(reserveButton);
+            footerPanel.add(Box.createRigidArea(new Dimension(undoButtonSize/2, 0)));
+        }
 
         mainPanel.add(Box.createRigidArea(new Dimension(0,gap2)));
         mainPanel.add(footerPanel);

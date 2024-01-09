@@ -20,6 +20,7 @@ public abstract class ScrollGUITemplate extends BaseGUI{
     Integer[] fittingElementsIds;
     int offerHeight = frameHeight/4;
     int offerWidth = frameWidth/3;
+    int scrollButtonSize = frameHeight/7;
     String pageName = "";
 
     abstract void getElementsData();

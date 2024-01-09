@@ -1,8 +1,7 @@
 package pap.gui;
 
+import pap.gui.components.*;
 import pap.db.dao.OfferDAO;
-import pap.gui.components.OfferPanel;
-import pap.gui.components.ScrollElementButton;
 import pap.logic.guiAction.FindDisplayOffers;
 
 import javax.swing.*;
@@ -14,8 +13,8 @@ import java.util.HashMap;
 public class SearchOffersGUI extends ScrollGUITemplate{
 
     void getElementsData() {
-        fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
-        nrOfElements = fittingElementsIds.length;
+        this.fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
+        this.nrOfElements = fittingElementsIds.length;
     }
 
     HashMap<String, String> getElementData(int elementId) {
@@ -46,7 +45,7 @@ public class SearchOffersGUI extends ScrollGUITemplate{
 
     void createScrollButtons(int elementId, JPanel offerPanel) {
 
-        ScrollElementButton seeOfferBtn = new ScrollElementButton("See offer", frameHeight/7, frameHeight/7,secondColor, secondColorDarker, fontButtons, true, elementId);
+        ScrollElementButton seeOfferBtn = new ScrollElementButton("See offer", scrollButtonSize, scrollButtonSize, secondColor, secondColorDarker, fontButtons, true, elementId);
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
@@ -56,7 +55,17 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         };
         seeOfferBtn.addActionListener(actionListener);
         offerPanel.add(seeOfferBtn);
+        offerPanel.add(Box.createRigidArea(new Dimension(scrollButtonSize,0)));
 
+        FavouritesButton favouritesButton = FavouritesButtonCreator.createFavouritesButton(scrollButtonSize/2, scrollButtonSize/2, elementId, userId);
+        ActionListener favActionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                FavouritesButton button = (FavouritesButton)actionEvent.getSource();
+                FavouritesButtonCreator.favouritesBtnClicked(button, userId);
+            }
+        };
+        favouritesButton.addActionListener(favActionListener);
+        offerPanel.add(favouritesButton);
     }
 
     public SearchOffersGUI(int userId, String userType){

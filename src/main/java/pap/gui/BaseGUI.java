@@ -19,6 +19,7 @@ public class BaseGUI {
     Color secondColor = Color.decode("#e09f3e"); Color secondColorDarker = Color.decode("#b88232");
     Color neutralBlue = Color.decode("#d6d9df"); Color neutralGray = Color.decode("#a89f9f");
     Color statusNeutral = Color.decode("#7a7373"); Color statusWrong = logoColor;
+    Color statusWrongLighter = Color.decode("#a84b4c");
     Font fontBigger, fontMiddle, fontSmaller, fontButtons, fontBiggerBold, fontMiddleBold, fontSmallerBold;
     int userId = -1; String userType = "None";
 
