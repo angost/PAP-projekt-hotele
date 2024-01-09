@@ -15,9 +15,9 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
 
     // mock function
     void getElementsData() {
-        fittingElementsIds = new Integer[]{1,2,3,4,5};
+        this.fittingElementsIds = new Integer[]{1,2,3,4,5};
         // fittingElementsIds = new ...()...(userId);
-        nrOfElements = fittingElementsIds.length;
+        this.nrOfElements = fittingElementsIds.length;
     }
 
     // mock function
@@ -110,7 +110,8 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
             if (penalty == true) {
                 reservationPanel.add(Box.createRigidArea(new Dimension(frameHeight/14,0)));
 
-                ScrollElementButton penaltiesButton = new ScrollElementButton("See penalties", frameHeight/7, frameHeight/7, Color.decode("#A84B4C"), statusWrong, fontButtons, true, elementId);
+                ScrollElementButton penaltiesButton = new ScrollElementButton("See penalties", frameHeight/7, frameHeight/7,
+                        statusWrongLighter, statusWrong, fontButtons, true, elementId);
                 ActionListener penatlyActionListener = new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
                         ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();

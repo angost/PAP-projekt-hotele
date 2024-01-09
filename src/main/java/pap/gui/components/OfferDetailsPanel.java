@@ -3,6 +3,8 @@ package pap.gui.components;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
 
@@ -13,7 +15,7 @@ public class OfferDetailsPanel extends JPanel {
     RoundedButtonDefault seeHotelButton, seeReviewsButton;
 
     public OfferDetailsPanel(Color bgColor, Font fontBigger, Font fontBiggerBold, Font fontMiddle, Font fontMiddleBold, Font fontSmaller, Font fontSmallerBold, int panelWidth, int panelHeight,
-                             HashMap<String, String> offerInfo, Image offerImg, HashMap<String, String> reservationInfo) {
+                             HashMap<String, String> offerInfo, Image offerImg, HashMap<String, String> reservationInfo, int offerId, int userId, String userType) {
 
         this.panelWidth = panelWidth; this.panelHeight = panelHeight;
         this.bgColor = bgColor; this.fontBigger = fontBigger; this.fontMiddle = fontMiddle;
@@ -43,7 +45,13 @@ public class OfferDetailsPanel extends JPanel {
         topPanel.add(Box.createRigidArea(new Dimension(20,0)));
         seeHotelButton = new RoundedButtonDefault("See hotel", panelWidth/12, topPanelHeight/2, false, true);
         topPanel.add(seeHotelButton);
-        topPanel.add(Box.createRigidArea(new Dimension(10,0)));
+        topPanel.add(Box.createRigidArea(new Dimension(30,0)));
+
+        if (userType.equals("Client")) {
+            FavouritesButton favouritesButton = FavouritesButtonCreator.createFavouritesButton(topPanelHeight/3, topPanelHeight/3, offerId, userId);
+            favouritesButton.addActionListener(e -> FavouritesButtonCreator.favouritesBtnClicked(favouritesButton, userId));
+            topPanel.add(favouritesButton);
+        }
         add(topPanel);
 
         int contentPanelsHeight = panelHeight - topPanelHeight;
