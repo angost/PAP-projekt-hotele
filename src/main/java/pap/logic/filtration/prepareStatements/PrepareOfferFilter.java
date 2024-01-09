@@ -52,6 +52,18 @@ public class PrepareOfferFilter {
             baseQuery.append(" AND offers.pet_friendly = '").append(offerInfo.getPetFriendly()).append("'");
         }
 
+        if (offerInfo.getHasWifi() != null) {
+            baseQuery.append(" AND offers.has_wifi = '").append(offerInfo.getHasWifi()).append("'");
+        }
+
+        if (offerInfo.getSmokingAllowed() != null) {
+            baseQuery.append(" AND offers.smoking_allowed = '").append(offerInfo.getSmokingAllowed()).append("'");
+        }
+
+        if (offerInfo.getHasParking() != null) {
+            baseQuery.append(" AND offers.has_parking = '").append(offerInfo.getHasParking()).append("'");
+        }
+
         if (offerInfo.getPriceLowerBound() != null) {
             baseQuery.append(" AND offers.price >= '").append(offerInfo.getPriceLowerBound()).append("'");
         }
