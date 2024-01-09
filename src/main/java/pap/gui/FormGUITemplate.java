@@ -72,7 +72,7 @@ public abstract class FormGUITemplate extends BaseGUI{
             nrOfFields = fieldLabels.length;
         } else {
             nrOfFields = 0; // Throw exception?
-            JOptionPane.showMessageDialog(frame, "Nr of fields inconsistent", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "No of fields inconsistent", "Error!", JOptionPane.ERROR_MESSAGE);
         }
 
         int fieldHeight = frameHeight/22;
