@@ -1,0 +1,32 @@
+package pap.logic.owner.getStats;
+
+import jakarta.persistence.NoResultException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import pap.db.SessionFactoryMaker;
+import pap.db.entities.Hotel;
+
+public class GetHotelStats {
+    private SessionFactory factory = SessionFactoryMaker.getFactory();
+    private Hotel hotel;
+
+    public GetHotelStats(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    public Float getAverageHotelRating() {
+        String query = "SELECT AVG(r.rating) FROM ratings r JOIN offers o ON r.offer_id = o.offer_id JOIN hotels h ON o.hotel_id = h.hotel_id WHERE h.hotel_id = :hotelId";
+        Float value = null;
+        try (Session session = factory.openSession()) {
+            Object result = session.createNativeQuery(query)
+                    .setParameter("hotelId", hotel.getHotelId())
+                    .getSingleResult();
+            if (result != null) {
+                value = ((Number) result).floatValue();
+            }
+        } catch (NoResultException e) {
+            value = null;
+        }
+        return value;
+    }
+}
