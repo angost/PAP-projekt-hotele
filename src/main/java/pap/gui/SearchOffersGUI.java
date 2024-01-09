@@ -1,6 +1,7 @@
 package pap.gui;
 
 import pap.gui.components.*;
+import pap.db.dao.OfferDAO;
 import pap.logic.guiAction.FindDisplayOffers;
 
 import javax.swing.*;
@@ -21,18 +22,6 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         return offerInfo;
     }
 
-    //mock function
-    String getImgPath(int offerId) {
-        HashMap<Integer, String> imgPathMap = new HashMap<Integer, String>();
-        imgPathMap.put(1, "/room1.jpg"); imgPathMap.put(2, "/room2.jpg");
-        imgPathMap.put(3, "/room3.jpg"); imgPathMap.put(4, "/room4.jpg");
-        imgPathMap.put(5, "/room5.jpg"); imgPathMap.put(6, "/room6.jpeg");
-        imgPathMap.put(7, "/room7.jpg"); imgPathMap.put(8, "/room8.jpg");
-        imgPathMap.put(9, "/room9.jpeg"); imgPathMap.put(10, "/room10.jpg");
-        return imgPathMap.get(offerId);
-    }
-
-
     JPanel createScrollElement(int elementId) {
 
         HashMap<String, String> offerInfo = getElementData(elementId);
@@ -43,9 +32,9 @@ public class SearchOffersGUI extends ScrollGUITemplate{
         offerPanel.setPreferredSize(new Dimension(frameWidth, offerHeight));
         offerPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
         offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
-
+        Image image = new OfferDAO().getImageById(elementId);
         OfferPanel offerInfoPanel = new OfferPanel(neutralGray, fontBigger, fontMiddle, fontMiddleBold, offerWidth,
-                offerHeight, offerInfo.get("name"), getImgPath(elementId), offerInfo);
+                offerHeight, offerInfo.get("name"), offerInfo, image);
 
         offerPanel.add(offerInfoPanel);
         offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));

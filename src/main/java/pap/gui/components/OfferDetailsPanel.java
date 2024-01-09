@@ -15,7 +15,7 @@ public class OfferDetailsPanel extends JPanel {
     RoundedButtonDefault seeHotelButton, seeReviewsButton;
 
     public OfferDetailsPanel(Color bgColor, Font fontBigger, Font fontBiggerBold, Font fontMiddle, Font fontMiddleBold, Font fontSmaller, Font fontSmallerBold, int panelWidth, int panelHeight,
-                             HashMap<String, String> offerInfo, HashMap<String, String> reservationInfo, int offerId, int userId, String userType) {
+                             HashMap<String, String> offerInfo, Image offerImg, HashMap<String, String> reservationInfo, int offerId, int userId, String userType) {
 
         this.panelWidth = panelWidth; this.panelHeight = panelHeight;
         this.bgColor = bgColor; this.fontBigger = fontBigger; this.fontMiddle = fontMiddle;
@@ -81,7 +81,6 @@ public class OfferDetailsPanel extends JPanel {
         // LEFT PANEL
         int offerImgWidth = leftPanelWidth; int offerImgHeight = contentPanelsHeight/2;
         try {
-            Image offerImg = ImageIO.read(new File(getClass().getResource(offerInfo.get("img_path")).getPath()));
             offerImg = offerImg.getScaledInstance(offerImgWidth, offerImgHeight, Image.SCALE_SMOOTH);
             ImageIcon offerImgIcon = new ImageIcon(offerImg);
             JLabel offerImgLabel = new JLabel();

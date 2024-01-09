@@ -61,6 +61,10 @@ public class Offer {
     @Column(name = "is_active", nullable = false)
     private boolean isActive = true;
 
+    @Basic
+    @Column(name = "image", nullable = false)
+    private byte[] imageData;
+
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;

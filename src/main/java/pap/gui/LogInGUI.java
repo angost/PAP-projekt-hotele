@@ -146,7 +146,7 @@ public class LogInGUI extends BaseGUI {
         Client user = ul.getUserAccount();
         List<Integer> errorCodesUser = ul.getErrorCodes();
 
-        // Successfull log in
+        // Successful log in
         if (errorCodesUser.isEmpty()) {
             new HomePageGUI(user.getClientId(), "Client").createGUI();
             frame.setVisible(false);

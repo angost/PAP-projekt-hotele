@@ -29,11 +29,12 @@ public class OfferDetailsGUI extends BaseGUI {
 
         mainPanel.add(Box.createRigidArea(new Dimension(0, gap)));
         HashMap<String, String> offerInfo = getOfferInfo();
+        Image image = new OfferDAO().getImageById(offerId);
         // Should be info passed to this class's constructor - hashmap<String,String>, which will be later passed to payment view
         HashMap<String, String> reservationInfo = new HashMap<>();
         OfferDetailsPanel offerPanel = new OfferDetailsPanel(neutralGray, fontBigger, fontBiggerBold, fontMiddle,
                 fontMiddleBold, fontSmaller, fontSmallerBold, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2,
-                offerInfo, reservationInfo, offerId, userId, userType);
+                offerInfo, image, reservationInfo, offerId, userId, userType);
         mainPanel.add(offerPanel);
 
         JPanel footerPanel = new JPanel();
@@ -61,17 +62,6 @@ public class OfferDetailsGUI extends BaseGUI {
         mainPanel.add(Box.createRigidArea(new Dimension(0,gap2)));
     }
 
-    //mock function
-    String getImgPath() {
-        HashMap<Integer, String> imgPathMap = new HashMap<Integer, String>();
-        imgPathMap.put(1, "/room1.jpg"); imgPathMap.put(2, "/room2.jpg");
-        imgPathMap.put(3, "/room3.jpg"); imgPathMap.put(4, "/room4.jpg");
-        imgPathMap.put(5, "/room5.jpg"); imgPathMap.put(6, "/room6.jpeg");
-        imgPathMap.put(7, "/room7.jpg"); imgPathMap.put(8, "/room8.jpg");
-        imgPathMap.put(9, "/room9.jpeg"); imgPathMap.put(10, "/room10.jpg");
-        return imgPathMap.get(offerId);
-    }
-
     // mock function
     HashMap<String, String> getOfferInfo() {
         HashMap<String, String> offerInfo = new HashMap<String, String>();
@@ -82,7 +72,6 @@ public class OfferDetailsGUI extends BaseGUI {
         offerInfo.put("hotel", offer.getHotel().getName());
         offerInfo.put("price", String.format("%.2f", offer.getPrice()) + " PLN");
         offerInfo.put("description", "Welcome to our exquisite Luxury Suite located in the heart of Wrocław, offering a refined and indulgent experience for the discerning traveler. Immerse yourself in the lap of luxury with our meticulously designed suite that combines sophistication, comfort, and modern convenience.");
-        offerInfo.put("img_path", getImgPath());
         offerInfo.put("street", offer.getHotel().getAddress().getStreet());
         offerInfo.put("street_nr", offer.getHotel().getAddress().getStreetNumber());
         offerInfo.put("city", offer.getHotel().getAddress().getCity());

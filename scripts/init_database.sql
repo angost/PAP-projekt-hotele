@@ -83,7 +83,8 @@ CREATE TABLE "offers" (
                           "has_kitchen" bool,
                           "pet_friendly" bool,
                           "price" float,
-                          "is_active" bool
+                          "is_active" bool,
+                          "image" bytea
 );
 
 CREATE TABLE "ratings" (
