@@ -13,7 +13,7 @@ public class PrepareOwnerFilter {
         StringBuilder baseQuery = new StringBuilder("SELECT offers.* FROM offers JOIN hotels ON (offers.hotel_id = hotels.hotel_id) JOIN owners ON (hotels.owner_id = owners.owner_id) WHERE offers.is_active = true");
 
         if (ownerInfo.getCompanyName() != null && !ownerInfo.getCompanyName().isEmpty()) {
-            baseQuery.append(" AND LOWER(owners.company_name) = LOWER('").append(ownerInfo.getCompanyName()).append("')");
+            baseQuery.append(" AND LOWER(owners.company_name) like LOWER('").append(ownerInfo.getCompanyName()).append("%')");
         }
 
         return baseQuery.toString();

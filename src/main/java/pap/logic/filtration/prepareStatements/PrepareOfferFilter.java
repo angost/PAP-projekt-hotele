@@ -13,11 +13,11 @@ public class PrepareOfferFilter {
         StringBuilder baseQuery = new StringBuilder("SELECT * FROM offers WHERE offers.is_active = true");
 
         if (offerInfo.getRoomType() != null && !offerInfo.getRoomType().isEmpty()) {
-            baseQuery.append(" AND LOWER(offers.room_type) = LOWER('").append(offerInfo.getRoomType()).append("')");
+            baseQuery.append(" AND LOWER(offers.room_type) like LOWER('").append(offerInfo.getRoomType()).append("%')");
         }
 
         if (offerInfo.getName() != null && !offerInfo.getName().isEmpty()) {
-            baseQuery.append(" AND LOWER(offers.name) = LOWER('").append(offerInfo.getName()).append("')");
+            baseQuery.append(" AND LOWER(offers.name) like LOWER('").append(offerInfo.getName()).append("%')");
         }
 
         if (offerInfo.getBathroomNoLowerBound() != null) {
