@@ -68,6 +68,37 @@ public class ErrorCodes {
         errorDescriptions.put(509, "Street number is too short");
         errorDescriptions.put(510, "Street number is too long");
         errorDescriptions.put(511, "Wrong street number format");
+
+        // Offer errors
+        errorDescriptions.put(601, "Room type is too short");
+        errorDescriptions.put(602, "Room type is too long");
+        errorDescriptions.put(603, "Name is too short");
+        errorDescriptions.put(604, "Name is too long");
+        errorDescriptions.put(605, "Add date is illegal");
+        errorDescriptions.put(606, "Description is too short");
+        errorDescriptions.put(607, "Description is too long");
+        errorDescriptions.put(608, "BathroomNo can't be negative");
+        errorDescriptions.put(609, "RoomNo can't be negative");
+        errorDescriptions.put(610, "BedNo can't be negative");
+        errorDescriptions.put(611, "Price can't be negative");
+
+        // Hotel errors
+        errorDescriptions.put(701, "Name is too short");
+        errorDescriptions.put(702, "Name is too long");
+        errorDescriptions.put(703, "Add date is illegal");
+        errorDescriptions.put(704, "Description is too short");
+        errorDescriptions.put(705, "Description is too long");
+        errorDescriptions.put(706, "Email is too short");
+        errorDescriptions.put(707, "Email is too long");
+        errorDescriptions.put(708, "Email format is incorrect");
+        errorDescriptions.put(709, "Website is too short");
+        errorDescriptions.put(710, "Website is too long");
+        errorDescriptions.put(711, "Website format is incorrect");
+        errorDescriptions.put(712, "Phone number is too short");
+        errorDescriptions.put(713, "Phone number is too long");
+        errorDescriptions.put(714, "Phone number doesn't contain only numbers");
+        errorDescriptions.put(715, "Bank account is too short");
+        errorDescriptions.put(716, "Bank account is too long");
     }
 
     public static String getErrorDescription(int errorCode) {
