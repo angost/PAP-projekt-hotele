@@ -64,7 +64,7 @@ public class OfferDetailsGUI extends BaseGUI {
     }
 
     HashMap<String, String> getOfferInfo() {
-        HashMap<String, String> offerInfo = new HashMap<String, String>();
+        HashMap<String, String> offerInfo = new HashMap<>();
         OfferDAO od = new OfferDAO();
         Offer offer = od.findById(offerId);
 
@@ -92,11 +92,20 @@ public class OfferDetailsGUI extends BaseGUI {
             yes += "Pet-friendly:  ✔    ";
         else
             no += "Pet-friendly:  ✘    ";
+        if (offer.isHasWifi())
+            yes += "Free Wi-Fi:  ✔    ";
+        else
+            no += "Free Wi-Fi:  ✘    ";
+        if (offer.isSmokingAllowed())
+            yes += "Smoking allowed:  ✔    ";
+        else
+            no += "Smoking allowed:  ✘    ";
+        if (offer.isHasParking())
+            yes += "Parking available:  ✔    ";
+        else
+            no += "Parking available:  ✘    ";
         offerInfo.put("facilities_yes", yes);
         offerInfo.put("facilities_no", no);
-        //offerInfo.put("facilities_yes", "Free Wi-Fi:  ✔    Air conditioning:  ✔    TV in room:  ✔    Breakfast included:  ✔    24/7 reception:  ✔    Laundry services:  ✔   Airport transfer:  ✔    Room service:  ✔    Meeting/conference rooms:  ✔    Family-friendly:  ✔    Close to city center:  ✔");
-        //offerInfo.put("facilities_no", "Parking availability:  ✘    Disability access:  ✘    Balcony:  ✘    Pet-friendly:  ✘    Gym access:  ✘    Security features:  ✘        Kitchen:  ✘    Private bathroom:  ✘    Smoking allowed:  ✘    Pool access:  ✘");
-        //✘✖
         return offerInfo;
     }
 
