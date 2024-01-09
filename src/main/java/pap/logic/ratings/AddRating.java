@@ -1,5 +1,6 @@
 package pap.logic.ratings;
 
+import pap.db.dao.RatingDAO;
 import pap.db.entities.Rating;
 import pap.db.entities.Offer;
 import pap.db.entities.Client;
@@ -20,6 +21,6 @@ public class AddRating {
     }
 
     public void insertIntoDatabase() {
-
+        new RatingDAO().create(rating);
     }
 }

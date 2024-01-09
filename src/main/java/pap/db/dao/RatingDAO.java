@@ -70,6 +70,13 @@ public class RatingDAO {
         }
     }
 
+    public List <Rating> findAll() {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("SELECT * FROM ratings", Rating.class)
+                    .list();
+        }
+    }
+
     public Rating findById(int id) {
         try (Session session = factory.openSession()) {
             return session.get(Rating.class, id);
