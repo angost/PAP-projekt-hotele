@@ -21,8 +21,8 @@ public class HomePageGUI extends BaseGUI {
     MenuButton findOffersButton, seeReservationsButton, favouritesButton,
             reservationHistoryButton, reviewsButton, paymentsButton,
             deactivateAccountButton, yourHotelsButton, yourOffersButton,
-            addHotelButton, addOfferButton, addManyOffersButton,
-            discountsButton, bankInfoButton;
+            addHotelButton, addOfferButton,
+            discountsButton;
     JPanel mainPanel, buttonsPanel, buttonsRowsPanel, infoPanel;
     LogoPanel logoPanel;
     JLabel welcomeLabel;
@@ -147,30 +147,26 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow2.setBackground(bgColor);
             addHotelButton = new MenuButton("Add hotel", "/icons/add_hotel.png");
             addOfferButton = new MenuButton("Add offer", "/icons/add_offer.png");
-            addManyOffersButton = new MenuButton("Add multiple offers", "/icons/add_offers.png");
             buttonsRow2.add(addHotelButton); buttonsRow2.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
-            buttonsRow2.add(addOfferButton); buttonsRow2.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
-            buttonsRow2.add(addManyOffersButton); buttonsRow2.add(Box.createHorizontalGlue());
+            buttonsRow2.add(addOfferButton); buttonsRow2.add(Box.createHorizontalGlue());
 
             JPanel buttonsRow3 = new JPanel();
             buttonsRow3.setLayout(new BoxLayout(buttonsRow3, BoxLayout.LINE_AXIS));
             buttonsRow3.setBackground(bgColor);
             reservationHistoryButton = new MenuButton("See reservation history", "/icons/history.png");
             reviewsButton = new MenuButton("See reviews", "/icons/reviews.png");
-            discountsButton = new MenuButton("Discount codes", "/icons/discount.png");
             buttonsRow3.add(reservationHistoryButton); buttonsRow3.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
-            buttonsRow3.add(reviewsButton); buttonsRow3.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
-            buttonsRow3.add(discountsButton); buttonsRow3.add(Box.createHorizontalGlue());
+            buttonsRow3.add(reviewsButton); buttonsRow3.add(Box.createHorizontalGlue());
 
             JPanel buttonsRow4 = new JPanel();
             buttonsRow4.setLayout(new BoxLayout(buttonsRow4, BoxLayout.LINE_AXIS));
             buttonsRow4.setBackground(bgColor);
-            bankInfoButton = new MenuButton("Bank information", "/icons/bank.png");
+            discountsButton = new MenuButton("Discount codes", "/icons/discount.png");
             deactivateAccountButton = new MenuButton("Deactivate account", "/icons/deactivate.png");
             deactivateAccountButton.fillColor = statusWrongLighter;
             deactivateAccountButton.hoverColor = statusWrong;
             deactivateAccountButton.addActionListener(e->deactivateAccountAction());
-            buttonsRow4.add(bankInfoButton); buttonsRow4.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
+            buttonsRow4.add(discountsButton); buttonsRow4.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow4.add(deactivateAccountButton); buttonsRow4.add(Box.createHorizontalGlue());
 
             buttonsRowsPanel.add(buttonsRow1); buttonsRowsPanel.add(Box.createVerticalGlue());
