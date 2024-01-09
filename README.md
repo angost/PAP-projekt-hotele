@@ -13,11 +13,20 @@ Aby móc uruchomić aplikację, należy zainstalować:
 - **Docker**
 
 ### Uruchomienie
-Aby uruchomić aplikację, należy wpisać:
+Aby skonfigurować aplikację, należy uruchomić skrypt **initialize.sh**:
 ```
-sudo bash run.sh
+sudo bash initialize.sh
 ```
-Skrypt tworzy i konfiguruje bazę danych, buduje aplikację i uruchamia ją.
+Skrypt tworzy i konfiguruje bazę danych, a następnie buduje aplikację.\
+Po zbudowaniu aplikacji można ją uruchomić za pomocą poniższej komendy:
+```
+mvn exec:java@default
+```
+**@TODO**
+Jest to wersja aplikacji dla zwykłych użytkowników. Aby uruchomić panel administracyjny, należy użyć poniższej komendy:
+```
+mvn exec:java@admin
+```
 
 ## Konfiguracja deweloperska
 Baza wykorzystywana w projekcie to **PostgreSQL**.
@@ -27,6 +36,12 @@ Dane do logowania do bazy danych:
 - user: postgres
 - password: root
 - database: postgres
+
+Możliwe jest uruchomienie projektu w IntelliJ IDEA po utworzeniu i dodaniu informacji do bazy danych.
+Aplikacje dostępne przy kompilacji:
+- `pap.UploadImages` - aplikacja do uploadu zdjęć do bazy danych
+- `pap.Default` - aplikacja dla zwykłych użytkowników
+- **@TODO** `pap.Admin` - aplikacja dla administratorów
 
 ## Autorzy
     Adrian Murawski

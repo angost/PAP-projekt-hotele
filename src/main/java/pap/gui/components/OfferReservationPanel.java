@@ -12,7 +12,7 @@ public abstract class OfferReservationPanel extends JPanel {
     Color bgColor; Font fontBigger, fontMiddle, fontMiddleBold;
 
     public OfferReservationPanel(Color bgColor, Font fontBigger, Font fontMiddle, Font fontMiddleBold, int offerWidth, int offerHeight,
-                                 String topPanelText, String imgPath, HashMap<String, String> detailsInfo) {
+                                 String topPanelText, HashMap<String, String> detailsInfo, Image offerImg) {
 
         this.offerWidth = offerWidth; this.offerHeight = offerHeight;
         this.bgColor = bgColor; this.fontBigger = fontBigger; this.fontMiddle = fontMiddle; this.fontMiddleBold = fontMiddleBold;
@@ -43,7 +43,6 @@ public abstract class OfferReservationPanel extends JPanel {
         bottomPanel.setMaximumSize(new Dimension(offerWidth, bottomPanelHeight));
 
         try {
-            Image offerImg = ImageIO.read(new File(getClass().getResource(imgPath).getPath()));
 //            int currHeight = offerImg.getHeight(); int currWidth = offerImg.getHeight();
 //            int goalHeight = bottomPanelHeight; int goalWidth = (currWidth*goalHeight)/currHeight;
 //            offerImg = (BufferedImage) offerImg.getScaledInstance(goalWidth, goalHeight, Image.SCALE_SMOOTH);
