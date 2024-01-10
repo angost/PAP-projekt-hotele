@@ -1,5 +1,6 @@
 package pap.logic.favourites;
 
+import pap.db.dao.FavouriteOfferDAO;
 import pap.db.entities.Client;
 import pap.db.entities.FavouriteOffer;
 import pap.db.entities.Offer;
@@ -13,6 +14,6 @@ public class RemoveOfferFromFavourites {
     }
 
     public void remove() {
-
+        new FavouriteOfferDAO().delete(fo);
     }
 }

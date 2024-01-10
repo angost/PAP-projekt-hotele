@@ -1,6 +1,8 @@
 package pap.logic.favourites;
 
+import pap.db.dao.FavouriteOfferDAO;
 import pap.db.entities.Client;
+import pap.db.entities.FavouriteHotel;
 import pap.db.entities.FavouriteOffer;
 import pap.db.entities.Offer;
 
@@ -12,7 +14,7 @@ public class AddOfferToFavourites {
         this.fo.setOffer(offer);
     }
 
-    public static void insert() {
-
+    public void insert() {
+        new FavouriteOfferDAO().create(fo);
     }
 }
