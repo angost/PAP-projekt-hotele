@@ -1,34 +1,45 @@
 package pap.gui;
 
+import pap.db.dao.HotelDAO;
+import pap.db.dao.OfferDAO;
+import pap.db.dao.OwnerDAO;
+import pap.db.entities.Hotel;
+import pap.db.entities.Offer;
 import pap.gui.components.*;
-import pap.logic.guiAction.FindDisplayOffers;
+import pap.logic.get.GetAllOwnerHotels;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
 
 public class OwnerHotelsGUI extends ScrollGUITemplate{
 
-    // mock funtion
     void getElementsData() {
-        this.fittingElementsIds = new Integer[]{2,3,5,8};
-        this.nrOfElements = fittingElementsIds.length;
+        List<Hotel> hotels = new GetAllOwnerHotels(new OwnerDAO().findById(userId)).get();
+        this.nrOfElements = hotels.size();
+        this.fittingElementsIds = new Integer[nrOfElements];
+        for (int i = 0; i < nrOfElements; i++) {
+            fittingElementsIds[i] = hotels.get(i).getHotelId();
+        }
     }
 
-    // mock function
     HashMap<String, String> getElementData(int elementId) {
-        HashMap<String, String> hotelInfo = new HashMap<String, String>();
-        hotelInfo.put("name", "Grand Hotel");
-        hotelInfo.put("offer_no", "47");
-        hotelInfo.put("country", "Poland");
-        hotelInfo.put("city", "Wroclaw");
-        hotelInfo.put("website", "www.sunsetresorts.com");
-        hotelInfo.put("email", "goldensands@email.com");
-        hotelInfo.put("phone_number", "+5544332211");
-        hotelInfo.put("bank_account_nr", "7777888899");
-        return hotelInfo;
+        HashMap<String, String> elInfo = new HashMap<>();
+
+        Hotel hotel = new HotelDAO().findById(elementId);
+        List<Offer> offers = new OfferDAO().findByHotelId(elementId);
+
+        elInfo.put("name", hotel.getName());
+        elInfo.put("offer_no", String.valueOf(offers.size()));
+        elInfo.put("country", hotel.getAddress().getCountry());
+        elInfo.put("city", hotel.getAddress().getCity());
+        elInfo.put("website", hotel.getWebsite());
+        elInfo.put("email", hotel.getEmail());
+        elInfo.put("phone_number", hotel.getPhoneNumber());
+        elInfo.put("bank_account_nr", hotel.getBankAccountNumber());
+
+        return elInfo;
     }
 
     JPanel createScrollElement(int elementId) {
