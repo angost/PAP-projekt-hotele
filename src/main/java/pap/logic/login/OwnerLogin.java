@@ -1,4 +1,5 @@
 package pap.logic.login;
+import jakarta.persistence.NoResultException;
 import pap.db.dao.OwnerDAO;
 import pap.db.entities.Owner;
 
@@ -30,8 +31,11 @@ public class OwnerLogin {
                 codes.add(405);
             }
             return new Owner();
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             codes.add(404);
+            return new Owner();
+        } catch (Exception exception) {
+            codes.add(1);
             return new Owner();
         }
     }
