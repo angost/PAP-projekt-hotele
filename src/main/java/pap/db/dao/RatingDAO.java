@@ -93,7 +93,7 @@ public class RatingDAO {
 
     public List<Rating> getRatingsForClient(int clientId) {
         try (Session session = factory.openSession()) {
-            return session.createNativeQuery("FROM ratings WHERE client_id = :clientId", Rating.class)
+            return session.createNativeQuery("SELECT * FROM ratings WHERE client_id = :clientId", Rating.class)
                     .setParameter("clientId", clientId)
                     .list();
         }
