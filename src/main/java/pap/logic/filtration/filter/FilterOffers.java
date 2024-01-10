@@ -32,6 +32,9 @@ public class FilterOffers {
     private Integer bedNoUpperBound;
     private Boolean hasKitchen;
     private Boolean petFriendly;
+    private Boolean hasWifi;
+    private Boolean smokingAllowed;
+    private Boolean hasParking;
     private Integer priceLowerBound;
     private Integer priceUpperBound;
     private String ownerCompanyName;
@@ -87,7 +90,7 @@ public class FilterOffers {
 
     private String offerQuery() {
         OfferProperties offerProperties = new OfferProperties(roomType, offerName, bathroomNoLowerBound, bathroomNoUpperBound,
-                roomNoLowerBound, roomNoUpperBound, bedNoLowerBound, bedNoUpperBound, hasKitchen, petFriendly, priceLowerBound, priceUpperBound);
+                roomNoLowerBound, roomNoUpperBound, bedNoLowerBound, bedNoUpperBound, hasKitchen, petFriendly, hasWifi, smokingAllowed, hasParking, priceLowerBound, priceUpperBound);
         PrepareOfferFilter offerFilter = new PrepareOfferFilter(offerProperties);
         return offerFilter.prepareQuery();
     }
@@ -97,4 +100,17 @@ public class FilterOffers {
         PrepareOwnerFilter ownerFilter = new PrepareOwnerFilter(ownerProperties);
         return ownerFilter.prepareQuery();
     }
+
+    public static void main(String[] args) {
+        FilterOffers fo = new FilterOffers();
+        fo.setHasKitchen(true);
+        fo.setHasParking(true);
+        //fo.setOfferName("Cityscape");
+        //fo.setRoomType("Suite");
+        List <Offer> offersList = fo.filter();
+        for (Offer offer : offersList) {
+            System.out.println(offer.getName());
+        }
+    }
+
 }

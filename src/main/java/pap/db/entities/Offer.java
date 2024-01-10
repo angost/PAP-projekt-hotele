@@ -54,6 +54,18 @@ public class Offer {
     private boolean petFriendly;
 
     @Basic
+    @Column(name = "has_wifi", nullable = false)
+    private boolean hasWifi;
+
+    @Basic
+    @Column(name = "smoking_allowed", nullable = false)
+    private boolean smokingAllowed;
+
+    @Basic
+    @Column(name = "has_parking", nullable = false)
+    private boolean hasParking;
+
+    @Basic
     @Column(name = "price", nullable = false)
     private float price;
 
