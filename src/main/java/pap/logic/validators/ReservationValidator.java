@@ -41,7 +41,6 @@ public class ReservationValidator {
 
     private static void checkCreditCard(PaymentMethod creditCard, List <Integer> codes){
         try {
-            //TODO moneyCheck
             if (creditCard == null){
                 codes.add(4);
             }
@@ -52,7 +51,7 @@ public class ReservationValidator {
         try {
             List<Reservation> reservations = new ReservationDAO().findByOfferId(offerId);
             for (Reservation reservation: reservations){
-                if (!(reservation.getEndDate().isBefore(dateStart) || reservation.getStartDate().isAfter(dateEnd))){
+                if (reservation.getStatus().equals("Active") && !(reservation.getEndDate().isBefore(dateStart) || reservation.getStartDate().isAfter(dateEnd))){
                     codes.add(2);
                     return;
                 }
