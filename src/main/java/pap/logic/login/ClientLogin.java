@@ -1,13 +1,14 @@
 package pap.logic.login;
+import jakarta.persistence.NoResultException;
 import pap.db.dao.ClientDAO;
 import pap.db.entities.Client;
 import java.util.*;
 
-public class UserLogin {
+public class ClientLogin {
     private final String username;
     private final String password;
     private List <Integer> codes;
-    public UserLogin(String username, String password) {
+    public ClientLogin(String username, String password) {
         this.username = username;
         this.password = password;
         this.codes = new ArrayList<>();
@@ -20,14 +21,17 @@ public class UserLogin {
                 if (user.isActive()) {
                     return user;
                 } else {
-                    codes.add(203);
+                    codes.add(403);
                 }
             } else {
-                codes.add(202);
+                codes.add(402);
             }
             return new Client();
-        } catch (Exception e) {
-            codes.add(201);
+        } catch (NoResultException e) {
+            codes.add(401);
+            return new Client();
+        } catch (Exception exception) {
+            codes.add(1);
             return new Client();
         }
     }

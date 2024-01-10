@@ -12,8 +12,8 @@ import jakarta.persistence.*;
 public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "payment_id", nullable = false)
-    private int paymentId;
+    @Column(name = "payment_method_id", nullable = false)
+    private int paymentMethodId;
 
     @Basic
     @Column(name = "card_number", nullable = false)

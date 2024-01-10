@@ -5,18 +5,18 @@ import pap.db.dao.*;
 import java.util.*;
 
 public class DeactivateAccount {
-    public static List <Integer> deactivateUserAccount(int id) {
+    public static List <Integer> deactivateClientAccount(int id) {
         List <Integer> codes = new ArrayList<>();
         Client user = new ClientDAO().findById(id);
         if (user == null) {
-            codes.add(401);
+            codes.add(1001);
             return codes;
         }
         List<Reservation> reservations = new ReservationDAO().findByClientId(id);
         if (!reservations.isEmpty()) {
             for (var reservation : reservations) {
                 if (reservation.getStatus().equals("active")) {
-                    codes.add(401);
+                    codes.add(1002);
                     return codes;
                 }
             }
@@ -30,14 +30,14 @@ public class DeactivateAccount {
         List <Integer> codes = new ArrayList<>();
         Owner owner = new OwnerDAO().findById(id);
         if (owner == null) {
-            codes.add(403);
+            codes.add(1003);
             return codes;
         }
         List <Hotel> hotels = new HotelDAO().findByOwnerId(id);
         if (!hotels.isEmpty()) {
             for (var hotel : hotels) {
                 if (hotel.isActive()) {
-                    codes.add(404);
+                    codes.add(1004);
                     return codes;
                 }
             }

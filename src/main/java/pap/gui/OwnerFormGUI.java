@@ -1,29 +1,32 @@
 package pap.gui;
 
-import pap.logic.validators.OwnerCredentialValidator;
 import pap.logic.add.AddNewOwner;
+import pap.logic.validators.OwnerValidator;
 
-import java.time.LocalDate;
 import java.time.Year;
 import java.util.HashMap;
 import java.util.List;
 
-public class OwnerFormGUI extends FormGUITemplate {
+public class OwnerFormGUI extends RegisterUserFormTemplate {
 
     public OwnerFormGUI(int userId, String userType) {
         super(userId, userType);
+        pageName = "Create Owner Account";
     }
 
+    @Override
     String[] getFieldLabels() {
         String[] fieldLabels = {"Username", "Password", "Company name", "Email", "Phone number", "NIP", "Country", "City", "Street", "Street number", "Postal Code"};
         return fieldLabels;
     }
 
+    @Override
     String[] getFieldTypes() {
-        String[] fieldTypes = {"text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text"};
+        String[] fieldTypes = {"text", "password", "text", "text", "text", "text", "text", "text", "text", "text", "text"};
         return fieldTypes;
     }
 
+    @Override
     Object[] getFieldParameters() {
 
         Integer[] days = new Integer[31];
@@ -46,13 +49,15 @@ public class OwnerFormGUI extends FormGUITemplate {
         return fieldParameters;
     }
 
+    @Override
     List<Integer> validateCredentials(HashMap<String, String> textFieldsValues) {
-        List <Integer> errorCodes = new OwnerCredentialValidator(textFieldsValues.get("Username"), textFieldsValues.get("Password"), textFieldsValues.get("Company name"),
+        List <Integer> errorCodes = new OwnerValidator(textFieldsValues.get("Username"), textFieldsValues.get("Password"), textFieldsValues.get("Company name"),
                 textFieldsValues.get("Email"), textFieldsValues.get("Phone number"), textFieldsValues.get("Country"), textFieldsValues.get("City"),
-                textFieldsValues.get("Street"), textFieldsValues.get("Postal Code"), textFieldsValues.get("Street number"), textFieldsValues.get("NIP")).validateCredentials();
+                textFieldsValues.get("Street"), textFieldsValues.get("Postal Code"), textFieldsValues.get("Street number"), textFieldsValues.get("NIP")).validateOwnerCredentials();
         return errorCodes;
     }
 
+    @Override
     void createUser(HashMap<String, String> textFieldsValues) {
         new AddNewOwner(textFieldsValues.get("Username"), textFieldsValues.get("Password"), textFieldsValues.get("Company name"),
                 textFieldsValues.get("Email"), textFieldsValues.get("Phone number"), textFieldsValues.get("Country"), textFieldsValues.get("City"),

@@ -6,6 +6,8 @@ import java.util.List;
 
 import pap.db.entities.Client;
 import pap.db.entities.Owner;
+import pap.gui.components.LogoPanel;
+import pap.gui.components.RoundedButtonDefault;
 import pap.logic.login.*;
 import pap.logic.ErrorCodes;
 
@@ -15,8 +17,9 @@ public class LogInGUI extends BaseGUI {
     JPanel mainPanel, centerPanel, loginPanel, createAccountPanel;
     LogoPanel logoPanel;
     JLabel usernameLabel, createAccountLabel, passwordLabel, statusLabel;
-    JTextField usernameInputField, passwordInputField;
-    RoundedButton logInClientButton, logInOwnerButton, createAccountButton;
+    JTextField usernameInputField;
+    JPasswordField passwordInputField;
+    RoundedButtonDefault logInClientButton, logInOwnerButton, createAccountButton;
 
     public LogInGUI(int userId, String userType) {
         super(userId, userType);
@@ -74,7 +77,8 @@ public class LogInGUI extends BaseGUI {
         loginPanel.add(textPanel2);
         loginPanel.add(Box.createRigidArea(new Dimension(0,10)));
 
-        passwordInputField = new JTextField();
+        passwordInputField = new JPasswordField();
+        passwordInputField.setEchoChar('•');
         passwordInputField.setFont(fontMiddle);
         passwordInputField.setPreferredSize(new Dimension(frameWidth, 30));
         passwordInputField.setMaximumSize(new Dimension(frameWidth, 30));
@@ -90,23 +94,24 @@ public class LogInGUI extends BaseGUI {
         buttonsPanel.setBackground(bgColor);
         loginPanel.add(buttonsPanel);
 
-        logInClientButton = new RoundedButton("Log in as Client", frameWidth*3/20, btnHeight, secondColor, secondColorDarker, fontButtons, false);
+        logInClientButton = new RoundedButtonDefault("Log in as Client", frameWidth*3/20, btnHeight, false, false);
         logInClientButton.addActionListener(e->logInClientClickedAction());
         buttonsPanel.add(logInClientButton);
         buttonsPanel.add(Box.createRigidArea(new Dimension(20,0)));
-        logInOwnerButton = new RoundedButton("Log in as Owner", frameWidth*3/20, btnHeight, secondColor, secondColorDarker, fontButtons, false);
+        logInOwnerButton = new RoundedButtonDefault("Log in as Owner", frameWidth*3/20, btnHeight, false, false);
         logInOwnerButton.addActionListener(e->logInOwnerClickedAction());
         buttonsPanel.add(logInOwnerButton);
 
         statusLabel = new JLabel("<html>Insert your data</html>", JLabel.CENTER);
         statusLabel.setFont(fontSmaller);
-        statusLabel.setForeground(Color.decode("#7a7373"));
+        statusLabel.setForeground(statusNeutral);
         JPanel textPanel3 = new JPanel();
         textPanel3.setLayout(new BoxLayout(textPanel3, BoxLayout.LINE_AXIS));
         textPanel3.setBackground(bgColor);
         textPanel3.add(Box.createHorizontalGlue());
         textPanel3.add(statusLabel);
         textPanel3.add(Box.createHorizontalGlue());
+        loginPanel.add(Box.createRigidArea(new Dimension(0,10)));
         loginPanel.add(textPanel3);
         loginPanel.add(Box.createVerticalGlue());
 
@@ -118,7 +123,7 @@ public class LogInGUI extends BaseGUI {
         createAccountLabel.setFont(fontMiddle);
         createAccountPanel.add(createAccountLabel);
         createAccountPanel.add(Box.createRigidArea(new Dimension(10,0)));
-        createAccountButton = new RoundedButton("Create account", frameWidth*3/20, btnHeight, secondColor, secondColorDarker, fontButtons, false);
+        createAccountButton = new RoundedButtonDefault("Create account", frameWidth*3/20, btnHeight, false, false);
         createAccountButton.addActionListener(e->createAccountBtnClickedAction());
         createAccountPanel.add(createAccountButton);
         createAccountPanel.add(Box.createRigidArea(new Dimension(10,0)));
@@ -132,19 +137,26 @@ public class LogInGUI extends BaseGUI {
         String passwordText = passwordInputField.getText();
 
         // Found user account
-        UserLogin ul = new UserLogin(usernameText, passwordText);
+        String statusLabelText = "<html>Please wait...</html>";
+        statusLabel.setText(statusLabelText);
+        statusLabel.setForeground(statusNeutral);
+        statusLabel.paintImmediately(statusLabel.getVisibleRect());
+
+        ClientLogin ul = new ClientLogin(usernameText, passwordText);
         Client user = ul.getUserAccount();
         List<Integer> errorCodesUser = ul.getErrorCodes();
 
-        // Successfull log in
+        // Successful log in
         if (errorCodesUser.isEmpty()) {
             new HomePageGUI(user.getClientId(), "Client").createGUI();
             frame.setVisible(false);
         } else {
-            String statusLabelText = "<html>";
+            statusLabelText = "<html>";
             statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(errorCodesUser.get(0));
             statusLabelText = statusLabelText + "</html>";
             statusLabel.setText(statusLabelText);
+            statusLabel.setForeground(statusWrong);
+            statusLabel.paintImmediately(statusLabel.getVisibleRect());
         }
     }
 
@@ -153,6 +165,11 @@ public class LogInGUI extends BaseGUI {
         String passwordText = passwordInputField.getText();
 
         // Found user account
+        String statusLabelText = "<html>Please wait...</html>";
+        statusLabel.setText(statusLabelText);
+        statusLabel.setForeground(statusNeutral);
+        statusLabel.paintImmediately(statusLabel.getVisibleRect());
+
         OwnerLogin ol = new OwnerLogin(usernameText, passwordText);
         Owner owner = ol.getOwnerAccount();
         List<Integer> errorCodesOwner = ol.getErrorCodes();
@@ -161,10 +178,12 @@ public class LogInGUI extends BaseGUI {
             new HomePageGUI(owner.getOwnerId(), "Owner").createGUI();
             frame.setVisible(false);
         } else {
-            String statusLabelText = "<html>";
+            statusLabelText = "<html>";
             statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(errorCodesOwner.get(0));
             statusLabelText = statusLabelText + "</html>";
             statusLabel.setText(statusLabelText);
+            statusLabel.setForeground(statusWrong);
+            statusLabel.paintImmediately(statusLabel.getVisibleRect());
         }
 
     }
