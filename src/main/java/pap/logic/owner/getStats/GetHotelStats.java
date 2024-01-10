@@ -7,8 +7,8 @@ import pap.db.SessionFactoryMaker;
 import pap.db.entities.Hotel;
 
 public class GetHotelStats {
-    private SessionFactory factory = SessionFactoryMaker.getFactory();
-    private Hotel hotel;
+    private final SessionFactory factory = SessionFactoryMaker.getFactory();
+    private final Hotel hotel;
 
     public GetHotelStats(Hotel hotel) {
         this.hotel = hotel;

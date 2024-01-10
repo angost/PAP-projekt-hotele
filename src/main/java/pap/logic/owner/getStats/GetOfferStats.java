@@ -1,7 +1,5 @@
 package pap.logic.owner.getStats;
 
-import jakarta.persistence.NoResultException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
 import pap.db.dao.RatingDAO;
