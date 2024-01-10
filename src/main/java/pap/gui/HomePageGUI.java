@@ -9,7 +9,6 @@ import java.util.List;
 
 import pap.db.dao.ClientDAO;
 import pap.db.dao.OwnerDAO;
-import pap.db.dao.AdminDAO;
 import pap.gui.components.LogOutButton;
 import pap.gui.components.LogoPanel;
 import pap.gui.components.TextIconButton;
@@ -23,7 +22,7 @@ public class HomePageGUI extends BaseGUI {
             reservationHistoryButton, reviewsButton, paymentsButton,
             deactivateAccountButton, yourHotelsButton, yourOffersButton,
             addHotelButton, addOfferButton,
-            verifyOwnersButton, discountsButton;
+            discountsButton;
     JPanel mainPanel, buttonsPanel, buttonsRowsPanel, infoPanel;
     LogoPanel logoPanel;
     JLabel welcomeLabel;
@@ -58,10 +57,6 @@ public class HomePageGUI extends BaseGUI {
             OwnerDAO od = new OwnerDAO();
             name = od.findById(userId).getCompanyName();
             userImgPath = "/business.png";
-        } else if (userType.equals("Admin")) {
-            AdminDAO ad = new AdminDAO();
-            name = ad.findById(userId).getName();
-            userImgPath = "/admin.png";
         } else {
             name = "User";
         }
@@ -99,7 +94,8 @@ public class HomePageGUI extends BaseGUI {
         buttonsPanel.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
         buttonsPanel.add(buttonsRowsPanel);
 
-        if (userType.equals("Client")) {
+        if (userType.equals("Client")){
+
             JPanel buttonsRow1 = new JPanel();
             buttonsRow1.setLayout(new BoxLayout(buttonsRow1, BoxLayout.LINE_AXIS));
             buttonsRow1.setBackground(bgColor);
@@ -166,7 +162,6 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow4.setLayout(new BoxLayout(buttonsRow4, BoxLayout.LINE_AXIS));
             buttonsRow4.setBackground(bgColor);
             discountsButton = new MenuButton("Discount codes", "/icons/discount.png");
-            discountsButton.addActionListener(e->seeDiscountsAction());
             deactivateAccountButton = new MenuButton("Deactivate account", "/icons/deactivate.png");
             deactivateAccountButton.fillColor = statusWrongLighter;
             deactivateAccountButton.hoverColor = statusWrong;
@@ -178,17 +173,6 @@ public class HomePageGUI extends BaseGUI {
             buttonsRowsPanel.add(buttonsRow2); buttonsRowsPanel.add(Box.createVerticalGlue());
             buttonsRowsPanel.add(buttonsRow3); buttonsRowsPanel.add(Box.createVerticalGlue());
             buttonsRowsPanel.add(buttonsRow4); buttonsRowsPanel.add(Box.createVerticalGlue());
-        } else if (userType.equals("Admin")) {
-            JPanel buttonsRow1 = new JPanel();
-            buttonsRow1.setLayout(new BoxLayout(buttonsRow1, BoxLayout.LINE_AXIS));
-            buttonsRow1.setBackground(bgColor);
-            verifyOwnersButton = new MenuButton("Verify account requests", "/icons/verify_owner.png");
-            discountsButton = new MenuButton("Manage discount codes", "/icons/discount.png");
-            discountsButton.addActionListener(e->seeDiscountsAction());
-            buttonsRow1.add(verifyOwnersButton); buttonsRow1.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
-            buttonsRow1.add(discountsButton); buttonsRow1.add(Box.createHorizontalGlue());
-
-            buttonsRowsPanel.add(buttonsRow1); buttonsRowsPanel.add(Box.createVerticalGlue());
         }
 
         mainPanel.add(buttonsPanel);
@@ -219,7 +203,7 @@ public class HomePageGUI extends BaseGUI {
         if (pickedOption == 1) {
             List<Integer> errorCodes = new ArrayList<>();
             if (userType.equals("Client")){
-                errorCodes = DeactivateAccount.deactivateClientAccount(userId);
+                errorCodes = DeactivateAccount.deactivateUserAccount(userId);
             } else if (userType.equals("Owner")){
                 errorCodes = DeactivateAccount.deactivateOwnerAccount(userId);
             } else {
@@ -250,6 +234,25 @@ public class HomePageGUI extends BaseGUI {
         new OwnerOffersGUI(userId, userType).createGUI();
         frame.setVisible(false);
     }
+//    void addHotelAction(){
+//        new AddHotelGUI(userId, userType).createGUI();
+//        frame.setVisible(false);
+//    }
+
+//    void addOfferAction(){
+//        new AddOfferGUI(userId, userType).createGUI();
+//        frame.setVisible(false);
+//    }
+
+    void seeClientReviews(){
+        new ReviewsScrollGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
+    void seeOwnerReviews(){
+        new ReviewsScrollGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
 
     void seeDiscountsAction(){
         //new ScrollDiscountsGUI(userId, userType).createGUI();
@@ -257,10 +260,7 @@ public class HomePageGUI extends BaseGUI {
     }
 
     void logOutBtnClickedAction(){
-        if (userType.equals("Admin"))
-            new AdminLogInGUI(-1, "None").createGUI();
-        else
-            new LogInGUI(-1, "None").createGUI();
+        new LogInGUI(-1, "None").createGUI();
         frame.setVisible(false);
     }
 

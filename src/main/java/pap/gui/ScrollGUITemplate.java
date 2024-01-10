@@ -66,7 +66,7 @@ public abstract class ScrollGUITemplate extends BaseGUI{
         mainPanel.add(undoPanel);
     }
 
-    void createGUI(){
+    public void createGUI(){
         super.createBaseGUI();
         createCustomGUI();
         frame.setVisible(true);

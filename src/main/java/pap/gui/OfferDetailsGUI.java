@@ -37,7 +37,7 @@ public class OfferDetailsGUI extends BaseGUI {
         HashMap<String, String> reservationInfo = new HashMap<>();
         OfferDetailsPanel offerPanel = new OfferDetailsPanel(neutralGray, fontBigger, fontBiggerBold, fontMiddle,
                 fontMiddleBold, fontSmaller, fontSmallerBold, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2,
-                offerInfo, image, reservationInfo, offerId, userId, userType);
+                offerInfo, image, reservationInfo, offerId, userId, userType, frame);
         mainPanel.add(offerPanel);
 
         JPanel footerPanel = new JPanel();
