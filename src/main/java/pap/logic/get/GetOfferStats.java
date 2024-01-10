@@ -19,11 +19,4 @@ public class GetOfferStats {
     public Integer getNumberOfRatingsForOffer() {
         return new RatingDAO().getNumberOfRatingsForOffer(offer.getOfferId());
     }
-
-    public static void main(String[] args) {
-        Offer offer = new Offer();
-        offer.setOfferId(3);
-        Float value = new GetOfferStats(offer).getAverageRating();
-        System.out.println(value);
-    }
 }

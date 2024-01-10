@@ -6,11 +6,11 @@ import pap.db.entities.Offer;
 
 import java.time.LocalDate;
 
-public class AddOffer {
+public class AddNewOffer {
     private final Offer offer;
-    public AddOffer(String roomType, String name, LocalDate addDate, String description,
-                    Integer bathroomNo, Integer roomNo, Integer bedNo, boolean hasKitchen, boolean petFriendly,
-                    Float price, boolean isActive, Hotel hotel) {
+    public AddNewOffer(String roomType, String name, LocalDate addDate, String description,
+                       Integer bathroomNo, Integer roomNo, Integer bedNo, boolean hasKitchen, boolean petFriendly,
+                       Float price, boolean isActive, Hotel hotel) {
         this.offer = new Offer();
         this.offer.setRoomType(roomType);
         this.offer.setName(name);
