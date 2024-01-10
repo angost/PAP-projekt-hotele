@@ -82,8 +82,12 @@ CREATE TABLE "offers" (
                           "bed_no" integer,
                           "has_kitchen" bool,
                           "pet_friendly" bool,
+                          "has_wifi" bool,
+                          "smoking_allowed" bool,
+                          "has_parking" bool,
                           "price" float,
-                          "is_active" bool
+                          "is_active" bool,
+                          "image" bytea
 );
 
 CREATE TABLE "ratings" (
@@ -266,17 +270,17 @@ INSERT INTO hotels ("owner_id", "name", "add_date", "description", "address_id",
 (9, 'Luxe Retreats', '2023-09-01', 'Elegant retreat with spa and fine dining', 1, 'luxeretreats@email.com', 'www.luxeretreats.com', '+123456789', '1212121212', true),
 (10, 'Global Suites', '2023-10-01', 'International chain of modern and comfortable suites', 2, 'globalsuites@email.com', 'www.globalsuites.com', '+9988776655', '9090909090', true);
 
-INSERT INTO offers ("hotel_id", "room_type", "name", "add_date", "description", "bathroom_no", "room_no", "bed_no", "has_kitchen", "pet_friendly", "price", "is_active") VALUES
-(1, 'Suite', 'Luxury Suite', '2023-01-05', 'Spacious suite with city view', 2, 1, 1, true, false, 300.00, true),
-(1, 'Double', 'Executive Double Room', '2023-02-10', 'Executive room with modern amenities', 1, 2, 2, false, true, 250.00, true),
-(2, 'Standard', 'Ocean View Standard Room', '2023-03-15', 'Standard room with a view of the ocean', 2, 2, 2, false, false, 180.00, true),
-(2, 'Suite', 'Sunset Suite', '2023-04-20', 'Suite with a breathtaking view of the sunset', 1, 2, 1, true, false, 320.00, true),
-(3, 'Deluxe', 'Cityscape Deluxe Room', '2023-05-25', 'Deluxe room with panoramic city views', 2, 2, 2, true, false, 220.00, true),
-(3, 'Standard', 'Cityscape Standard Room', '2023-06-30', 'Standard room with city view', 1, 2, 2, false, true, 200.00, true),
-(4, 'Suite', 'Golden Sands Suite', '2023-07-05', 'Spacious suite with views of the golden sands', 2, 3, 1, true, true, 350.00, true),
-(4, 'Double', 'Beachfront Double Room', '2023-08-10', 'Double room with direct access to the beach', 1, 3, 2, false, false, 280.00, true),
-(5, 'Cabin', 'Sunny Cabin Retreat', '2023-09-15', 'Cozy cabin with a rustic charm', 1, 1, 1, false, true, 150.00, true),
-(5, 'Suite', 'Nature Suite', '2023-10-20', 'Suite with views of the surrounding nature', 2, 5, 1, true, false, 280.00, true);
+INSERT INTO offers ("hotel_id", "room_type", "name", "add_date", "description", "bathroom_no", "room_no", "bed_no", "has_kitchen", "pet_friendly", "has_wifi", "smoking_allowed", "has_parking", "price", "is_active") VALUES
+(1, 'Suite', 'Luxury Suite', '2023-01-05', 'Spacious suite with city view', 2, 1, 1, true, false, true, false, true, 300.00, true),
+(1, 'Double', 'Executive Double Room', '2023-02-10', 'Executive room with modern amenities', 1, 2, 2, false, true, false, true, true, 250.00, true),
+(2, 'Standard', 'Ocean View Standard Room', '2023-03-15', 'Standard room with a view of the ocean', 2, 2, 2, false, false, false, false, false, 180.00, true),
+(2, 'Suite', 'Sunset Suite', '2023-04-20', 'Suite with a breathtaking view of the sunset', 1, 2, 1, true, false, false, false, true, 320.00, true),
+(3, 'Deluxe', 'Cityscape Deluxe Room', '2023-05-25', 'Deluxe room with panoramic city views', 2, 2, 2, true, false, false, false, true, 220.00, true),
+(3, 'Standard', 'Cityscape Standard Room', '2023-06-30', 'Standard room with city view', 1, 2, 2, false, true, true, true, true, 200.00, true),
+(4, 'Suite', 'Golden Sands Suite', '2023-07-05', 'Spacious suite with views of the golden sands', 2, 3, 1, true, true, true, true, true, 350.00, true),
+(4, 'Double', 'Beachfront Double Room', '2023-08-10', 'Double room with direct access to the beach', 1, 3, 2, false, false, true, false, true, 280.00, true),
+(5, 'Cabin', 'Sunny Cabin Retreat', '2023-09-15', 'Cozy cabin with a rustic charm', 1, 1, 1, false, true, true, false, true, 150.00, true),
+(5, 'Suite', 'Nature Suite', '2023-10-20', 'Suite with views of the surrounding nature', 2, 5, 1, true, false, true, true, true, 280.00, true);
 
 INSERT INTO ratings ("offer_id", "client_id", "rating", "comment", "date", "is_hidden") VALUES
 (1, 1, 5, 'Excellent stay!', '2023-01-15', false),

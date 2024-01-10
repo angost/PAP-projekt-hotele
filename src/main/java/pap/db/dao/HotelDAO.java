@@ -4,8 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
 import pap.db.entities.Hotel;
-import pap.db.entities.Offer;
-import pap.db.entities.Owner;
 
 import java.util.List;
 

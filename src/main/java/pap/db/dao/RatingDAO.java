@@ -74,6 +74,7 @@ public class RatingDAO {
         try (Session session = factory.openSession()) {
             return session.createNativeQuery("SELECT * FROM ratings WHERE is_hidden = false", Rating.class)
                     .list();
+            System.out.println("[RatingDAO] Updated offer with id: " + rating.getRatingId());
         }
     }
 
@@ -125,6 +126,7 @@ public class RatingDAO {
             return count != null ? count.intValue() : 0;
         }
     }
+
     public int getOfferRatingsAmount(int offer_id) {
         try (Session session = factory.openSession()) {
             return session.createNativeQuery("select count(*) from ratings where offer_id = :offer_id", Integer.class)
@@ -142,5 +144,4 @@ public class RatingDAO {
                     .getSingleResult();
         }
     }
-
 }

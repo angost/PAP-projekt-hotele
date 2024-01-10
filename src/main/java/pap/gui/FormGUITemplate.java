@@ -2,6 +2,7 @@ package pap.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -16,6 +17,11 @@ public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
     List<JTextField> textFields = new ArrayList<JTextField>();
     List<String> textFieldLabels = new ArrayList<String>();
+    List<JComboBox> comboBoxes = new ArrayList<JComboBox>();
+    List<String> comboBoxesLabels = new ArrayList<String>();
+    List<List<JComboBox>> dateComboBoxes = new ArrayList<List<JComboBox>>();
+    List<String> dateComboBoxesLabels = new ArrayList<String>();
+
     JLabel statusLabel;
     String pageName = "";
 
@@ -72,7 +78,7 @@ public abstract class FormGUITemplate extends BaseGUI{
             nrOfFields = fieldLabels.length;
         } else {
             nrOfFields = 0; // Throw exception?
-            JOptionPane.showMessageDialog(frame, "Nr of fields inconsistent", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "No of fields inconsistent", "Error!", JOptionPane.ERROR_MESSAGE);
         }
 
         int fieldHeight = frameHeight/22;
@@ -141,15 +147,24 @@ public abstract class FormGUITemplate extends BaseGUI{
                     fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
                     radioButtonGroup.add(optionBtn);
                 }
-
             } else if (fieldTypes[i].startsWith("comboBox")) {
                 // comboBoxesData may all be Integer or all String
                 Object[][] comboBoxesData;
-                if (fieldTypes[i].equals("comboBoxInteger")) {
+                if (fieldTypes[i].equals("comboBoxDate") || fieldTypes[i].equals("comboBoxInteger")) {
                     comboBoxesData = (Integer[][]) fieldParameters[i];
                 } else {
                     comboBoxesData = (String[][]) fieldParameters[i];
                 }
+
+                HashMap<Integer, String> dateElementLabel = new HashMap<>();
+                dateElementLabel.put(0, "<day>"); dateElementLabel.put(1, "<month>"); dateElementLabel.put(2, "<year>");
+                int dateElementCounter = 0;
+
+                if (fieldTypes[i].equals("comboBoxDate")) {
+                    dateComboBoxesLabels.add(fieldLabels[i]);
+                    dateComboBoxes.add(new ArrayList<JComboBox>());
+                }
+
                 // Create comboBox from data
                 for ( var data: comboBoxesData) {
                     JComboBox comboBox = new JComboBox(data);
@@ -167,6 +182,12 @@ public abstract class FormGUITemplate extends BaseGUI{
                     comboBox.setMaximumSize(new Dimension(longestElWidth+50, fieldHeight));
                     fieldPanel.add(comboBox);
                     fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
+                    if (fieldTypes[i].equals("comboBoxInteger") || fieldTypes[i].equals("comboBoxString")) {
+                        comboBoxes.add(comboBox);
+                        comboBoxesLabels.add(fieldLabels[i]);
+                    } else if (fieldTypes[i].equals("comboBoxDate")) {
+                        dateComboBoxes.get(dateComboBoxes.size() - 1).add(comboBox);
+                    }
                 }
             }
             fieldsPanel.add(Box.createVerticalGlue());
@@ -205,7 +226,7 @@ public abstract class FormGUITemplate extends BaseGUI{
 
     void registerBtnClickedAction(){
         // Get values
-        HashMap<String, String> textFieldsValues = getTextFieldValues();
+        HashMap<String, String> textFieldsValues = getFieldValues();
         // Validate values
         List <Integer> errorCodes = validateCredentials(textFieldsValues);
         // Create user and open Home Page
@@ -228,14 +249,33 @@ public abstract class FormGUITemplate extends BaseGUI{
         }
     }
 
-    HashMap<String, String> getTextFieldValues(){
-        int nrOfFields = textFields.size();
-        HashMap<String, String> textFieldsValues = new HashMap<String, String>();
+    HashMap<String, String> getFieldValues(){
+        int nrOfTextFields = textFields.size();
+        int nrOfComboBoxes = comboBoxes.size();
+        int nrOfDateComboBoxes = dateComboBoxes.size();
+        HashMap<String, String> FieldValues = new HashMap<String, String>();
 
-        for (int i = 0; i < nrOfFields; i++){
-            textFieldsValues.put(textFieldLabels.get(i), textFields.get(i).getText());
+        for (int i = 0; i < nrOfTextFields; i++){
+            FieldValues.put(textFieldLabels.get(i), textFields.get(i).getText());
         }
-        return textFieldsValues;
+        for (int i = 0; i < nrOfComboBoxes; i++){
+            FieldValues.put(comboBoxesLabels.get(i), String.valueOf(comboBoxes.get(i).getSelectedItem()));
+        }
+        for (int i = 0; i < nrOfDateComboBoxes; i++){
+
+            int day = 0; int month = 0; int year = 0;
+
+            List<JComboBox> currDateField = dateComboBoxes.get(i);
+
+            day = (int) currDateField.get(0).getSelectedItem();
+            month = (int) currDateField.get(1).getSelectedItem();
+            year = (int) currDateField.get(2).getSelectedItem();
+            String currDateData = LocalDate.of(year, month, day).toString();
+
+            FieldValues.put(dateComboBoxesLabels.get(i), currDateData);
+        }
+
+        return FieldValues;
     }
 
     abstract List <Integer> validateCredentials(HashMap<String, String> textFieldsValues);

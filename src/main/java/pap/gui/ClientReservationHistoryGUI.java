@@ -1,5 +1,6 @@
 package pap.gui;
 
+import pap.db.dao.OfferDAO;
 import pap.db.dao.ReservationDAO;
 import pap.gui.components.ReservationPanel;
 import pap.gui.components.ScrollElementButton;
@@ -14,20 +15,9 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
 
     // mock function
     void getElementsData() {
-        fittingElementsIds = new Integer[]{1,2,3,4,5};
+        this.fittingElementsIds = new Integer[]{1,2,3,4,5};
         // fittingElementsIds = new ...()...(userId);
-        nrOfElements = fittingElementsIds.length;
-    }
-
-    //mock function
-    String getImgPath(int offerId) {
-        HashMap<Integer, String> imgPathMap = new HashMap<Integer, String>();
-        imgPathMap.put(1, "/room1.jpg"); imgPathMap.put(2, "/room2.jpg");
-        imgPathMap.put(3, "/room3.jpg"); imgPathMap.put(4, "/room4.jpg");
-        imgPathMap.put(5, "/room5.jpg"); imgPathMap.put(6, "/room6.jpeg");
-        imgPathMap.put(7, "/room7.jpg"); imgPathMap.put(8, "/room8.jpg");
-        imgPathMap.put(9, "/room9.jpeg"); imgPathMap.put(10, "/room10.jpg");
-        return imgPathMap.get(offerId);
+        this.nrOfElements = fittingElementsIds.length;
     }
 
     // mock function
@@ -49,7 +39,6 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         reservationInfo.put("status", status);
         reservationInfo.put("name", name);
         reservationInfo.put("city", city);
-        reservationInfo.put("img_path", getImgPath(rd.findById(elementId).getOffer().getOfferId()));
         reservationInfo.put("people", people);
 
         return reservationInfo;
@@ -65,11 +54,12 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
         reservationPanel.setPreferredSize(new Dimension(frameWidth, offerHeight));
         reservationPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
         reservationPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
+        Image image = new OfferDAO().getImageById(elementId);
 
         String topPanelText = reservationInfo.get("city") + " from " + reservationInfo.get("date_from") +
                 " to " + reservationInfo.get("date_to");
         ReservationPanel reservationInfoPanel = new ReservationPanel(neutralGray, fontBigger, fontMiddle, fontMiddleBold, offerWidth,
-                offerHeight, topPanelText, reservationInfo.get("img_path"), reservationInfo);
+                offerHeight, topPanelText, reservationInfo, image);
 
         reservationPanel.add(reservationInfoPanel);
         reservationPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
@@ -120,7 +110,8 @@ public class ClientReservationHistoryGUI extends ScrollGUITemplate{
             if (penalty == true) {
                 reservationPanel.add(Box.createRigidArea(new Dimension(frameHeight/14,0)));
 
-                ScrollElementButton penaltiesButton = new ScrollElementButton("See penalties", frameHeight/7, frameHeight/7, Color.decode("#A84B4C"), statusWrong, fontButtons, true, elementId);
+                ScrollElementButton penaltiesButton = new ScrollElementButton("See penalties", frameHeight/7, frameHeight/7,
+                        statusWrongLighter, statusWrong, fontButtons, true, elementId);
                 ActionListener penatlyActionListener = new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
                         ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
