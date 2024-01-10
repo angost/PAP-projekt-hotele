@@ -24,6 +24,7 @@ public abstract class FormGUITemplate extends BaseGUI{
 
     JLabel statusLabel;
     String pageName = "";
+    String finishFormButtonText = "";
 
     public FormGUITemplate(int userId, String userType) {
         super(userId, userType);
@@ -202,9 +203,10 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(statusLabel);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
 
-        RoundedButtonDefault registerButton = new RoundedButtonDefault("Register", frameWidth*3/20, frameHeight/10, false, false);
-        registerButton.addActionListener(e->registerBtnClickedAction());
-        registerPanel.add(registerButton);
+        setFinishFormButtonText();
+        RoundedButtonDefault finishFormButton = new RoundedButtonDefault(finishFormButtonText, frameWidth*3/20, frameHeight/10, false, false);
+        finishFormButton.addActionListener(e->finishFormButtonClicked());
+        registerPanel.add(finishFormButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
         UndoPanel undoPanel = new UndoPanel(frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
@@ -219,35 +221,9 @@ public abstract class FormGUITemplate extends BaseGUI{
         frame.setVisible(true);
     }
 
-    void undoBtnClickedAction(){
-        new ChooseAccountTypeGUI(-1, "None").createGUI();
-        frame.setVisible(false);
-    }
-
-    void registerBtnClickedAction(){
-        // Get values
-        HashMap<String, String> textFieldsValues = getFieldValues();
-        // Validate values
-        List <Integer> errorCodes = validateCredentials(textFieldsValues);
-        // Create user and open Home Page
-        if (errorCodes.isEmpty()) {
-            createUser(textFieldsValues);
-            JOptionPane.showMessageDialog(frame, "Success! Created user!");
-            new LogInGUI(-1, "None").createGUI();
-            frame.setVisible(false);
-        }
-        // Errors occured, display them on screen
-        else {
-            String statusLabelText = "<html>"; String spacingCharacter = "<br/>";
-            if (errorCodes.size() > 10) spacingCharacter = " | ";
-            for (Integer code : errorCodes) {
-                statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(code) + spacingCharacter;
-            }
-            statusLabelText = statusLabelText + "</html>";
-            statusLabel.setText(statusLabelText);
-            statusLabel.setForeground(statusWrong);
-        }
-    }
+    abstract void setFinishFormButtonText();
+    abstract void finishFormButtonClicked();
+    abstract void undoBtnClickedAction();
 
     HashMap<String, String> getFieldValues(){
         int nrOfTextFields = textFields.size();
@@ -278,7 +254,4 @@ public abstract class FormGUITemplate extends BaseGUI{
         return FieldValues;
     }
 
-    abstract List <Integer> validateCredentials(HashMap<String, String> textFieldsValues);
-
-    abstract void createUser(HashMap<String, String> textFieldsValues);
 }
