@@ -100,6 +100,13 @@ public class ErrorCodes {
         errorDescriptions.put(715, "Bank account is too short");
         errorDescriptions.put(716, "Bank account is too long");
 
+        // Rating errors
+        errorDescriptions.put(801, "Rating has to be in range (1, 5)");
+        errorDescriptions.put(802, "Comment is too short");
+        errorDescriptions.put(803, "Comment is too long");
+        errorDescriptions.put(804, "Date is invalid");
+
+
         // DiscountCode errors
         errorDescriptions.put(901, "Discount code has wrong length");
         errorDescriptions.put(902, "Discount code can contain only letters or numbers");
