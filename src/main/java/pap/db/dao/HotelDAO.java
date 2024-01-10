@@ -87,6 +87,15 @@ public class HotelDAO {
         }
     }
 
+    public Hotel findByNameAndOwnerId(String name, Integer id) {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("SELECT * FROM hotels WHERE name = :name AND owner_id = :ownerId", Hotel.class)
+                    .setParameter("name", name)
+                    .setParameter("owner_id", id)
+                    .uniqueResult();
+        }
+    }
+
     public List<Hotel> findByOwnerId (int id) {
         try (Session session = factory.openSession()) {
             return session.createNativeQuery("select * from hotels where owner_id = " + id, Hotel.class).list();
