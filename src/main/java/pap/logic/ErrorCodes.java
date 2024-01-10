@@ -55,6 +55,10 @@ public class ErrorCodes {
         errorDescriptions.put(404, "No such owner in the database (not a successful login attempt)");
         errorDescriptions.put(405, "Wrong password for owner (not a successful login attempt)");
         errorDescriptions.put(406, "Owner is not active (not a successful login attempt)");
+        errorDescriptions.put(407, "No such admin in the database (not a successful login attempt)");
+        errorDescriptions.put(408, "Wrong password for admin (not a successful login attempt)");
+        errorDescriptions.put(409, "Admin is not active (not a successful login attempt)");
+
 
         // Addresses
         errorDescriptions.put(501, "Country is too short");

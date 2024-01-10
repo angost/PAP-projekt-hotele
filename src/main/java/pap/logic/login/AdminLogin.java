@@ -26,14 +26,14 @@ public class AdminLogin {
                 if (admin.isActive()) {
                     return admin;
                 } else {
-                    codes.add(503);
+                    codes.add(409);
                 }
             } else {
-                codes.add(502);
+                codes.add(408);
             }
             return new Admin();
         } catch (NoResultException e) {
-            codes.add(501);
+            codes.add(407);
             return new Admin();
         } catch (Exception exception) {
             codes.add(1);
