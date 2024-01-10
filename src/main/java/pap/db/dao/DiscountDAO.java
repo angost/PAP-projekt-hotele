@@ -96,6 +96,14 @@ public class DiscountDAO {
         }
     }
 
+    public Discount findByCodeWithNoActive(String code) {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("SELECT * FROM discounts WHERE code = :code", Discount.class)
+                    .setParameter("code", code)
+                    .uniqueResult();
+        }
+    }
+
     public Double getValueByCode(String code) {
         try (Session session = factory.openSession()) {
             return (Double) session.createNativeQuery("SELECT value FROM discounts WHERE code = :code AND is_active = true")
