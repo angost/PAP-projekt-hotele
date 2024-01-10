@@ -72,7 +72,7 @@ public class RatingDAO {
 
     public List <Rating> findAll() {
         try (Session session = factory.openSession()) {
-            return session.createNativeQuery("SELECT * FROM ratings", Rating.class)
+            return session.createNativeQuery("SELECT * FROM ratings WHERE is_hidden = false", Rating.class)
                     .list();
         }
     }
@@ -85,7 +85,7 @@ public class RatingDAO {
 
     public List<Rating> getRatingsForOffer(int offerId) {
         try (Session session = factory.openSession()) {
-            return session.createNativeQuery("FROM ratings WHERE offer_id = :offerId", Rating.class)
+            return session.createNativeQuery("FROM ratings WHERE offer_id = :offerId AND is_hidden = false", Rating.class)
                     .setParameter("offerId", offerId)
                     .list();
         }
@@ -93,7 +93,7 @@ public class RatingDAO {
 
     public List<Rating> getRatingsForClient(int clientId) {
         try (Session session = factory.openSession()) {
-            return session.createNativeQuery("SELECT * FROM ratings WHERE client_id = :clientId", Rating.class)
+            return session.createNativeQuery("SELECT * FROM ratings WHERE client_id = :clientId AND is_hidden = false", Rating.class)
                     .setParameter("clientId", clientId)
                     .list();
         }
@@ -101,7 +101,7 @@ public class RatingDAO {
 
     public int getNumberOfRatingsForOffer(int offerId) {
         try (Session session = factory.openSession()) {
-            Long count = (Long) session.createNativeQuery("SELECT COUNT(*) FROM ratings WHERE offer_id = :offerId")
+            Long count = (Long) session.createNativeQuery("SELECT COUNT(*) FROM ratings WHERE offer_id = :offerId AND is_hidden = false")
                     .setParameter("offerId", offerId)
                     .uniqueResult();
             return count != null ? count.intValue() : 0;
@@ -110,7 +110,7 @@ public class RatingDAO {
 
     public Float getAverageRatingForOffer(int offerId) {
         try (Session session = factory.openSession()) {
-            Number average = (Number) session.createNativeQuery("SELECT AVG(rating) FROM ratings WHERE offer_id = :offerId")
+            Number average = (Number) session.createNativeQuery("SELECT AVG(rating) FROM ratings WHERE offer_id = :offerId AND is_hidden = false")
                     .setParameter("offerId", offerId)
                     .uniqueResult();
             return average != null ? average.floatValue() : 0;
@@ -119,7 +119,7 @@ public class RatingDAO {
 
     public int getNumberOfRatingsForClient(int clientId) {
         try (Session session = factory.openSession()) {
-            Long count = (Long) session.createNativeQuery("SELECT COUNT(*) FROM ratings WHERE client_id = :clientId")
+            Long count = (Long) session.createNativeQuery("SELECT COUNT(*) FROM ratings WHERE client_id = :clientId AND is_hidden = false")
                     .setParameter("clientId", clientId)
                     .uniqueResult();
             return count != null ? count.intValue() : 0;
