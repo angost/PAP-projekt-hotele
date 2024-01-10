@@ -103,6 +103,7 @@ public class ErrorCodes {
         errorDescriptions.put(714, "Phone number doesn't contain only numbers");
         errorDescriptions.put(715, "Bank account is too short");
         errorDescriptions.put(716, "Bank account is too long");
+        errorDescriptions.put(717, "You cannot have two hotels with the same name");
 
         // Rating errors
         errorDescriptions.put(801, "Rating has to be in range (1, 5)");

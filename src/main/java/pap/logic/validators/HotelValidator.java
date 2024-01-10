@@ -1,6 +1,10 @@
 package pap.logic.validators;
 
 
+import jakarta.persistence.NoResultException;
+import pap.db.dao.DiscountDAO;
+import pap.db.dao.HotelDAO;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +32,10 @@ public class HotelValidator {
     private final String phoneNumber;
     private final String bankAccountNumber;
     private final boolean isActive;
+    private final Integer ownerId;
     public HotelValidator(String name, LocalDate addDate, String description, String country, String city,
                           String street, String postalCode, String streetNo, String email, String website, String phoneNumber,
-                          String bankAccountNumber, boolean isActive) {
+                          String bankAccountNumber, boolean isActive, Integer ownerId) {
         this.name = name;
         this.addDate = addDate;
         this.description = description;
@@ -40,11 +45,12 @@ public class HotelValidator {
         this.phoneNumber = phoneNumber;
         this.bankAccountNumber = bankAccountNumber;
         this.isActive = isActive;
+        this.ownerId = ownerId;
     }
 
     public List<Integer> validate() {
         List <Integer> codes = new ArrayList<>();
-        validateName(name, codes);
+        validateName(name, codes, ownerId);
         validateAddDate(addDate, codes);
         validateDescription(description, codes);
         codes.addAll(addressValidator.validateCredentials());
@@ -55,9 +61,18 @@ public class HotelValidator {
         return codes;
     }
 
-    public static void validateName(String name, List <Integer> codes) {
+    public static void validateName(String name, List <Integer> codes, Integer ownerId) {
         if (name.length() < MIN_NAME_LENGTH) codes.add(701);
         if (name.length() > MAX_NAME_LENGTH) codes.add(702);
+        try {
+            new HotelDAO().findByNameAndOwnerId(name, ownerId);
+            codes.add(717);
+        } catch (NoResultException error) {
+            // expected situation, do nothing
+        }
+        catch (Exception anotherError) {
+            codes.add(1);
+        }
     }
 
     public static void validateAddDate(LocalDate addDate, List <Integer> codes) {

@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
 import pap.db.entities.Hotel;
 import pap.db.entities.Offer;
+import pap.db.entities.Owner;
 
 import javax.security.auth.login.CredentialException;
 import java.util.List;
@@ -86,6 +87,15 @@ public class HotelDAO {
     public Hotel findById(int id) {
         try (Session session = factory.openSession()) {
             return session.find(Hotel.class, id);
+        }
+    }
+
+    public Hotel findByNameAndOwnerId(String name, Integer id) {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("SELECT * FROM hotels WHERE name = :name AND owner_id = :ownerId", Hotel.class)
+                    .setParameter("name", name)
+                    .setParameter("owner_id", id)
+                    .uniqueResult();
         }
     }
 
