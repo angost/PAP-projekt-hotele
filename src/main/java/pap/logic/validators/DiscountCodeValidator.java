@@ -1,5 +1,8 @@
 package pap.logic.validators;
 
+import jakarta.persistence.NoResultException;
+import pap.db.dao.ClientDAO;
+import pap.db.dao.DiscountDAO;
 import pap.db.entities.Hotel;
 
 import java.util.ArrayList;
@@ -41,6 +44,15 @@ public class DiscountCodeValidator {
     public static void validateCode(String code, List <Integer> codes) {
         if (code.length() != CODE_LENGTH) codes.add(901);
         if (!code.matches("[a-zA-Z0-9]+")) codes.add(902);
+        try {
+            new DiscountDAO().findByCodeWithNoActive(code);
+            codes.add(909);
+        } catch (NoResultException error) {
+            // expected situation, do nothing
+        }
+        catch (Exception anotherError) {
+            codes.add(1);
+        }
     }
 
     public static void validateValueType(Integer valueType, List <Integer> codes) {

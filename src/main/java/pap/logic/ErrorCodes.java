@@ -119,6 +119,7 @@ public class ErrorCodes {
         errorDescriptions.put(906, "Discount description is too long");
         errorDescriptions.put(907, "Discount value percentage has to be in <0, 100>");
         errorDescriptions.put(908, "Discount value can't be negative");
+        errorDescriptions.put(909, "Discount code is not unique, enter different one");
 
         // Deactivate Errors
         errorDescriptions.put(1001, "User not found");
