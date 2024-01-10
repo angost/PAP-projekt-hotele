@@ -62,7 +62,6 @@ public class HomePageGUI extends BaseGUI {
             AdminDAO ad = new AdminDAO();
             name = ad.findById(userId).getName();
             userImgPath = "/admin.png";
-            // @TODO add admin icon
         } else {
             name = "User";
         }
@@ -167,6 +166,7 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow4.setLayout(new BoxLayout(buttonsRow4, BoxLayout.LINE_AXIS));
             buttonsRow4.setBackground(bgColor);
             discountsButton = new MenuButton("Discount codes", "/icons/discount.png");
+            discountsButton.addActionListener(e->seeDiscountsAction());
             deactivateAccountButton = new MenuButton("Deactivate account", "/icons/deactivate.png");
             deactivateAccountButton.fillColor = statusWrongLighter;
             deactivateAccountButton.hoverColor = statusWrong;
@@ -184,6 +184,7 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow1.setBackground(bgColor);
             verifyOwnersButton = new MenuButton("Verify account requests", "/icons/verify_owner.png");
             discountsButton = new MenuButton("Manage discount codes", "/icons/discount.png");
+            discountsButton.addActionListener(e->seeDiscountsAction());
             buttonsRow1.add(verifyOwnersButton); buttonsRow1.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow1.add(discountsButton); buttonsRow1.add(Box.createHorizontalGlue());
 
@@ -250,8 +251,16 @@ public class HomePageGUI extends BaseGUI {
         frame.setVisible(false);
     }
 
+    void seeDiscountsAction(){
+        new ScrollDiscountsGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
     void logOutBtnClickedAction(){
-        new LogInGUI(-1, "None").createGUI();
+        if (userType.equals("Admin"))
+            new AdminLogInGUI(-1, "None").createGUI();
+        else
+            new LogInGUI(-1, "None").createGUI();
         frame.setVisible(false);
     }
 
