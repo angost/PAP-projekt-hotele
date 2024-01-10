@@ -10,6 +10,7 @@ import pap.gui.FormGUITemplate;
 import pap.db.dao.PaymentMethodDAO;
 import pap.db.dao.DiscountsDAO;
 import pap.gui.HomePageGUI;
+import pap.gui.components.OfferPanel;
 import pap.gui.components.RoundedButton;
 
 import javax.imageio.ImageIO;
@@ -125,7 +126,7 @@ public class MakeReservationPanel extends JPanel {
         int offerImgWidth = leftPanelWidth ;
         int offerImgHeight = contentPanelsHeight / 2;
         try {
-            Image offerImg = ImageIO.read(new File(getClass().getResource(offerInfo.get("img_path")).getPath()));
+            Image offerImg = new OfferDAO().getImageById(offerId);
             offerImg = offerImg.getScaledInstance(offerImgWidth, offerImgHeight, Image.SCALE_SMOOTH);
             ImageIcon offerImgIcon = new ImageIcon(offerImg);
             JLabel offerImgLabel = new JLabel();
