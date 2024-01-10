@@ -114,6 +114,7 @@ public class HomePageGUI extends BaseGUI {
             reservationHistoryButton = new MenuButton("See reservation history", "/icons/history.png");
             reservationHistoryButton.addActionListener(e->seeClientHistoryAction());
             reviewsButton = new MenuButton("See your reviews", "/icons/reviews.png");
+            reviewsButton.addActionListener(e->seeClientReviews());
             buttonsRow2.add(reservationHistoryButton); buttonsRow2.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow2.add(reviewsButton); buttonsRow2.add(Box.createHorizontalGlue());
 
@@ -146,7 +147,9 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow2.setLayout(new BoxLayout(buttonsRow2, BoxLayout.LINE_AXIS));
             buttonsRow2.setBackground(bgColor);
             addHotelButton = new MenuButton("Add hotel", "/icons/add_hotel.png");
+//            addHotelButton.addActionListener(e->addHotelAction());
             addOfferButton = new MenuButton("Add offer", "/icons/add_offer.png");
+//            addOfferButton.addActionListener(e->addOfferAction());
             buttonsRow2.add(addHotelButton); buttonsRow2.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow2.add(addOfferButton); buttonsRow2.add(Box.createHorizontalGlue());
 
@@ -155,6 +158,8 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow3.setBackground(bgColor);
             reservationHistoryButton = new MenuButton("See reservation history", "/icons/history.png");
             reviewsButton = new MenuButton("See reviews", "/icons/reviews.png");
+            reviewsButton.addActionListener(e->seeOwnerReviews());
+
             buttonsRow3.add(reservationHistoryButton); buttonsRow3.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow3.add(reviewsButton); buttonsRow3.add(Box.createHorizontalGlue());
 
@@ -235,6 +240,27 @@ public class HomePageGUI extends BaseGUI {
         frame.setVisible(false);
     }
 
+//    void addHotelAction(){
+//        new AddHotelGUI(userId, userType).createGUI();
+//        frame.setVisible(false);
+//    }
+
+//    void addOfferAction(){
+//        new AddOfferGUI(userId, userType).createGUI();
+//        frame.setVisible(false);
+//    }
+
+    void seeClientReviews(){
+        new ReviewsScrollGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
+    void seeOwnerReviews(){
+        new ReviewsScrollGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
+
     void logOutBtnClickedAction(){
         new LogInGUI(-1, "None").createGUI();
         frame.setVisible(false);
@@ -253,8 +279,8 @@ public class HomePageGUI extends BaseGUI {
     }
 
     public static void main(String[] args) {
-//        new HomePageGUI(-1, "None").createGUI();
-        new HomePageGUI(1, "Owner").createGUI();
+        new HomePageGUI(-1, "None").createGUI();
+//        new HomePageGUI(1, "Owner").createGUI();
 //        new HomePageGUI(8, "Client").createGUI();
     }
 }
