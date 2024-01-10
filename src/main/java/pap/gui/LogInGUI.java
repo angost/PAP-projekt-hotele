@@ -142,7 +142,7 @@ public class LogInGUI extends BaseGUI {
         statusLabel.setForeground(statusNeutral);
         statusLabel.paintImmediately(statusLabel.getVisibleRect());
 
-        UserLogin ul = new UserLogin(usernameText, passwordText);
+        ClientLogin ul = new ClientLogin(usernameText, passwordText);
         Client user = ul.getUserAccount();
         List<Integer> errorCodesUser = ul.getErrorCodes();
 
