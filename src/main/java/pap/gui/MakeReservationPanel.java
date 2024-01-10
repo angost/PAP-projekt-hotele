@@ -1,7 +1,9 @@
 package pap.gui;
 
 import lombok.Getter;
+import pap.db.dao.OfferDAO;
 import pap.db.entities.Discount;
+import pap.db.entities.Offer;
 import pap.db.entities.PaymentMethod;
 import pap.gui.FormGUITemplate;
 
@@ -16,6 +18,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.io.File;
 import java.util.HashMap;
@@ -24,6 +28,7 @@ import java.util.Calendar;
 
 public class MakeReservationPanel extends JPanel {
     int panelWidth, panelHeight, userId;
+    private JLabel costLabel;
     private JComboBox<Integer> startYearComboBox;
     private JComboBox<Integer> startMonthComboBox;
     private JComboBox<Integer> startDayComboBox;
@@ -37,11 +42,13 @@ public class MakeReservationPanel extends JPanel {
     Color bgColor; Font fontBigger, fontMiddle, fontMiddleBold, fontSmaller, fontSmallerBold;
     LocalDate startDate, endDate;
     String userType;
+    Integer offerId;
+    Float discount;
     @Getter
     private String discountCode;
 
     public MakeReservationPanel(Color bgColor, Font fontBigger, Font fontBiggerBold, Font fontMiddle, Font fontMiddleBold, Font fontSmaller, Font fontSmallerBold, int panelWidth, int panelHeight,
-                             HashMap<String, String> offerInfo, HashMap<String, String> reservationInfo, Integer userId, JFrame frame, String userType) {
+                             HashMap<String, String> offerInfo, HashMap<String, String> reservationInfo, Integer userId, JFrame frame, String userType, Integer offerId) {
 
         this.panelWidth = panelWidth;
         this.panelHeight = panelHeight;
@@ -56,11 +63,15 @@ public class MakeReservationPanel extends JPanel {
         this.frame = frame;
         this.userType = userType;
         this.pickedCreditCard = null;
+        this.offerId = offerId;
+        this.discount = 0f;
 
         setBackground(bgColor);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setPreferredSize(new Dimension(panelWidth, panelHeight));
         setMaximumSize(new Dimension(panelWidth, panelHeight));
+
+        this.costLabel = new JLabel("Cost: 0.00 zł");
 
         JPanel topPanel = new JPanel();
         topPanel.setBackground(bgColor);
@@ -109,7 +120,7 @@ public class MakeReservationPanel extends JPanel {
         groupPanel1.add(Box.createRigidArea(new Dimension(10, 0)));
 
         // LEFT PANEL
-        int offerImgWidth = leftPanelWidth;
+        int offerImgWidth = leftPanelWidth ;
         int offerImgHeight = contentPanelsHeight / 2;
         try {
             Image offerImg = ImageIO.read(new File(getClass().getResource(offerInfo.get("img_path")).getPath()));
@@ -130,32 +141,48 @@ public class MakeReservationPanel extends JPanel {
         // Start Date
         JPanel startDatePanel = new JPanel();
         startDatePanel.setBackground(bgColor);
-        startDatePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        startDatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JLabel startDateLabel = new JLabel("Reservation Start Date:");
         startDateLabel.setFont(new Font(startDateLabel.getFont().getName(), Font.BOLD, 16));
         startYearComboBox = createComboBox(getCurrentYear(), getCurrentYear()+1);
         startMonthComboBox = createComboBox(1, 12);
         startDayComboBox = new JComboBox<>();
 
-        startDatePanel.add(startDateLabel);
+        JLabel blankLabel = new JLabel("ㅤ ");
+        contentPanelLeft.add(blankLabel);
+
+        JLabel dayStartLabel = new JLabel("ㅤ             Day:");
+        JLabel monthStartLabel = new JLabel("Month:");
+        JLabel yearStartLabel = new JLabel("Year:");
+        JLabel dayEndLabel = new JLabel("ㅤ             Day:");
+        JLabel monthEndLabel = new JLabel("Month:");
+        JLabel yearEndLabel = new JLabel("Year:");
+
+        contentPanelLeft.add(startDateLabel);
+        startDatePanel.add(dayStartLabel);
         startDatePanel.add(startDayComboBox);
+        startDatePanel.add(monthStartLabel);
         startDatePanel.add(startMonthComboBox);
+        startDatePanel.add(yearStartLabel);
         startDatePanel.add(startYearComboBox);
         contentPanelLeft.add(startDatePanel);
 
         // End Date
         JPanel endDatePanel = new JPanel();
         endDatePanel.setBackground(bgColor);
-        endDatePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        endDatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JLabel endDateLabel = new JLabel("Reservation End Date:  ");
         endDateLabel.setFont(new Font(endDateLabel.getFont().getName(), Font.BOLD, 16));
         endYearComboBox = createComboBox(getCurrentYear(), getCurrentYear()+1);
         endMonthComboBox = createComboBox(1, 12);
         endDayComboBox = new JComboBox<>();
 
-        endDatePanel.add(endDateLabel);
+        contentPanelLeft.add(endDateLabel);
+        endDatePanel.add(dayEndLabel);
         endDatePanel.add(endDayComboBox);
+        endDatePanel.add(monthEndLabel);
         endDatePanel.add(endMonthComboBox);
+        endDatePanel.add(yearEndLabel);
         endDatePanel.add(endYearComboBox);
         contentPanelLeft.add(endDatePanel);
 
@@ -163,12 +190,20 @@ public class MakeReservationPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateDays(startYearComboBox, startMonthComboBox, startDayComboBox);
+                updateCost();
             }
         });
         startYearComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateDays(startYearComboBox, startMonthComboBox, startDayComboBox);
+                updateCost();
+            }
+        });
+        startDayComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateCost();
             }
         });
 
@@ -176,12 +211,20 @@ public class MakeReservationPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateDays(endYearComboBox, endMonthComboBox, endDayComboBox);
+                updateCost();
             }
         });
         endYearComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateDays(endYearComboBox, endMonthComboBox, endDayComboBox);
+                updateCost();
+            }
+        });
+        endDayComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateCost();
             }
         });
 
@@ -197,6 +240,8 @@ public class MakeReservationPanel extends JPanel {
 
         addCreditCardPanel(contentPanelRight);
         addDiscountPanel(contentPanelRight);
+        addReservationCostPanel(contentPanelRight);
+
 
     }
 
@@ -215,11 +260,29 @@ public class MakeReservationPanel extends JPanel {
     private void updateDays(JComboBox<Integer> yearComboBox, JComboBox<Integer> monthComboBox, JComboBox<Integer> dayComboBox) {
         int year = (int) yearComboBox.getSelectedItem();
         int month = (int) monthComboBox.getSelectedItem();
-        int daysInMonth = getDaysInMonth(year, month);
 
-        dayComboBox.removeAllItems();
-        for (int i = 1; i <= daysInMonth; i++) {
-            dayComboBox.addItem(i);
+        Calendar currentDate = Calendar.getInstance();
+        int currentYear = currentDate.get(Calendar.YEAR);
+        int currentMonth = currentDate.get(Calendar.MONTH) + 1; // Calendar months are 0-based
+        int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
+
+        if (year == currentYear && month == currentMonth) {
+            // If the selected month is the current month, filter out days earlier than the current day + 3
+            currentDate.add(Calendar.DAY_OF_MONTH, 3);
+            int minSelectableDay = currentDate.get(Calendar.DAY_OF_MONTH);
+
+            dayComboBox.removeAllItems();
+            for (int i = minSelectableDay; i <= getDaysInMonth(year, month); i++) {
+                dayComboBox.addItem(i);
+            }
+        } else {
+            // For future months, include all days
+            int daysInMonth = getDaysInMonth(year, month);
+
+            dayComboBox.removeAllItems();
+            for (int i = 1; i <= daysInMonth; i++) {
+                dayComboBox.addItem(i);
+            }
         }
     }
 
@@ -234,6 +297,7 @@ public class MakeReservationPanel extends JPanel {
         }
         return daysInMonth;
     }
+
 
     void addCreditCardPanel(JPanel panel) {
         List<PaymentMethod> creditCards = getCreditCards();
@@ -338,12 +402,21 @@ public class MakeReservationPanel extends JPanel {
 
     private float isValidDiscountCode(String discountCode) {
         List<Discount> discounts = new DiscountsDAO().findAll();
+        Offer offer = new OfferDAO().findById(offerId);
         for (Discount discount: discounts){
-            if (discount.isActive() && discountCode.equals(discount.getCode())){
+            if (isCurrentDiscountValid(offer, discount, discountCode)){
+                this.discount = discount.getValue();
+                updateCost();
                 return discount.getValue();
             }
         }
         return 0;
+    }
+
+    private boolean isCurrentDiscountValid(Offer offer, Discount discount, String discountCode){
+        return discount.isActive() &&
+                (offer.getHotel().getHotelId() == discount.getHotel().getHotelId() || discount.getHotel().getHotelId() == 0) &&
+                discountCode.equals(discount.getCode());
     }
 
     List<PaymentMethod> getCreditCards(){
@@ -358,7 +431,7 @@ public class MakeReservationPanel extends JPanel {
     }
 
     private void returnSelectedDates() {
-        if (endDayComboBox.getSelectedItem() != null) {
+        if (endDayComboBox.getSelectedItem() != null && startDayComboBox.getSelectedItem() != null) {
             int startYear = (int) startYearComboBox.getSelectedItem();
             int startMonth = (int) startMonthComboBox.getSelectedItem();
             int startDay = (int) startDayComboBox.getSelectedItem();
@@ -370,6 +443,28 @@ public class MakeReservationPanel extends JPanel {
             this.startDate = LocalDate.of(startYear, startMonth, startDay);
             this.endDate = LocalDate.of(endYear, endMonth, endDay);
         }
+    }
+
+    public void addReservationCostPanel(JPanel panel) {
+        costLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        costLabel.setFont(new Font(costLabel.getFont().getName(), Font.PLAIN, 24));
+        panel.add(costLabel);
+    }
+    public void updateCost() {
+        returnSelectedDates();
+        if (startDate != null && endDate != null && (startDate.isBefore(endDate) || startDate.isEqual(endDate))) {
+            long numberOfDays = calculateDaysBetween();
+            float price = new OfferDAO().findById(offerId).getPrice();
+            double totalCost = numberOfDays * (price - price * discount / 100);
+            this.costLabel.setText(String.format("Cost: %.2f zł", totalCost));
+        } else {
+            this.costLabel.setText("Cost: N/A");
+        }
+    }
+
+    public long calculateDaysBetween() {
+        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+        return daysBetween + 1;
     }
 
     public LocalDate getStartDate(){
