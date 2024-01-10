@@ -79,7 +79,7 @@ public class RatingDAO {
 
     public Rating findById(int id) {
         try (Session session = factory.openSession()) {
-            return session.get(Rating.class, id);
+            return session.find(Rating.class, id);
         }
     }
 
@@ -125,4 +125,22 @@ public class RatingDAO {
             return count != null ? count.intValue() : 0;
         }
     }
+    public int getOfferRatingsAmount(int offer_id) {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("select count(*) from ratings where offer_id = :offer_id", Integer.class)
+                    .setParameter("offer_id", offer_id)
+                    .getSingleResult();
+        }
+    }
+
+    public float getAverageOfferRating(int offer_id) {
+        if (getOfferRatingsAmount(offer_id) == 0)
+            return 0.00f;
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("select avg(rating) from ratings where offer_id = :offer_id", Float.class)
+                    .setParameter("offer_id", offer_id)
+                    .getSingleResult();
+        }
+    }
+
 }
