@@ -29,4 +29,20 @@ public class GetHotelStats {
         }
         return value;
     }
+
+    public Integer getNumberOfRatingsForHotel() {
+        String query = "SELECT COUNT(r.rating) FROM ratings r JOIN offers o ON r.offer_id = o.offer_id JOIN hotels h ON o.hotel_id = h.hotel_id WHERE h.hotel_id = :hotelId";
+        Integer value = null;
+        try (Session session = factory.openSession()) {
+            Object result = session.createNativeQuery(query)
+                    .setParameter("hotelId", hotel.getHotelId())
+                    .getSingleResult();
+            if (result != null) {
+                value = ((Number) result).intValue();
+            }
+        } catch (NoResultException e) {
+            value = null;
+        }
+        return value;
+    }
 }

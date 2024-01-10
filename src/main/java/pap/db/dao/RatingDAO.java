@@ -108,12 +108,12 @@ public class RatingDAO {
         }
     }
 
-    public double getAverageRatingForOffer(int offerId) {
+    public Float getAverageRatingForOffer(int offerId) {
         try (Session session = factory.openSession()) {
-            Double average = (Double) session.createNativeQuery("SELECT AVG(rating) FROM ratings WHERE offer_id = :offerId")
+            Number average = (Number) session.createNativeQuery("SELECT AVG(rating) FROM ratings WHERE offer_id = :offerId")
                     .setParameter("offerId", offerId)
                     .uniqueResult();
-            return average != null ? average : 0.0;
+            return average != null ? average.floatValue() : 0;
         }
     }
 
