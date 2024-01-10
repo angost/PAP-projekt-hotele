@@ -1,5 +1,9 @@
 package pap.gui.components;
 
+import pap.gui.HomePageGUI;
+import pap.gui.OfferDetailsGUI;
+import pap.gui.ReviewsScrollGUI;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -13,14 +17,19 @@ public class OfferDetailsPanel extends JPanel {
     int panelWidth, panelHeight;
     Color bgColor; Font fontBigger, fontMiddle, fontMiddleBold, fontSmaller, fontSmallerBold;
     RoundedButtonDefault seeHotelButton, seeReviewsButton;
+    int userId, offerId;
+    String userType;
+    JFrame frame;
 
     public OfferDetailsPanel(Color bgColor, Font fontBigger, Font fontBiggerBold, Font fontMiddle, Font fontMiddleBold, Font fontSmaller, Font fontSmallerBold, int panelWidth, int panelHeight,
-                             HashMap<String, String> offerInfo, Image offerImg, HashMap<String, String> reservationInfo, int offerId, int userId, String userType) {
+                             HashMap<String, String> offerInfo, Image offerImg, HashMap<String, String> reservationInfo, int offerId, int userId, String userType, JFrame sourceFrame) {
 
         this.panelWidth = panelWidth; this.panelHeight = panelHeight;
         this.bgColor = bgColor; this.fontBigger = fontBigger; this.fontMiddle = fontMiddle;
         this.fontMiddleBold = fontMiddleBold; this.fontSmaller = fontSmaller; this.fontSmallerBold = fontSmallerBold;
         int topPanelHeight = panelHeight/6;
+        this.userId = userId; this.userType = userType; this.offerId = offerId;
+        this.frame = frame;
 
         setBackground(bgColor);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -163,6 +172,7 @@ public class OfferDetailsPanel extends JPanel {
         groupPanel5.add(Box.createRigidArea(new Dimension(contentPanelsHeight/30, 0)));
         addJLabel("<html><p style='font-family:verdana'>" + reviewScore + " (" + reviewCount + ")" + "</p></html>", Color.BLACK, fontSmaller, groupPanel5, reviewsPanelWidth/7, reviewsPanelHeight);
         seeReviewsButton = new RoundedButtonDefault("See all reviews", panelWidth/9, topPanelHeight/2, false, true);
+        seeReviewsButton.addActionListener(e -> seeReviewsBtnClicked());
         groupPanel5.add(seeReviewsButton);
         groupPanel5.add(Box.createRigidArea(new Dimension(rightPanelGap, 0)));
 
@@ -195,6 +205,11 @@ public class OfferDetailsPanel extends JPanel {
             textLabel.setMaximumSize(new Dimension(panelWidth, panelHeight));
         }
         panel.add(textLabel);
+    }
+
+    void seeReviewsBtnClicked() {
+        new ReviewsScrollGUI(userId, userType, offerId).createGUI();
+        frame.setVisible(false);
     }
 
 }

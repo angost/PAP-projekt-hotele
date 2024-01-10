@@ -9,11 +9,20 @@ import java.util.HashMap;
 
 public class ReviewsScrollGUI extends ScrollGUITemplate{
 
+    int offerId;
+
     // mock funtion
     void getElementsData() {
-        if (userType.equals("Client")) {
+        // Offer's reviews
+        if (offerId != -1) {
+            this.fittingElementsIds = new Integer[]{3};
+        }
+        // Client's reviews
+        else if (userType.equals("Client")) {
             this.fittingElementsIds = new Integer[]{1,2,3,4};
-        } else {
+        }
+        // Owner's reviews
+        else {
             this.fittingElementsIds = new Integer[]{1,4,5};
         }
         this.nrOfElements = fittingElementsIds.length;
@@ -68,8 +77,32 @@ public class ReviewsScrollGUI extends ScrollGUITemplate{
         }
     }
 
+    @Override
+    void undoBtnClickedAction(){
+        if (offerId != -1) {
+            if (userType.equals("Client")) {
+                new OfferDetailsGUI(userId, userType, offerId).createGUI();
+            } else {
+                new OwnersOfferDetailsGUI(userId, userType, offerId).createGUI();
+            }
+        } else {
+            new HomePageGUI(userId, userType).createGUI();
+        }
+        frame.setVisible(false);
+    }
+
     public ReviewsScrollGUI(int userId, String userType){
         super(userId, userType);
+        offerId = -1;
+        getElementsData();
+        offerHeight = frameHeight/6;
+        offerWidth = frameWidth*3/5;
+        pageName = "Reviews";
+    }
+
+    public ReviewsScrollGUI(int userId, String userType, int offerId){
+        super(userId, userType);
+        this.offerId = offerId;
         getElementsData();
         offerHeight = frameHeight/6;
         offerWidth = frameWidth*3/5;
