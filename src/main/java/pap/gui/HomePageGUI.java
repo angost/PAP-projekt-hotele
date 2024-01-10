@@ -146,7 +146,9 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow2.setLayout(new BoxLayout(buttonsRow2, BoxLayout.LINE_AXIS));
             buttonsRow2.setBackground(bgColor);
             addHotelButton = new MenuButton("Add hotel", "/icons/add_hotel.png");
+            addHotelButton.addActionListener(e->addHotelAction());
             addOfferButton = new MenuButton("Add offer", "/icons/add_offer.png");
+            addOfferButton.addActionListener(e->addOfferAction());
             buttonsRow2.add(addHotelButton); buttonsRow2.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow2.add(addOfferButton); buttonsRow2.add(Box.createHorizontalGlue());
 
@@ -258,6 +260,17 @@ public class HomePageGUI extends BaseGUI {
         //new ScrollDiscountsGUI(userId, userType).createGUI();
         //frame.setVisible(false);
     }
+
+    void addHotelAction(){
+        new AddHotelGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
+    void addOfferAction(){
+        new AddOfferGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
 
     void logOutBtnClickedAction(){
         new LogInGUI(-1, "None").createGUI();
