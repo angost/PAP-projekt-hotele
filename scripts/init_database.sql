@@ -192,6 +192,11 @@ ALTER TABLE discounts
     ADD CONSTRAINT fk_discounts_hotels FOREIGN KEY (hotel_id) REFERENCES hotels (hotel_id);
 
 
+insert into addresses values (0, 'No country', 'No city', 'No street', 'No postal-code', '0N');
+insert into owners values (0, 'dnawiuda', 'dawda', 'dawda d', 'd adwa', 'dwa d', 0, 'nudawdadll', true, false);
+insert into hotels values (0, 0, 'ALL HOTELS', localtimestamp, 'representing all hotels (for discount)', 0, 'all@gmail.com', 'www.abc.pl', '123456789', '123456' , true);
+
+
 INSERT INTO addresses ("country", "city", "street", "postal_code", "street_no") VALUES
 ('USA', 'New York', 'Broadway St', '10001', '123'),
 ('Canada', 'Toronto', 'King St', 'M5V 1K4', '456'),
