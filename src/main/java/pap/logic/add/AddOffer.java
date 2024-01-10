@@ -1,4 +1,4 @@
-package pap.logic.owner.add;
+package pap.logic.add;
 
 import pap.db.dao.OfferDAO;
 import pap.db.entities.Hotel;

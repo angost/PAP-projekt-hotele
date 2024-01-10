@@ -1,4 +1,4 @@
-package pap.logic.owner.update;
+package pap.logic.update;
 
 import pap.db.dao.HotelDAO;
 import pap.db.entities.Hotel;

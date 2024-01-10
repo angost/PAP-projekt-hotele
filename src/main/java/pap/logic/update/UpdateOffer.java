@@ -1,4 +1,4 @@
-package pap.logic.owner.update;
+package pap.logic.update;
 
 import pap.db.dao.OfferDAO;
 import pap.db.entities.Offer;

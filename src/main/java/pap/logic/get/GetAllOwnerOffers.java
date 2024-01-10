@@ -1,4 +1,4 @@
-package pap.logic.owner;
+package pap.logic.get;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

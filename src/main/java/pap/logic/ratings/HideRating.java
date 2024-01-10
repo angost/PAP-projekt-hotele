@@ -1,4 +1,4 @@
-package pap.logic.owner.ratings;
+package pap.logic.ratings;
 
 import pap.db.dao.RatingDAO;
 import pap.db.entities.Rating;

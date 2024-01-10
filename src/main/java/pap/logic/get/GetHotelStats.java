@@ -1,4 +1,4 @@
-package pap.logic.owner.getStats;
+package pap.logic.get;
 
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
