@@ -7,7 +7,6 @@ import pap.db.entities.Hotel;
 import pap.db.entities.Offer;
 import pap.db.entities.Owner;
 
-import javax.security.auth.login.CredentialException;
 import java.util.List;
 
 public class HotelDAO {
