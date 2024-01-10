@@ -72,13 +72,13 @@ public class DiscountDAO {
 
     public List<Discount> findAll() {
         try (Session session = factory.openSession()) {
-            return session.createNativeQuery("SELECT * FROM Discount WHERE is_active = true", Discount.class).list();
+            return session.createNativeQuery("SELECT * FROM discounts WHERE is_active = true", Discount.class).list();
         }
     }
 
     public List<Discount> findAllWithNotActive() {
         try (Session session = factory.openSession()) {
-            return session.createNativeQuery("SELECT * FROM Discount", Discount.class).list();
+            return session.createNativeQuery("SELECT * FROM discounts", Discount.class).list();
         }
     }
 
@@ -88,9 +88,17 @@ public class DiscountDAO {
         }
     }
 
+    public Discount findByCode(String code) {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("SELECT * FROM discounts WHERE code = :code AND is_active = true", Discount.class)
+                    .setParameter("code", code)
+                    .uniqueResult();
+        }
+    }
+
     public Double getValueByCode(String code) {
         try (Session session = factory.openSession()) {
-            return (Double) session.createNativeQuery("SELECT value FROM Discount WHERE code = :code AND is_active = true")
+            return (Double) session.createNativeQuery("SELECT value FROM discounts WHERE code = :code AND is_active = true")
                     .setParameter("code", code)
                     .uniqueResult();
         }
@@ -98,7 +106,7 @@ public class DiscountDAO {
 
     public Integer getHotelIdByCode(String code) {
         try (Session session = factory.openSession()) {
-            return (Integer) session.createNativeQuery("SELECT hotelId FROM Discount WHERE code = :code AND is_active = true")
+            return (Integer) session.createNativeQuery("SELECT hotelId FROM discounts WHERE code = :code AND is_active = true")
                     .setParameter("code", code)
                     .uniqueResult();
         }
