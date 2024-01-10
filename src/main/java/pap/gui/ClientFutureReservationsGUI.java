@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import pap.logic.reservation.ReservationFunctionality;
 
 public class ClientFutureReservationsGUI extends ClientReservationHistoryGUI {
 
@@ -32,8 +33,8 @@ public class ClientFutureReservationsGUI extends ClientReservationHistoryGUI {
                 ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
                 System.out.println("Prolong reservation " + button.elementId);
 
-//                new OfferPageGUI(-1, "None", button.elementId).createGUI();
-//                frame.setVisible(false);
+                new ChangeReservationDateGUI(userId, userType, button.elementId).createGUI();
+                frame.setVisible(false);
             }
         };
         prolongButton.addActionListener(prolongActionListener);
@@ -45,9 +46,11 @@ public class ClientFutureReservationsGUI extends ClientReservationHistoryGUI {
             public void actionPerformed(ActionEvent actionEvent) {
                 ScrollElementButton button = (ScrollElementButton)actionEvent.getSource();
                 System.out.println("Cancel reservation " + button.elementId);
-
-//                new OfferPageGUI(-1, "None", button.elementId).createGUI();
-//                frame.setVisible(false);
+                int result = JOptionPane.showConfirmDialog(null, "Do you really want to cancel this reservation?", "Cancel confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    System.out.println("Cancel reservation " + button.elementId);
+                    new ReservationFunctionality(button.elementId).cancelReservation();
+                }
             }
         };
         cancelButton.addActionListener(cancelActionListener);

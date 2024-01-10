@@ -12,18 +12,18 @@ public class ReservationFunctionality {
     public ReservationFunctionality(Integer resId){
         reservation = new ReservationDAO().findById(resId);
     }
-    public void endReservationChecker(){
+    public void cancelReservation(){
 
         if (reservation.getStartDate().minusDays(3).isBefore(LocalDate.now())) {
             changePaidAmount((float) 0);
-            changeStatus("cancelled");
+            changeStatus("Cancelled");
         }
         if (reservation.getStartDate().isBefore(LocalDate.now())) {
             changePaidAmount((float) (reservation.getPaidAmount() * 0.5));
-            changeStatus("cancelled");
+            changeStatus("Cancelled");
         }
         else {
-            changeStatus("returned");
+            changeStatus("Cancelled");
         }
     }
 
@@ -32,9 +32,6 @@ public class ReservationFunctionality {
             reservation.setStartDate(startDate);
             new ReservationDAO().update(reservation);
         }
-        else {
-            //TODO
-        }
     }
 
     public void changeEndDate(LocalDate endDate){
@@ -42,9 +39,13 @@ public class ReservationFunctionality {
             reservation.setEndDate(endDate);
             new ReservationDAO().update(reservation);
         }
-        else {
-            //TODO
-        }
+    }
+
+    public void changeDates(LocalDate startDate, LocalDate endDate){
+        reservation.setEndDate(endDate);
+        reservation.setStartDate(startDate);
+        new ReservationDAO().update(reservation);
+
     }
 
     public void changeDescription(String description){
