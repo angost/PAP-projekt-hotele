@@ -106,7 +106,6 @@ public class ErrorCodes {
         errorDescriptions.put(803, "Comment is too long");
         errorDescriptions.put(804, "Date is invalid");
 
-
         // DiscountCode errors
         errorDescriptions.put(901, "Discount code has wrong length");
         errorDescriptions.put(902, "Discount code can contain only letters or numbers");
@@ -117,6 +116,11 @@ public class ErrorCodes {
         errorDescriptions.put(907, "Discount value percentage has to be in <0, 100>");
         errorDescriptions.put(908, "Discount value can't be negative");
 
+        // Deactivate Errors
+        errorDescriptions.put(1001, "User not found");
+        errorDescriptions.put(1002, "User has active reservations (not successful deactivate account)");
+        errorDescriptions.put(1003, "Owner not found");
+        errorDescriptions.put(1004, "Owner has active hotels (not successful deactivate account)");
     }
 
     public static String getErrorDescription(int errorCode) {
