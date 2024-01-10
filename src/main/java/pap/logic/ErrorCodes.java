@@ -7,88 +7,120 @@ public class ErrorCodes {
     private static final Map<Integer, String> errorDescriptions = new HashMap<>();
 
     static {
-        // User Errors
-        errorDescriptions.put(1, "Username is too short");
-        errorDescriptions.put(2, "Username is too long");
-        errorDescriptions.put(3, "Username contains illegal characters");
-        errorDescriptions.put(4, "Username contains illegal keywords");
-        errorDescriptions.put(5, "Username is not unique");
-        errorDescriptions.put(6, "Password is too short");
-        errorDescriptions.put(7, "Password is too long");
-        errorDescriptions.put(8, "Password contains username");
-        errorDescriptions.put(9, "Password doesn't contain capital letter");
-        errorDescriptions.put(10, "Password doesn't contain lowercase letter");
-        errorDescriptions.put(11, "Password doesn't contain number");
-        errorDescriptions.put(12, "Password doesn't contain special character");
-        errorDescriptions.put(13, "Name is too short");
-        errorDescriptions.put(14, "Name is too long");
-        errorDescriptions.put(15, "Surname is too short");
-        errorDescriptions.put(16, "Surname is too long");
-        errorDescriptions.put(17, "Email is too short");
-        errorDescriptions.put(18, "Email is too long");
-        errorDescriptions.put(19, "Email doesn't contain @");
-        errorDescriptions.put(20, "Phone number is too short");
-        errorDescriptions.put(21, "Phone number is too long");
-        errorDescriptions.put(22, "Birthdate is invalid");
-        errorDescriptions.put(23, "Nationality is too short");
-        errorDescriptions.put(24, "Nationality is too long");
-        errorDescriptions.put(25, "Gender is invalid");
+        errorDescriptions.put(1, "Database error");
 
-        // Address errors
-        errorDescriptions.put(51, "Country is too short");
-        errorDescriptions.put(52, "Country is too long");
-        errorDescriptions.put(53, "City is too short");
-        errorDescriptions.put(54, "City is too long");
-        errorDescriptions.put(55, "Street is too short");
-        errorDescriptions.put(56, "Street is too long");
-        errorDescriptions.put(57, "Postal code is too short");
-        errorDescriptions.put(58, "Postal code is too long");
-        errorDescriptions.put(59, "Street number is too short");
-        errorDescriptions.put(60, "Street number is too long");
-        errorDescriptions.put(61, "Street number doesn’t contain number");
+        // User errors
+        errorDescriptions.put(101, "Username is too short");
+        errorDescriptions.put(102, "Username is too long");
+        errorDescriptions.put(103, "Username contains illegal characters");
+        errorDescriptions.put(104, "Username contains illegal keywords");
+        errorDescriptions.put(105, "Username is not unique");
+        errorDescriptions.put(106, "Password is too short");
+        errorDescriptions.put(107, "Password is too long");
+        errorDescriptions.put(108, "Password contains username");
+        errorDescriptions.put(109, "Password doesn't contain capital letter");
+        errorDescriptions.put(110, "Password doesn't contain lowercase letter");
+        errorDescriptions.put(111, "Password doesn't contain number");
+        errorDescriptions.put(112, "Password doesn't contain special character");
+        errorDescriptions.put(113, "Email is too short");
+        errorDescriptions.put(114, "Email is too long");
+        errorDescriptions.put(115, "Email format is incorrect");
+        errorDescriptions.put(116, "Phone number is too short");
+        errorDescriptions.put(117, "Phone number is too long");
+        errorDescriptions.put(118, "Phone number doesn't contain only numbers");
 
-        // Owner Errors
-        errorDescriptions.put(101, "Owner username is too short");
-        errorDescriptions.put(102, "Owner username is too long");
-        errorDescriptions.put(103, "Owner username contains illegal characters");
-        errorDescriptions.put(104, "Owner username contains illegal keywords");
-        errorDescriptions.put(105, "Owner username is not unique");
-        errorDescriptions.put(106, "Owner password is too short");
-        errorDescriptions.put(107, "Owner password is too long");
-        errorDescriptions.put(108, "Owner password contains username");
-        errorDescriptions.put(109, "Owner password doesn't contain capital");
-        errorDescriptions.put(110, "Owner password doesn't contain lowercase");
-        errorDescriptions.put(111, "Owner password doesn't contain number");
-        errorDescriptions.put(112, "Owner password doesn't contain special character");
-        errorDescriptions.put(113, "Owner company name is too short");
-        errorDescriptions.put(114, "Owner company name is too long");
-        errorDescriptions.put(115, "Owner email is too short");
-        errorDescriptions.put(116, "Owner email is too long");
-        errorDescriptions.put(117, "Owner email doesn't contain @");
-        errorDescriptions.put(118, "Owner phone number is too short");
-        errorDescriptions.put(119, "Owner phone number is too long");
-        errorDescriptions.put(120, "Owner nip is wrong length");
-        errorDescriptions.put(121, "Owner nip contains not only digits");
-        errorDescriptions.put(122, "Owner nip has wrong checksum");
+        // Client errors
+        errorDescriptions.put(201, "Client name is too short");
+        errorDescriptions.put(202, "Client name is too long");
+        errorDescriptions.put(203, "Client name doesn't contain only letters");
+        errorDescriptions.put(204, "Client surname is too short");
+        errorDescriptions.put(205, "Client surname is too long");
+        errorDescriptions.put(206, "Client surname doesn't contain only letters");
+        errorDescriptions.put(207, "Birthdate is invalid");
+        errorDescriptions.put(208, "Nationality is too short");
+        errorDescriptions.put(209, "Nationality is too long");
+        errorDescriptions.put(210, "Nationality doesn't contain only letters");
+        errorDescriptions.put(211, "Gender is invalid");
 
-        // Login Errors
-        errorDescriptions.put(201, "No such user in database (not successful user login attempt)");
-        errorDescriptions.put(202, "Wrong password (not successful user login attempt)");
-        errorDescriptions.put(203, "User account is not active (not successful login attempt)");
+        // Owner errors
+        errorDescriptions.put(301, "Owner company name is too short");
+        errorDescriptions.put(302, "Owner company name is too long");
+        errorDescriptions.put(303, "Owner NIP is wrong length");
+        errorDescriptions.put(304, "Owner NIP contains not only digits");
 
-        errorDescriptions.put(301, "No such owner in database (not successful owner login attempt)");
-        errorDescriptions.put(302, "Wrong password for owner (not successful owner login attempt)");
-        errorDescriptions.put(303, "Owner account is not active (not successful owner login attempt)");
+        // Login errors
+        errorDescriptions.put(401, "No such user in the database (not a successful login attempt)");
+        errorDescriptions.put(402, "Wrong password (not a successful login attempt)");
+        errorDescriptions.put(403, "User is not active (not a successful login attempt)");
+        errorDescriptions.put(404, "No such owner in the database (not a successful login attempt)");
+        errorDescriptions.put(405, "Wrong password for owner (not a successful login attempt)");
+        errorDescriptions.put(406, "Owner is not active (not a successful login attempt)");
 
-        errorDescriptions.put(501, "No such admin in database (not successful admin login attempt)");
-        errorDescriptions.put(502, "Wrong password (not successful admin login attempt)");
-        errorDescriptions.put(503, "Admin account is not active (not successful admin login attempt)");
+        // Addresses
+        errorDescriptions.put(501, "Country is too short");
+        errorDescriptions.put(502, "Country is too long");
+        errorDescriptions.put(503, "City is too short");
+        errorDescriptions.put(504, "City is too long");
+        errorDescriptions.put(505, "Street is too short");
+        errorDescriptions.put(506, "Street is too long");
+        errorDescriptions.put(507, "Postal code is too short");
+        errorDescriptions.put(508, "Postal code is too long");
+        errorDescriptions.put(509, "Street number is too short");
+        errorDescriptions.put(510, "Street number is too long");
+        errorDescriptions.put(511, "Wrong street number format");
+
+        // Offer errors
+        errorDescriptions.put(601, "Room type is too short");
+        errorDescriptions.put(602, "Room type is too long");
+        errorDescriptions.put(603, "Name is too short");
+        errorDescriptions.put(604, "Name is too long");
+        errorDescriptions.put(605, "Add date is illegal");
+        errorDescriptions.put(606, "Description is too short");
+        errorDescriptions.put(607, "Description is too long");
+        errorDescriptions.put(608, "BathroomNo can't be negative");
+        errorDescriptions.put(609, "RoomNo can't be negative");
+        errorDescriptions.put(610, "BedNo can't be negative");
+        errorDescriptions.put(611, "Price can't be negative");
+
+        // Hotel errors
+        errorDescriptions.put(701, "Name is too short");
+        errorDescriptions.put(702, "Name is too long");
+        errorDescriptions.put(703, "Add date is illegal");
+        errorDescriptions.put(704, "Description is too short");
+        errorDescriptions.put(705, "Description is too long");
+        errorDescriptions.put(706, "Email is too short");
+        errorDescriptions.put(707, "Email is too long");
+        errorDescriptions.put(708, "Email format is incorrect");
+        errorDescriptions.put(709, "Website is too short");
+        errorDescriptions.put(710, "Website is too long");
+        errorDescriptions.put(711, "Website format is incorrect");
+        errorDescriptions.put(712, "Phone number is too short");
+        errorDescriptions.put(713, "Phone number is too long");
+        errorDescriptions.put(714, "Phone number doesn't contain only numbers");
+        errorDescriptions.put(715, "Bank account is too short");
+        errorDescriptions.put(716, "Bank account is too long");
+
+        // Rating errors
+        errorDescriptions.put(801, "Rating has to be in range (1, 5)");
+        errorDescriptions.put(802, "Comment is too short");
+        errorDescriptions.put(803, "Comment is too long");
+        errorDescriptions.put(804, "Date is invalid");
+
+        // DiscountCode errors
+        errorDescriptions.put(901, "Discount code has wrong length");
+        errorDescriptions.put(902, "Discount code can contain only letters or numbers");
+        errorDescriptions.put(903, "Discount value type is incorrect (has to be 0 or 1)");
+        errorDescriptions.put(904, "Discount type is incorrect (has to be 0 or 1)");
+        errorDescriptions.put(905, "Discount description is too short");
+        errorDescriptions.put(906, "Discount description is too long");
+        errorDescriptions.put(907, "Discount value percentage has to be in <0, 100>");
+        errorDescriptions.put(908, "Discount value can't be negative");
 
         // Deactivate Errors
-        errorDescriptions.put(401, "User not found");
-        errorDescriptions.put(402, "User has active reservations (not successful deactivate account)");
-        errorDescriptions.put(403, "Owner not found");
-        errorDescriptions.put(404, "Owner has active hotels (not successful deactivate account)");
+        errorDescriptions.put(1001, "User not found");
+        errorDescriptions.put(1002, "User has active reservations (not successful deactivate account)");
+        errorDescriptions.put(1003, "Owner not found");
+        errorDescriptions.put(1004, "Owner has active hotels (not successful deactivate account)");
     }
 
     public static String getErrorDescription(int errorCode) {
