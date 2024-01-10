@@ -16,7 +16,7 @@ public class DeactivateAccount {
         if (!reservations.isEmpty()) {
             for (var reservation : reservations) {
                 if (reservation.getStatus().equals("active")) {
-                    codes.add(1001);
+                    codes.add(1002);
                     return codes;
                 }
             }
