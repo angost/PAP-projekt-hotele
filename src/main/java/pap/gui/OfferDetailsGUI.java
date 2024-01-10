@@ -1,5 +1,6 @@
 package pap.gui;
 
+import pap.db.dao.OfferDAO;
 import pap.logic.guiAction.OfferDetails;
 import pap.logic.guiAction.ReserveOffer;
 import pap.gui.components.LogoPanel;
@@ -32,6 +33,7 @@ public class OfferDetailsGUI extends BaseGUI {
         mainPanel.add(Box.createRigidArea(new Dimension(0, gap)));
         OfferDetails offerDetails = new OfferDetails();
         HashMap<String, String> offerInfo = offerDetails.getOfferInfo(offerId);
+        Image image = new OfferDAO().getImageById(offerId);
         // Should be info passed to this class's constructor - hashmap<String,String>, which will be later passed to payment view
         HashMap<String, String> reservationInfo = new HashMap<>();
         OfferDetailsPanel offerPanel = new OfferDetailsPanel(neutralGray, fontBigger, fontBiggerBold, fontMiddle,
