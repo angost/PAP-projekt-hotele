@@ -17,7 +17,7 @@ public class NewReservation {
         reservation.setEndDate(endDate);
         reservation.setDescription(description);
         reservation.setPaidAmount(paidAmount);
-        reservation.setStatus("active");
+        reservation.setStatus("Active");
         reservation.setPaid(isPaid);
         reservation.setClient(client);
         reservation.setOffer(offer);
