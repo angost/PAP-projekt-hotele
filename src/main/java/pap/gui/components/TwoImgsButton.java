@@ -8,7 +8,7 @@ import java.io.File;
 public class TwoImgsButton extends JButton {
 
     Image baseImg, secondImg;
-    String state;
+    public String state;
     boolean imgUploadSuccess = false;
 
     public TwoImgsButton(int buttonWidth, int buttonHeight, int imgWidth, int imgHeight, String baseImgPath, String secondImgPath) {
@@ -24,18 +24,22 @@ public class TwoImgsButton extends JButton {
             this.baseImg = baseImg;
             this.secondImg = secondImg;
             imgUploadSuccess = true;
-            state = "base_state";
         } catch (Exception ex) {
             setContentAreaFilled(true);
         }
+        state = "base_state";
     }
 
     public void changeState() {
         if (state.equals("base_state")) {
-            setIcon(new ImageIcon(secondImg));
+            if (imgUploadSuccess){
+                setIcon(new ImageIcon(secondImg));
+            }
             state = "second_state";
         } else {
-            setIcon(new ImageIcon(baseImg));
+            if (imgUploadSuccess){
+                setIcon(new ImageIcon(baseImg));
+            }
             state = "base_state";
         }
     }

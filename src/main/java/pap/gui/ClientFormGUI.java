@@ -1,7 +1,7 @@
 package pap.gui;
 
-import pap.logic.validators.UserCredentialValidator;
 import pap.logic.add.AddNewUser;
+import pap.logic.validators.ClientValidator;
 
 import java.time.LocalDate;
 import java.time.Year;
@@ -21,7 +21,7 @@ public class ClientFormGUI extends FormGUITemplate {
     }
 
     String[] getFieldTypes() {
-        String[] fieldTypes = {"text", "text", "text", "text", "comboBoxInteger",  "text", "text", "text", "text", "text", "text", "text", "text", "text"};
+        String[] fieldTypes = {"text", "password", "text", "text", "comboBoxDate",  "text", "text", "text", "text", "text", "text", "text", "text", "text"};
         return fieldTypes;
     }
 
@@ -49,9 +49,9 @@ public class ClientFormGUI extends FormGUITemplate {
 
 
     List<Integer> validateCredentials(HashMap<String, String> textFieldsValues) {
-        List <Integer> errorCodes = new UserCredentialValidator(textFieldsValues.get("Username"), textFieldsValues.get("Password"), textFieldsValues.get("Name"), textFieldsValues.get("Surname"),
+        List <Integer> errorCodes = new ClientValidator(textFieldsValues.get("Username"), textFieldsValues.get("Password"), textFieldsValues.get("Name"), textFieldsValues.get("Surname"),
                 textFieldsValues.get("Email"), textFieldsValues.get("Phone number"), textFieldsValues.get("Country"), textFieldsValues.get("City"),
-                textFieldsValues.get("Street"), textFieldsValues.get("Postal Code"), textFieldsValues.get("Street number"), LocalDate.parse("2003-01-14"),
+                textFieldsValues.get("Street"), textFieldsValues.get("Postal Code"), textFieldsValues.get("Street number"), LocalDate.parse(textFieldsValues.get("Date of birth")),
                 textFieldsValues.get("Nationality"), textFieldsValues.get("Gender")).validateCredentials();
         return errorCodes;
     }
@@ -59,7 +59,7 @@ public class ClientFormGUI extends FormGUITemplate {
     void createUser(HashMap<String, String> textFieldsValues) {
         new AddNewUser(textFieldsValues.get("Username"), textFieldsValues.get("Password"), textFieldsValues.get("Name"), textFieldsValues.get("Surname"),
                 textFieldsValues.get("Email"), textFieldsValues.get("Phone number"), textFieldsValues.get("Country"), textFieldsValues.get("City"),
-                textFieldsValues.get("Street"), textFieldsValues.get("Postal Code"), textFieldsValues.get("Street number"), LocalDate.parse("2003-01-14"),
+                textFieldsValues.get("Street"), textFieldsValues.get("Postal Code"), textFieldsValues.get("Street number"), LocalDate.parse(textFieldsValues.get("Date of birth")),
                 textFieldsValues.get("Nationality"), textFieldsValues.get("Gender"), true).insertIntoDatabase();
     }
 

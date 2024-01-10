@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RoundedButton extends JButton {
-    Color fillColor, hoverColor;
+    public Color fillColor, hoverColor;
     public int preferredWidth, preferredHeight;
     boolean squareShaped;
 
