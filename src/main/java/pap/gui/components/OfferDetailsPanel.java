@@ -127,9 +127,9 @@ public class OfferDetailsPanel extends JPanel {
         addJLabel("<html><p style='font-family:verdana'>" + roomTypeText +
                 priceText + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4, -1, -1);
 
-        String roomNrText = "<b>Nr of rooms: </b>" + offerInfo.get("rooms_nr") + "<br/>";
-        String bathroomNrText = "<b>Nr of bathrooms: </b>" + offerInfo.get("bathrooms_nr") + "<br/>";
-        String peopleNrText = "<b>For people: </b>" + offerInfo.get("people_nr");
+        String roomNrText = "<b>No of rooms: </b>" + offerInfo.get("rooms_nr") + "<br/>";
+        String bathroomNrText = "<b>No of bathrooms: </b>" + offerInfo.get("bathrooms_nr") + "<br/>";
+        String peopleNrText = "<b>No of beds: </b>" + offerInfo.get("people_nr");
 
         addJLabel("<html><p style='font-family:verdana'>" + roomNrText + bathroomNrText +
                 peopleNrText + "</p></html>", Color.BLACK, fontSmaller,  groupPanel4, -1, -1);

@@ -1,18 +1,17 @@
 package pap.gui;
 
 import pap.db.dao.OfferDAO;
+import pap.db.dao.RatingDAO;
+import pap.db.entities.Offer;
 import pap.logic.guiAction.OfferDetails;
-import pap.logic.guiAction.ReserveOffer;
 import pap.gui.components.LogoPanel;
 import pap.gui.components.OfferDetailsPanel;
 import pap.gui.components.RoundedButtonDefault;
 import pap.gui.components.UndoButton;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 
 public class OfferDetailsGUI extends BaseGUI {
 
