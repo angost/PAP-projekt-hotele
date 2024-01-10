@@ -43,7 +43,8 @@ public class MakeReservationPanel extends JPanel {
     LocalDate startDate, endDate;
     String userType;
     Integer offerId;
-    Float discount;
+    Float discountValue;
+    Discount discount;
     @Getter
     private String discountCode;
 
@@ -64,7 +65,8 @@ public class MakeReservationPanel extends JPanel {
         this.userType = userType;
         this.pickedCreditCard = null;
         this.offerId = offerId;
-        this.discount = 0f;
+        this.discountValue = 0f;
+        this.discount = null;
 
         setBackground(bgColor);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -389,9 +391,14 @@ public class MakeReservationPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String discountCode = discountCodeField.getText();
-                float discount = isValidDiscountCode(discountCode);
-                if (discount > 0) {
-                    JOptionPane.showMessageDialog(null, String.format("Discount code correct, adding %s%% discount", String.format("%.2f", discount)), "Discount Code Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                float discountValid = isValidDiscountCode(discountCode);
+                if (discountValid > 0) {
+                    if (discount.getValueType() == 0){
+                        JOptionPane.showMessageDialog(null, String.format("Discount code correct, adding %szł discount", String.format("%.2f", discountValue)), "Discount Code Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, String.format("Discount code correct, adding %s%% discount", String.format("%.2f", discountValue)), "Discount Code Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Discount code incorrect!", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -405,7 +412,8 @@ public class MakeReservationPanel extends JPanel {
         Offer offer = new OfferDAO().findById(offerId);
         for (Discount discount: discounts){
             if (isCurrentDiscountValid(offer, discount, discountCode)){
-                this.discount = discount.getValue();
+                this.discountValue = discount.getValue();
+                this.discount = discount;
                 updateCost();
                 return discount.getValue();
             }
@@ -415,8 +423,8 @@ public class MakeReservationPanel extends JPanel {
 
     private boolean isCurrentDiscountValid(Offer offer, Discount discount, String discountCode){
         return discount.isActive() &&
-                (offer.getHotel().getHotelId() == discount.getHotel().getHotelId() || discount.getHotel().getHotelId() == 0) &&
-                discountCode.equals(discount.getCode());
+                (offer.getHotel().getHotelId() == discount.getHotel().getHotelId() || discount.getType() == 0) &&
+                discountCode.equalsIgnoreCase(discount.getCode());
     }
 
     List<PaymentMethod> getCreditCards(){
@@ -455,7 +463,13 @@ public class MakeReservationPanel extends JPanel {
         if (startDate != null && endDate != null && (startDate.isBefore(endDate) || startDate.isEqual(endDate))) {
             long numberOfDays = calculateDaysBetween();
             float price = new OfferDAO().findById(offerId).getPrice();
-            double totalCost = numberOfDays * (price - price * discount / 100);
+            double totalCost = 0;
+            if (discount != null && discount.getValueType() == 0){
+                totalCost = numberOfDays * (price - discountValue);
+            }
+            else {
+                totalCost = numberOfDays * (price - price * discountValue / 100);
+            }
             this.costLabel.setText(String.format("Cost: %.2f zł", totalCost));
         } else {
             this.costLabel.setText("Cost: N/A");
