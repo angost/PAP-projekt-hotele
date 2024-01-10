@@ -25,7 +25,7 @@ public class Rating {
     private String comment;
 
     @Basic
-    @Column(name = "add_date", nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDate addDate;
 
     @Basic

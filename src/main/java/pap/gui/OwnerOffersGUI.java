@@ -1,30 +1,48 @@
 package pap.gui;
 
+import pap.db.dao.OfferDAO;
+import pap.db.dao.OwnerDAO;
+import pap.db.dao.ReservationDAO;
+import pap.db.entities.Offer;
+import pap.db.entities.Reservation;
 import pap.gui.components.OwnersOfferPanel;
 import pap.gui.components.ScrollElementButton;
+import pap.logic.get.GetAllOwnerOffers;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 
 public class OwnerOffersGUI extends ScrollGUITemplate{
 
-    // mock funtion
     void getElementsData() {
-        this.fittingElementsIds = new Integer[]{1,2,3,5,7,8,9};
-        this.nrOfElements = fittingElementsIds.length;
+        List<Offer> offers = new GetAllOwnerOffers(new OwnerDAO().findById(userId)).get();
+        this.nrOfElements = offers.size();
+        this.fittingElementsIds = new Integer[nrOfElements];
+        for (int i = 0; i < nrOfElements; i++) {
+            fittingElementsIds[i] = offers.get(i).getOfferId();
+        }
     }
 
-    // mock function
     HashMap<String, String> getElementData(int elementId) {
-        HashMap<String, String> offerInfo = new HashMap<String, String>();
-        offerInfo.put("name", "Ocean View Standard Room");
-        offerInfo.put("hotel", "Grand Hotel");
-        offerInfo.put("add_date", "2023-08-10");
-        offerInfo.put("price", "280");
-        offerInfo.put("res_no", "40");
-        offerInfo.put("total_income", "33600");
-        return offerInfo;
+        HashMap<String, String> elInfo = new HashMap<>();
+
+        Offer offer = new OfferDAO().findById(elementId);
+        List<Reservation> reservations = new ReservationDAO().findByOfferId(elementId);
+        float income = 0;
+        for (Reservation reservation : reservations) {
+            income += reservation.getPaidAmount();
+        }
+
+        elInfo.put("name", offer.getName());
+        elInfo.put("hotel", offer.getHotel().getName());
+        elInfo.put("add_date", offer.getAddDate().toString());
+        elInfo.put("price", String.format("%.2f", offer.getPrice()) + " PLN");
+        elInfo.put("res_no", String.valueOf(reservations.size()));
+        elInfo.put("total_income", String.format("%.2f", income) + " PLN");
+
+        return elInfo;
     }
 
     JPanel createScrollElement(int elementId) {
@@ -78,7 +96,7 @@ public class OwnerOffersGUI extends ScrollGUITemplate{
 //        offerPanel.add(Box.createRigidArea(new Dimension(gapSize,0)));
     }
 
-    public OwnerOffersGUI(int userId, String userType){
+    public OwnerOffersGUI(int userId, String userType) {
         super(userId, userType);
         getElementsData();
         offerHeight = frameHeight/4;

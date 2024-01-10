@@ -1,42 +1,43 @@
 package pap.logic.login;
+
 import jakarta.persistence.NoResultException;
-import pap.db.dao.OwnerDAO;
-import pap.db.entities.Owner;
+import pap.db.dao.AdminDAO;
+import pap.db.entities.Admin;
+import pap.logic.add.AddNewOwner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class OwnerLogin {
+public class AdminLogin {
     private final String username;
     private final String password;
     private List<Integer> codes;
 
-    public OwnerLogin(String username, String password) {
+    public AdminLogin(String username, String password) {
         this.username = username;
         this.password = password;
         this.codes = new ArrayList<>();
     }
 
-    public Owner getOwnerAccount() {
+    public Admin getAdminAccount() {
         try {
-            Owner owner = new OwnerDAO().findByUsername(username);
-            if (password.equals(owner.getPassword())) {
-                if (owner.isActive()) {
-                    return owner;
+            Admin admin = new AdminDAO().findByUsername(username);
+            if (password.equals(admin.getPassword())) {
+                if (admin.isActive()) {
+                    return admin;
                 } else {
-                    codes.add(406);
+                    codes.add(409);
                 }
             } else {
-                codes.add(405);
+                codes.add(408);
             }
-            return new Owner();
+            return new Admin();
         } catch (NoResultException e) {
-            codes.add(404);
-            return new Owner();
+            codes.add(407);
+            return new Admin();
         } catch (Exception exception) {
             codes.add(1);
-            return new Owner();
+            return new Admin();
         }
     }
 

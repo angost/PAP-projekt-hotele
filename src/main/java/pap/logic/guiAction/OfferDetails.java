@@ -24,8 +24,8 @@ public class OfferDetails {
         offerInfo.put("rooms_nr", String.valueOf(offer.getRoomNumber()));
         offerInfo.put("bathrooms_nr", String.valueOf(offer.getBathroomNumber()));
         offerInfo.put("people_nr", String.valueOf(offer.getBedNumber()));
-        offerInfo.put("review_score", String.valueOf(new RatingDAO().getAverageOfferRating(offerId)));
-        offerInfo.put("reviews_nr", String.valueOf(new RatingDAO().getOfferRatingsAmount(offerId)));
+        offerInfo.put("review_score", String.valueOf(new RatingDAO().getAverageRatingForOffer(offerId)));
+        offerInfo.put("reviews_nr", String.valueOf(new RatingDAO().getNumberOfRatingsForOffer(offerId)));
         String yes = "";
         String no = "";
         if (offer.isHasKitchen())

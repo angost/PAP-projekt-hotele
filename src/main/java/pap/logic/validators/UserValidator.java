@@ -2,6 +2,7 @@ package pap.logic.validators;
 
 import jakarta.persistence.NoResultException;
 import pap.db.dao.ClientDAO;
+import pap.db.dao.OwnerDAO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +53,7 @@ public class UserValidator {
         checkUsernameContainsIllegalChar(username, codes);
         checkUsernameContainsIllegalKeyword(username, codes);
         checkUsernameIsUnique(username, codes);
+        checkUsernameIsUniqueAmongOwners(username, codes);
     }
 
     public static void validatePassword(String password, List <Integer> codes, String username) {
@@ -95,6 +97,17 @@ public class UserValidator {
     public static void checkUsernameIsUnique(String username, List <Integer> codes) {
         try {
             new ClientDAO().findByUsername(username);
+            codes.add(105);
+        } catch (NoResultException error) {
+            // expected situation, do nothing
+        }
+        catch (Exception anotherError) {
+            codes.add(1);
+        }
+    }
+    private static void checkUsernameIsUniqueAmongOwners(String username, List <Integer> codes) {
+        try {
+            new OwnerDAO().findByUsername(username);
             codes.add(105);
         } catch (NoResultException error) {
             // expected situation, do nothing
