@@ -252,8 +252,8 @@ public class HomePageGUI extends BaseGUI {
     }
 
     void seeDiscountsAction(){
-        new ScrollDiscountsGUI(userId, userType).createGUI();
-        frame.setVisible(false);
+        //new ScrollDiscountsGUI(userId, userType).createGUI();
+        //frame.setVisible(false);
     }
 
     void logOutBtnClickedAction(){

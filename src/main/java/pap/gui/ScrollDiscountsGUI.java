@@ -13,15 +13,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class ScrollDiscountsGUI extends ScrollGUITemplate {
-    public ScrollDiscountsGUI(int userId, String userType){
-        super(userId, userType);
-        getElementsData();
-        offerHeight = frameHeight/4;
-        offerWidth = frameWidth/2;
-        pageName = "Manage discounts";
-    }
-
+//public class ScrollDiscountsGUI extends ScrollGUITemplate {
+//    public ScrollDiscountsGUI(int userId, String userType){
+//        super(userId, userType);
+//        getElementsData();
+//        offerHeight = frameHeight/4;
+//        offerWidth = frameWidth/2;
+//        pageName = "Manage discounts";
+//    }
+//
 //    void getElementsData() {
 //        this.fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
 //        this.nrOfElements = fittingElementsIds.length;
@@ -77,6 +77,6 @@ public class ScrollDiscountsGUI extends ScrollGUITemplate {
 //        favouritesButton.addActionListener(favActionListener);
 //        offerPanel.add(favouritesButton);
 //    }
-
-
-}
+//
+//
+//}

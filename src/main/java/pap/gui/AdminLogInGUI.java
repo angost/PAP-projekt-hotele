@@ -137,22 +137,22 @@ public class AdminLogInGUI extends BaseGUI {
 
         new HomePageGUI(1, "Admin").createGUI();
         frame.setVisible(false);
-//        AdminLogin al = new AdminLogin(usernameText, passwordText);
-//        Admin admin = al.getAdminAccount();
-//        java.util.List<Integer> errorCodesAdmin = al.getErrorCodes();
-//
-//        // Successful log in
-//        if (errorCodesAdmin.isEmpty()) {
-//            new HomePageGUI(admin.getAdminId(), "Admin").createGUI();
-//            frame.setVisible(false);
-//        } else {
-//            statusLabelText = "<html>";
-//            statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(errorCodesAdmin.get(0));
-//            statusLabelText = statusLabelText + "</html>";
-//            statusLabel.setText(statusLabelText);
-//            statusLabel.setForeground(statusWrong);
-//            statusLabel.paintImmediately(statusLabel.getVisibleRect());
-//        }
+        AdminLogin al = new AdminLogin(usernameText, passwordText);
+        Admin admin = al.getAdminAccount();
+        java.util.List<Integer> errorCodesAdmin = al.getErrorCodes();
+
+        // Successful log in
+        if (errorCodesAdmin.isEmpty()) {
+            new HomePageGUI(admin.getAdminId(), "Admin").createGUI();
+            frame.setVisible(false);
+        } else {
+            statusLabelText = "<html>";
+            statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(errorCodesAdmin.get(0));
+            statusLabelText = statusLabelText + "</html>";
+            statusLabel.setText(statusLabelText);
+            statusLabel.setForeground(statusWrong);
+            statusLabel.paintImmediately(statusLabel.getVisibleRect());
+        }
     }
 
     void createGUI(){
