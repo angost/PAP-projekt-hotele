@@ -38,7 +38,8 @@ public class ReservationGUI extends BaseGUI {
         // Should be info passed to this class's constructor - hashmap<String,String>, which will be later passed to payment view
         HashMap<String, String> reservationInfo = new HashMap<>();
         MakeReservationPanel reservationPanel = new MakeReservationPanel(neutralGray, fontBigger, fontBiggerBold, fontMiddle,
-                fontMiddleBold, fontSmaller, fontSmallerBold, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2, offerInfo, reservationInfo, userId, frame, userType);
+                fontMiddleBold, fontSmaller, fontSmallerBold, frameWidth, frameHeight - logoPanelHeight - footerHeight - gap - gap2*2,
+                offerInfo, reservationInfo, userId, frame, userType, offerId);
         mainPanel.add(reservationPanel);
 
         JPanel footerPanel = new JPanel();
