@@ -15,7 +15,7 @@ public class PaymentMethodsDAO {
             session.beginTransaction();
             session.persist(paymentMethod);
             session.getTransaction().commit();
-            System.out.println("[PaymentMethodsDAO] Created payment method with id: " + paymentMethod.getPaymentId());
+            System.out.println("[PaymentMethodsDAO] Created payment method with id: " + paymentMethod.getPaymentMethodId());
         }
     }
 
@@ -24,7 +24,7 @@ public class PaymentMethodsDAO {
             session.beginTransaction();
             for (PaymentMethod paymentMethod : paymentMethodsList) {
                 session.persist(paymentMethod);
-                System.out.println("[PaymentMethodsDAO] Created payment method with id: " + paymentMethod.getPaymentId());
+                System.out.println("[PaymentMethodsDAO] Created payment method with id: " + paymentMethod.getPaymentMethodId());
             }
             session.getTransaction().commit();
         }
@@ -35,7 +35,7 @@ public class PaymentMethodsDAO {
             session.beginTransaction();
             session.remove(paymentMethod);
             session.getTransaction().commit();
-            System.out.println("[PaymentMethodsDAO] Removed payment method with id: " + paymentMethod.getPaymentId());
+            System.out.println("[PaymentMethodsDAO] Removed payment method with id: " + paymentMethod.getPaymentMethodId());
         }
     }
 
@@ -44,7 +44,7 @@ public class PaymentMethodsDAO {
             session.beginTransaction();
             for (PaymentMethod paymentMethod : paymentMethodsList) {
                 session.remove(paymentMethod);
-                System.out.println("[PaymentMethodsDAO] Removed payment method with id: " + paymentMethod.getPaymentId());
+                System.out.println("[PaymentMethodsDAO] Removed payment method with id: " + paymentMethod.getPaymentMethodId());
             }
             session.getTransaction().commit();
         }
@@ -55,7 +55,7 @@ public class PaymentMethodsDAO {
             session.beginTransaction();
             session.merge(paymentMethod);
             session.getTransaction().commit();
-            System.out.println("[PaymentMethodsDAO] Merged payment method with id: " + paymentMethod.getPaymentId());
+            System.out.println("[PaymentMethodsDAO] Merged payment method with id: " + paymentMethod.getPaymentMethodId());
         }
     }
 
@@ -64,7 +64,7 @@ public class PaymentMethodsDAO {
             session.beginTransaction();
             for (PaymentMethod paymentMethod : paymentMethodsList) {
                 session.merge(paymentMethod);
-                System.out.println("[PaymentMethodsDAO] Merged payment method with id: " + paymentMethod.getPaymentId());
+                System.out.println("[PaymentMethodsDAO] Merged payment method with id: " + paymentMethod.getPaymentMethodId());
             }
             session.getTransaction().commit();
         }
