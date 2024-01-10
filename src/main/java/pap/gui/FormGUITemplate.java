@@ -6,10 +6,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
-import pap.db.dao.ClientDAO;
-import pap.db.entities.Client;
+import pap.gui.components.LogoPanel;
+import pap.gui.components.RoundedButtonDefault;
+import pap.gui.components.UndoPanel;
 import pap.logic.ErrorCodes;
 import pap.logic.validators.*;
 
@@ -17,7 +17,14 @@ public abstract class FormGUITemplate extends BaseGUI{
     JPanel mainPanel;
     List<JTextField> textFields = new ArrayList<JTextField>();
     List<String> textFieldLabels = new ArrayList<String>();
+    List<JComboBox> comboBoxes = new ArrayList<JComboBox>();
+    List<String> comboBoxesLabels = new ArrayList<String>();
+    List<List<JComboBox>> dateComboBoxes = new ArrayList<List<JComboBox>>();
+    List<String> dateComboBoxesLabels = new ArrayList<String>();
+
     JLabel statusLabel;
+    String pageName = "";
+    String finishFormButtonText = "";
 
     public FormGUITemplate(int userId, String userType) {
         super(userId, userType);
@@ -72,7 +79,7 @@ public abstract class FormGUITemplate extends BaseGUI{
             nrOfFields = fieldLabels.length;
         } else {
             nrOfFields = 0; // Throw exception?
-            JOptionPane.showMessageDialog(frame, "Nr of fields inconsistent", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "No of fields inconsistent", "Error!", JOptionPane.ERROR_MESSAGE);
         }
 
         int fieldHeight = frameHeight/22;
@@ -114,7 +121,14 @@ public abstract class FormGUITemplate extends BaseGUI{
                 fieldPanel.add(inputField);
                 textFields.add(inputField);
                 textFieldLabels.add(fieldLabels[i]);
-
+            } else if (fieldTypes[i].equals("password")) {
+                JPasswordField inputField = new JPasswordField();
+                inputField.setFont(fontMiddle);
+                inputField.setPreferredSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
+                inputField.setMaximumSize(new Dimension((Integer) fieldParameters[i]*characterWidth, fieldHeight));
+                fieldPanel.add(inputField);
+                textFields.add(inputField);
+                textFieldLabels.add(fieldLabels[i]);
             } else if (fieldTypes[i].startsWith("radioButton")) {
                 Object[] radioBtnOptions;
                 if (fieldTypes[i].equals("radioButtonInteger")) {
@@ -134,15 +148,24 @@ public abstract class FormGUITemplate extends BaseGUI{
                     fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
                     radioButtonGroup.add(optionBtn);
                 }
-
             } else if (fieldTypes[i].startsWith("comboBox")) {
                 // comboBoxesData may all be Integer or all String
                 Object[][] comboBoxesData;
-                if (fieldTypes[i].equals("comboBoxInteger")) {
+                if (fieldTypes[i].equals("comboBoxDate") || fieldTypes[i].equals("comboBoxInteger")) {
                     comboBoxesData = (Integer[][]) fieldParameters[i];
                 } else {
                     comboBoxesData = (String[][]) fieldParameters[i];
                 }
+
+                HashMap<Integer, String> dateElementLabel = new HashMap<>();
+                dateElementLabel.put(0, "<day>"); dateElementLabel.put(1, "<month>"); dateElementLabel.put(2, "<year>");
+                int dateElementCounter = 0;
+
+                if (fieldTypes[i].equals("comboBoxDate")) {
+                    dateComboBoxesLabels.add(fieldLabels[i]);
+                    dateComboBoxes.add(new ArrayList<JComboBox>());
+                }
+
                 // Create comboBox from data
                 for ( var data: comboBoxesData) {
                     JComboBox comboBox = new JComboBox(data);
@@ -160,6 +183,12 @@ public abstract class FormGUITemplate extends BaseGUI{
                     comboBox.setMaximumSize(new Dimension(longestElWidth+50, fieldHeight));
                     fieldPanel.add(comboBox);
                     fieldPanel.add(Box.createRigidArea(new Dimension(frameWidth/40,0)));
+                    if (fieldTypes[i].equals("comboBoxInteger") || fieldTypes[i].equals("comboBoxString")) {
+                        comboBoxes.add(comboBox);
+                        comboBoxesLabels.add(fieldLabels[i]);
+                    } else if (fieldTypes[i].equals("comboBoxDate")) {
+                        dateComboBoxes.get(dateComboBoxes.size() - 1).add(comboBox);
+                    }
                 }
             }
             fieldsPanel.add(Box.createVerticalGlue());
@@ -168,18 +197,20 @@ public abstract class FormGUITemplate extends BaseGUI{
         registerPanel.add(Box.createVerticalGlue());
         statusLabel = new JLabel("<html>Insert your data<br/></html>", JLabel.LEFT);
         statusLabel.setFont(fontSmaller);
-        statusLabel.setForeground(Color.decode("#7a7373"));
+        statusLabel.setForeground(statusNeutral);
 //        statusLabel.setPreferredSize(new Dimension(frameWidth/4, contentPanelSize/5));
 //        statusLabel.setMaximumSize(new Dimension(frameWidth/4, contentPanelSize/5));
         registerPanel.add(statusLabel);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
 
-        RoundedButton registerButton = new RoundedButton("Register", frameWidth*3/20, frameHeight/10, secondColor, secondColorDarker, fontButtons, false);
-        registerButton.addActionListener(e->registerBtnClickedAction());
-        registerPanel.add(registerButton);
+        setFinishFormButtonText();
+        RoundedButtonDefault finishFormButton = new RoundedButtonDefault(finishFormButtonText, frameWidth*3/20, frameHeight/10, false, false);
+        finishFormButton.addActionListener(e->finishFormButtonClicked());
+        registerPanel.add(finishFormButton);
         registerPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/20)));
 
-        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction());
+        UndoPanel undoPanel = new UndoPanel(frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
+        mainPanel.add(undoPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0,frameHeight/40)));
     }
 
@@ -190,47 +221,37 @@ public abstract class FormGUITemplate extends BaseGUI{
         frame.setVisible(true);
     }
 
-    void undoBtnClickedAction(){
-        new ChooseAccountTypeGUI(-1, "None").createGUI();
-        frame.setVisible(false);
+    abstract void setFinishFormButtonText();
+    abstract void finishFormButtonClicked();
+    abstract void undoBtnClickedAction();
+
+    HashMap<String, String> getFieldValues(){
+        int nrOfTextFields = textFields.size();
+        int nrOfComboBoxes = comboBoxes.size();
+        int nrOfDateComboBoxes = dateComboBoxes.size();
+        HashMap<String, String> FieldValues = new HashMap<String, String>();
+
+        for (int i = 0; i < nrOfTextFields; i++){
+            FieldValues.put(textFieldLabels.get(i), textFields.get(i).getText());
+        }
+        for (int i = 0; i < nrOfComboBoxes; i++){
+            FieldValues.put(comboBoxesLabels.get(i), String.valueOf(comboBoxes.get(i).getSelectedItem()));
+        }
+        for (int i = 0; i < nrOfDateComboBoxes; i++){
+
+            int day = 0; int month = 0; int year = 0;
+
+            List<JComboBox> currDateField = dateComboBoxes.get(i);
+
+            day = (int) currDateField.get(0).getSelectedItem();
+            month = (int) currDateField.get(1).getSelectedItem();
+            year = (int) currDateField.get(2).getSelectedItem();
+            String currDateData = LocalDate.of(year, month, day).toString();
+
+            FieldValues.put(dateComboBoxesLabels.get(i), currDateData);
+        }
+
+        return FieldValues;
     }
 
-    void registerBtnClickedAction(){
-        // Get values
-        HashMap<String, String> textFieldsValues = getTextFieldValues();
-        // Validate values
-        List <Integer> errorCodes = validateCredentials(textFieldsValues);
-        // Create user and open Home Page
-        if (errorCodes.isEmpty()) {
-            createUser(textFieldsValues);
-            JOptionPane.showMessageDialog(frame, "Success! Created user!");
-            new LogInGUI(-1, "None").createGUI();
-            frame.setVisible(false);
-        }
-        // Errors occured, display them on screen
-        else {
-            String statusLabelText = "<html>"; String spacingCharacter = "<br/>";
-            if (errorCodes.size() > 10) spacingCharacter = " | ";
-            for (Integer code : errorCodes) {
-                statusLabelText = statusLabelText + ErrorCodes.getErrorDescription(code) + spacingCharacter;
-            }
-            statusLabelText = statusLabelText + "</html>";
-            statusLabel.setText(statusLabelText);
-            statusLabel.setForeground(logoColor);
-        }
-    }
-
-    HashMap<String, String> getTextFieldValues(){
-        int nrOfFields = textFields.size();
-        HashMap<String, String> textFieldsValues = new HashMap<String, String>();
-
-        for (int i = 0; i < nrOfFields; i++){
-            textFieldsValues.put(textFieldLabels.get(i), textFields.get(i).getText());
-        }
-        return textFieldsValues;
-    }
-
-    abstract List <Integer> validateCredentials(HashMap<String, String> textFieldsValues);
-
-    abstract void createUser(HashMap<String, String> textFieldsValues);
 }

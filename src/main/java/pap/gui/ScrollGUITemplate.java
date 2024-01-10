@@ -1,22 +1,32 @@
 package pap.gui;
 
-import javax.imageio.ImageIO;
+import pap.gui.components.FiltersPanel;
+import pap.gui.components.LogoPanel;
+import pap.gui.components.UndoPanel;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.HashMap;
-import pap.logic.guiAction.*;
 
-public class ScrollGUITemplate extends BaseGUI{
+public abstract class ScrollGUITemplate extends BaseGUI{
     JPanel mainPanel, scrollPanel;
     FiltersPanel filtersPanel;
     JScrollPane scrollPanelEnabler;
     // move some new components here
+    // TODO: customizowalny filters panel (ratingi - po dacie/po ocenie; historia - po dacie; ...)
+    // TODO: wgle filters panel i elementy w nim
 
     int nrOfElements;
     Integer[] fittingElementsIds;
+    int offerHeight = frameHeight/4;
+    int offerWidth = frameWidth/3;
+    int scrollButtonSize = frameHeight/7;
+    String pageName = "";
+
+    abstract void getElementsData();
+    abstract HashMap<String, String> getElementData(int elementId);
+    abstract JPanel createScrollElement(int elementId);
+    abstract void createScrollButtons(int elementId, JPanel elementPanel);
 
     void createCustomGUI() {
         mainPanel = new JPanel();
@@ -39,68 +49,27 @@ public class ScrollGUITemplate extends BaseGUI{
         scrollPanelEnabler.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPanelEnabler.setPreferredSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
         scrollPanelEnabler.setMaximumSize(new Dimension(frameWidth, scrollPanelEnablerHeight));
+        scrollPanelEnabler.getVerticalScrollBar().setUnitIncrement(10);
 
-        filtersPanel = new FiltersPanel(helpingColor, frameWidth, frameHeight, frameWidth, filtersPanelHeight, scrollPanelEnabler, scrollPanelEnablerHeight, frame);
+        filtersPanel = new FiltersPanel(neutralGray, frameWidth, frameHeight, frameWidth, filtersPanelHeight, scrollPanelEnabler, scrollPanelEnablerHeight, frame);
         mainPanel.add(filtersPanel);
         mainPanel.add(scrollPanelEnabler);
 
-        int offerHeight = frameHeight/4;
-        int offerWidth = frameWidth/3;
-
         for (int i = 0; i < nrOfElements; i++) {
+            JPanel elementPanel = createScrollElement(fittingElementsIds[i]);
+            createScrollButtons(fittingElementsIds[i], elementPanel);
 
-            JPanel offerPanel = new JPanel();
-            offerPanel.setBackground(neutralColor);
-            offerPanel.setLayout(new BoxLayout(offerPanel, BoxLayout.LINE_AXIS));
-            offerPanel.setPreferredSize(new Dimension(frameWidth, offerHeight));
-            offerPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
-            offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
-
-            JPanel offerInfoPanel = new JPanel();
-            offerInfoPanel.setBackground(helpingColor);
-            offerInfoPanel.setLayout(new BoxLayout(offerInfoPanel, BoxLayout.PAGE_AXIS));
-            offerInfoPanel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-            offerInfoPanel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-
-            HashMap<String, String> offerInfo = new FindDisplayOffers().getElementInfo(fittingElementsIds[i]);
-            JLabel offerNameLabel = new JLabel(offerInfo.get("name"), JLabel.CENTER);
-            offerNameLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-            offerNameLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-            offerNameLabel.setFont(fontMiddle);
-            offerInfoPanel.add(offerNameLabel);
-
-            JLabel offerInfoLabel = new JLabel(offerInfo.get("info"), JLabel.CENTER);
-            offerInfoLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-            offerInfoLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-            offerInfoLabel.setFont(fontSmaller);
-            offerInfoPanel.add(offerInfoLabel);
-
-            JLabel offerPriceLabel = new JLabel(offerInfo.get("price"), JLabel.CENTER);
-            offerPriceLabel.setPreferredSize(new Dimension(offerWidth, offerHeight));
-            offerPriceLabel.setMaximumSize(new Dimension(offerWidth, offerHeight));
-            offerPriceLabel.setFont(fontMiddle);
-            offerPriceLabel.setForeground(Color.RED);
-            offerInfoPanel.add(offerPriceLabel);
-
-            offerPanel.add(offerInfoPanel);
-            offerPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
-
-            SeeOfferButton seeOfferBtn = new SeeOfferButton("See offer", frameHeight/7, frameHeight/7,secondColor, secondColorDarker, fontButtons, true, fittingElementsIds[i]);
-            ActionListener actionListener = new ActionListener() {
-                public void actionPerformed(ActionEvent actionEvent) {
-                    SeeOfferButton button = (SeeOfferButton)actionEvent.getSource();
-                    System.out.println(button.offerId);
-                }
-            };
-            seeOfferBtn.addActionListener(actionListener);
-            offerPanel.add(seeOfferBtn);
-
-            scrollPanel.add(offerPanel);
+            scrollPanel.add(elementPanel);
             scrollPanel.add(Box.createRigidArea(new Dimension(0,30)));
         }
+        UndoPanel undoPanel = new UndoPanel(frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction(), pageName, fontMiddle);
+        mainPanel.add(undoPanel);
+    }
 
-        UndoPanel undoPanel = new UndoPanel(mainPanel, frameWidth, frameHeight/20, bgColor, e->undoBtnClickedAction());
-
+    public void createGUI(){
+        super.createBaseGUI();
+        createCustomGUI();
+        frame.setVisible(true);
     }
 
     void undoBtnClickedAction(){
@@ -108,82 +77,7 @@ public class ScrollGUITemplate extends BaseGUI{
         frame.setVisible(false);
     }
 
-    void createGUI(){
-        super.createBaseGUI();
-        createCustomGUI();
-        frame.setVisible(true);
-    }
-
     public ScrollGUITemplate(int userId, String userType){
         super(userId, userType);
-        fittingElementsIds = new FindDisplayOffers().getFittingElementsIds();
-        nrOfElements = fittingElementsIds.length;
     }
-
-    public static void main(String[] args) {
-        new ScrollGUITemplate(-1, "None").createGUI();
-    }
-
-}
-
-class SeeOfferButton extends RoundedButton {
-    int offerId;
-
-    public SeeOfferButton(String text, int preferredWidth, int preferredHeight, Color fillColor, Color hoverColor, Font font, boolean squareShaped, int offerId) {
-        super(text, preferredWidth, preferredHeight, fillColor, hoverColor, font, squareShaped);
-        this.offerId = offerId;
-    }
-}
-
-class FiltersPanel extends JPanel {
-
-    TwoImgsButton ShowHideFilterButton;
-    JScrollPane otherPanel;
-    JFrame frame;
-    int frameHeight, frameWidth, otherPanelHeight, panelWidth, panelHeight;
-
-    public FiltersPanel(Color panelColor, int frameWidth, int frameHeight, int panelWidth, int panelHeight, JScrollPane otherPanel, int otherPanelHeight, JFrame frame) {
-
-        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-        setBackground(panelColor);
-        setPreferredSize(new Dimension(panelWidth, panelHeight));
-        setMaximumSize(new Dimension(panelWidth, panelHeight));
-
-        this.add(Box.createRigidArea(new Dimension(frameHeight/20,0)));
-
-        ShowHideFilterButton = new TwoImgsButton(panelHeight, panelHeight, panelHeight*2, panelHeight, "/show_more_128.png", "/show_less_128.png");
-        ShowHideFilterButton.addActionListener(e->showHideFiltersClicked());
-        this.add(ShowHideFilterButton);
-
-        this.otherPanel = otherPanel;
-        this.frameHeight = frameHeight; this.frameWidth = frameWidth;
-        this.otherPanelHeight = otherPanelHeight;
-        this.panelHeight = panelHeight; this.panelWidth = panelWidth;
-        this.frame = frame;
-
-    }
-
-    void showHideFiltersClicked() {
-        // Showing filters
-        if (ShowHideFilterButton.state.equals("base_state")) {
-            ShowHideFilterButton.changeState();
-            changePanelSizes(panelWidth, panelHeight + 100, frameWidth, otherPanelHeight - 100);
-        } else {
-            // Hiding filters
-            ShowHideFilterButton.changeState();
-            changePanelSizes(panelWidth, panelHeight, frameWidth, otherPanelHeight);
-        }
-    }
-
-    void changePanelSizes(int filterPanelWidth, int filterPanelHeight, int otherPanelWidth, int otherPanelHeight) {
-        this.setPreferredSize(new Dimension(filterPanelWidth, filterPanelHeight));
-        this.setMaximumSize(new Dimension(filterPanelWidth, filterPanelHeight));
-        otherPanel.setPreferredSize(new Dimension(otherPanelWidth, otherPanelHeight));
-        otherPanel.setMaximumSize(new Dimension(otherPanelWidth, otherPanelHeight));
-        frame.revalidate();
-        frame.repaint();
-        this.revalidate();
-        this.repaint();
-    }
-
 }
