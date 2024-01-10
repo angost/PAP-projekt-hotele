@@ -99,6 +99,17 @@ public class ErrorCodes {
         errorDescriptions.put(714, "Phone number doesn't contain only numbers");
         errorDescriptions.put(715, "Bank account is too short");
         errorDescriptions.put(716, "Bank account is too long");
+
+        // DiscountCode errors
+        errorDescriptions.put(901, "Discount code has wrong length");
+        errorDescriptions.put(902, "Discount code can contain only letters or numbers");
+        errorDescriptions.put(903, "Discount value type is incorrect (has to be 0 or 1)");
+        errorDescriptions.put(904, "Discount type is incorrect (has to be 0 or 1)");
+        errorDescriptions.put(905, "Discount description is too short");
+        errorDescriptions.put(906, "Discount description is too long");
+        errorDescriptions.put(907, "Discount value percentage has to be in <0, 100>");
+        errorDescriptions.put(908, "Discount value can't be negative");
+
     }
 
     public static String getErrorDescription(int errorCode) {
