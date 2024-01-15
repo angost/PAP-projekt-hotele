@@ -82,9 +82,19 @@ public class FavouriteOfferDAO {
         }
     }
 
+    public Boolean isOfferInClientFavourites(int clientId, int offerId) {
+        try (Session session = factory.openSession()) {
+            Long result = (Long) session.createNativeQuery("SELECT COUNT(*) FROM favourite_offers WHERE client_id = :clientId AND offer_id = :offerId")
+                    .setParameter("clientId", clientId)
+                    .setParameter("offerId", offerId)
+                    .uniqueResult();
+            return result != null && result.intValue() > 0;
+        }
+    }
+
     public List<FavouriteOffer> findAllClientFavourite(int clientId) {
         try (Session session = factory.openSession()) {
-            return session.createNativeQuery("FROM favourite_offers WHERE client_id = :clientId", FavouriteOffer.class)
+            return session.createNativeQuery("SELECT * FROM favourite_offers WHERE client_id = :clientId", FavouriteOffer.class)
                     .setParameter("clientId", clientId)
                     .list();
         }

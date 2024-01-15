@@ -12,7 +12,7 @@ import jakarta.persistence.*;
 public class FavouriteOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "favourite_offer_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private int favouriteOfferId;
 
     @ManyToOne
