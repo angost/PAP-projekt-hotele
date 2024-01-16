@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
 import pap.db.dao.ReservationDAO;
+import pap.db.entities.Client;
 import pap.db.entities.Hotel;
 import pap.db.entities.Offer;
 import pap.db.entities.Reservation;
@@ -16,15 +17,24 @@ public class GetReservationHistory {
     private final SessionFactory factory = SessionFactoryMaker.getFactory();
     private final Hotel hotel;
     private final Offer offer;
+    private final Client client;
 
     public GetReservationHistory(Offer offer) {
+        this.client = null;
         this.offer = offer;
         this.hotel = null;
     }
 
     public GetReservationHistory(Hotel hotel) {
+        this.client = null;
         this.offer = null;
         this.hotel = hotel;
+    }
+
+    public GetReservationHistory(Client client) {
+        this.client = client;
+        this.offer = null;
+        this.hotel = null;
     }
 
     public List<Reservation> getAllReservations() {
@@ -37,27 +47,18 @@ public class GetReservationHistory {
         return new ReservationDAO().findByOfferId(offer.getOfferId());
     }
 
-    public List <Reservation> getAllPastReservations() {
+    public List <Reservation> getClientPastReservations() {
         String query;
-        if (offer == null) {
-            assert hotel != null;
-            query = "select reservations.* from hotels join offers on (hotels.hotel_id = offers.hotel_id) join reservations on offers.offer_id = reservations.offer_id where hotels.hotel_id = '" +
-                    hotel.getHotelId() + "'" + " and lower(reservations.status) = 'finished'";
-        } else {
-            query = "select * from reservations where LOWER(status) = 'finished' AND offer_id = '" + offer.getOfferId() + "'";
-        }
+        assert client != null;
+        query = "select * from reservations where (LOWER(status) in ('finished', 'cancelled') OR start_date < (select CURRENT_DATE)) AND client_id = '"
+                + client.getClientId() + "'";
         return executeQuery(query);
     }
 
-    public List <Reservation> getActiveReservations() {
+    public List <Reservation> getClientActiveReservations() {
         String query;
-        if (offer == null) {
-            assert hotel != null;
-            query = "select reservations.* from hotels join offers on (hotels.hotel_id = offers.hotel_id) join reservations on offers.offer_id = reservations.offer_id where hotels.hotel_id = '" +
-                    hotel.getHotelId() + "'" + " and lower(reservations.status) = 'active'";
-        } else {
-            query = "select * from reservations where LOWER(status) = 'active' AND offer_id = '" + offer.getOfferId() + "'";
-        }
+        assert client != null;
+        query = "select * from reservations where LOWER(status) = 'active' and start_date >= (select CURRENT_DATE) AND client_id = '" + client.getClientId() + "'";
         return executeQuery(query);
     }
 

@@ -1,12 +1,17 @@
 package pap.gui;
 
 
+import pap.db.dao.ClientDAO;
+import pap.db.entities.Reservation;
 import pap.gui.components.ScrollElementButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
+import pap.logic.get.GetReservationHistory;
 import pap.logic.reservation.ReservationFunctionality;
 
 public class ClientFutureReservationsGUI extends ClientReservationHistoryGUI {
@@ -16,12 +21,14 @@ public class ClientFutureReservationsGUI extends ClientReservationHistoryGUI {
         pageName = "Future reservations";
     }
 
-    // mock function
     @Override
     void getElementsData() {
-        this.fittingElementsIds = new Integer[]{2,3,5};
-        // fittingElementsIds = new ...()...(userId);
-        this.nrOfElements = fittingElementsIds.length;
+        List<Reservation> reservations = new GetReservationHistory(new ClientDAO().findById(userId)).getClientActiveReservations();
+        this.nrOfElements = reservations.size();
+        this.fittingElementsIds = new Integer[nrOfElements];
+        for (int i = 0; i < nrOfElements; i++) {
+            fittingElementsIds[i] = reservations.get(i).getReservationId();
+        }
     }
 
     @Override

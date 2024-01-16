@@ -125,4 +125,14 @@ public class RatingDAO {
             return count != null ? count : 0;
         }
     }
+
+    public boolean isRatingForOfferByClient(int offerId, int clientId) {
+        try (Session session = factory.openSession()) {
+            Integer count = session.createNativeQuery("SELECT COUNT(*) FROM ratings WHERE offer_id = :offerId AND client_id = :clientId AND is_hidden = false", Integer.class)
+                    .setParameter("offerId", offerId)
+                    .setParameter("clientId", clientId)
+                    .uniqueResult();
+            return count != null && count > 0;
+        }
+    }
 }
