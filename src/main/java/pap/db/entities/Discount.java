@@ -39,7 +39,7 @@ public class Discount {
     @Column(name = "is_active", nullable = false)
     private boolean isActive = true;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 }
