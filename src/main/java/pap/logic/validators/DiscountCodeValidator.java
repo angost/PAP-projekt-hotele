@@ -45,8 +45,9 @@ public class DiscountCodeValidator {
         if (code.length() != CODE_LENGTH) codes.add(901);
         if (!code.matches("[a-zA-Z0-9]+")) codes.add(902);
         try {
-            new DiscountDAO().findByCodeWithNoActive(code);
-            codes.add(909);
+            var x = new DiscountDAO().findByCodeWithNoActive(code);
+            if (x != null)
+                codes.add(909);
         } catch (NoResultException error) {
             // expected situation, do nothing
         }

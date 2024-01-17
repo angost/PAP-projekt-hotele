@@ -1,18 +1,19 @@
 package pap.logic.discountCodes;
 
 import pap.db.dao.DiscountDAO;
+import pap.db.dao.HotelDAO;
 import pap.db.entities.Discount;
 import pap.db.entities.Hotel;
 
 public class AddNewDiscountCode {
     private final Discount discount;
 
-    public AddNewDiscountCode(String code, Integer valueType, Integer type, String description,
+    public AddNewDiscountCode(String code, Integer valueType, String description,
                               Float value, Hotel hotel, boolean isActive) {
         this.discount = new Discount();
         this.discount.setCode(code);
         this.discount.setValueType(valueType);
-        this.discount.setType(type);
+        this.discount.setType(1);
         this.discount.setDescription(description);
         this.discount.setValue(value);
         this.discount.setHotel(hotel);
@@ -20,6 +21,7 @@ public class AddNewDiscountCode {
     }
 
     public void insertIntoDatabase() {
+        new HotelDAO().update(discount.getHotel());
         new DiscountDAO().create(discount);
     }
 }

@@ -12,14 +12,13 @@ public class AddDiscountCodeForAllHotels {
     private final Discount discount;
 
     public AddDiscountCodeForAllHotels(String code, Integer valueType, String description,
-                              Float value, Hotel hotel, boolean isActive) {
+                              Float value, boolean isActive) {
         this.discount = new Discount();
         this.discount.setCode(code);
         this.discount.setValueType(valueType);
         this.discount.setType(1);
         this.discount.setDescription(description);
         this.discount.setValue(value);
-        this.discount.setHotel(hotel);
         this.discount.setActive(isActive);
     }
 

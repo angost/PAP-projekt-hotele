@@ -62,7 +62,6 @@ public class ScrollDiscountsGUI extends ScrollGUITemplate {
         discountPanel.setPreferredSize(new Dimension(frameWidth, offerHeight));
         discountPanel.setMaximumSize(new Dimension(frameWidth, offerHeight));
         discountPanel.add(Box.createRigidArea(new Dimension(frameWidth/20,0)));
-        Image image = new OfferDAO().getImageById(elementId);
         fontBigger = new Font(fontBigger.getFontName(), Font.BOLD, fontBigger.getSize());
         DiscountPanel discountInfoPanel = new DiscountPanel(neutralGray, fontBigger, fontMiddle, fontMiddleBold, offerWidth,
                 offerHeight, discountInfo.get("code"), discountInfo);
