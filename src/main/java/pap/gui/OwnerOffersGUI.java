@@ -8,9 +8,14 @@ import pap.db.entities.Reservation;
 import pap.gui.components.OwnersOfferPanel;
 import pap.gui.components.ScrollElementButton;
 import pap.logic.get.GetAllOwnerOffers;
+import javax.swing.JOptionPane;
+
+import pap.logic.archiving.ArchiveOffer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 
@@ -89,11 +94,24 @@ public class OwnerOffersGUI extends ScrollGUITemplate{
         ScrollElementButton deactivateOfferBtn = new ScrollElementButton("Deactivate offer", buttonSize, buttonSize, statusWrongLighter, statusWrong, fontButtons, true, elementId);
         deactivateOfferBtn.addActionListener(actionEvent -> {
             ScrollElementButton button = (ScrollElementButton) actionEvent.getSource();
-//            new OfferDetailsGUI(userId, userType, button.elementId).createGUI();
-//            frame.setVisible(false);
         });
         offerPanel.add(deactivateOfferBtn);
 //        offerPanel.add(Box.createRigidArea(new Dimension(gapSize,0)));
+        deactivateOfferBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int result = JOptionPane.showConfirmDialog(null, "Do you want to proceed?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    boolean done = new ArchiveOffer(new OfferDAO().findById(elementId)).archive();
+                    if (done){
+                        JOptionPane.showMessageDialog(null, "Offer Deactivated!", "Deactivation", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Offer cannot be deactivated!", "Deactivation", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        });
     }
 
     public OwnerOffersGUI(int userId, String userType) {
