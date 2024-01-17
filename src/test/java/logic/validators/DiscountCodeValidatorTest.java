@@ -29,6 +29,15 @@ public class DiscountCodeValidatorTest {
     }
 
     @Test
+    public void validate_InvalidCodeLength_TooLongCodeShouldAddErrorCode910() {
+        DiscountCodeValidator validator = new DiscountCodeValidator(
+                "ABCDEFGEHIJKLMNO", 0, 0, "Valid description", 10.0f, new Hotel(), true);
+        List<Integer> validationCodes = validator.validate();
+        validationCodes.remove(Integer.valueOf(909));
+        assertEquals(List.of(910), validationCodes);
+    }
+
+    @Test
     public void validate_InvalidCodeCharacters_ShouldAddErrorCode902() {
         DiscountCodeValidator validator = new DiscountCodeValidator(
                 "ABC!@#$%^&", 0, 0, "Valid description", 10.0f, new Hotel(), true);

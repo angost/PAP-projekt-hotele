@@ -112,7 +112,8 @@ public class ErrorCodes {
         errorDescriptions.put(804, "Date is invalid");
 
         // DiscountCode errors
-        errorDescriptions.put(901, "Discount code has wrong length");
+        errorDescriptions.put(901, "Discount code is too short");
+        errorDescriptions.put(910, "Discount code is too long");
         errorDescriptions.put(902, "Discount code can contain only letters or numbers");
         errorDescriptions.put(903, "Discount value type is incorrect (has to be 0 or 1)");
         errorDescriptions.put(904, "Discount type is incorrect (has to be 0 or 1)");

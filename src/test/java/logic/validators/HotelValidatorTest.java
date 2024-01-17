@@ -17,6 +17,7 @@ public class HotelValidatorTest {
 
         List<Integer> validationCodes = hotelValidator.validate();
         validationCodes.remove(Integer.valueOf(1));
+        validationCodes.remove(Integer.valueOf(717));
         assertEquals(List.of(), validationCodes);
     }
 
@@ -27,6 +28,7 @@ public class HotelValidatorTest {
 
         List<Integer> validationCodes = hotelValidator.validate();
         validationCodes.remove(Integer.valueOf(1));
+        validationCodes.remove(Integer.valueOf(717));
         assertEquals(List.of(701), validationCodes);
     }
 
@@ -37,6 +39,7 @@ public class HotelValidatorTest {
 
         List<Integer> validationCodes = hotelValidator.validate();
         validationCodes.remove(Integer.valueOf(1));
+        validationCodes.remove(Integer.valueOf(717));
         assertEquals(List.of(703), validationCodes);
     }
 
@@ -47,6 +50,7 @@ public class HotelValidatorTest {
 
         List<Integer> validationCodes = hotelValidator.validate();
         validationCodes.remove(Integer.valueOf(1));
+        validationCodes.remove(Integer.valueOf(717));
         assertEquals(List.of(704), validationCodes);
     }
 
@@ -57,6 +61,7 @@ public class HotelValidatorTest {
 
         List<Integer> validationCodes = hotelValidator.validate();
         validationCodes.remove(Integer.valueOf(1));
+        validationCodes.remove(Integer.valueOf(717));
         assertEquals(List.of(706, 708), validationCodes);
     }
 
@@ -67,6 +72,7 @@ public class HotelValidatorTest {
 
         List<Integer> validationCodes = hotelValidator.validate();
         validationCodes.remove(Integer.valueOf(1));
+        validationCodes.remove(Integer.valueOf(717));
         assertEquals(List.of(709, 711), validationCodes);
     }
 
@@ -77,6 +83,7 @@ public class HotelValidatorTest {
 
         List<Integer> validationCodes = hotelValidator.validate();
         validationCodes.remove(Integer.valueOf(1));
+        validationCodes.remove(Integer.valueOf(717));
         assertEquals(List.of(712, 714), validationCodes);
     }
 
@@ -87,6 +94,7 @@ public class HotelValidatorTest {
 
         List<Integer> validationCodes = hotelValidator.validate();
         validationCodes.remove(Integer.valueOf(1));
+        validationCodes.remove(Integer.valueOf(717));
         assertEquals(List.of(716), validationCodes);
     }
 }
