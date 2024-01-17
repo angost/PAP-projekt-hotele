@@ -19,6 +19,14 @@ public class AdminLogin {
         this.codes = new ArrayList<>();
     }
 
+    /**
+     * method allowing to log in admin account,
+     * method checks if such user exists and if given password is correct
+     * @usage: new AdminLogin(username, password).getAdminAccount()
+     * @see Admin
+     * @see AdminDAO
+     * @return returns Admin object
+     */
     public Admin getAdminAccount() {
         try {
             Admin admin = new AdminDAO().findByUsername(username);
@@ -41,6 +49,11 @@ public class AdminLogin {
         }
     }
 
+    /**
+     * method allows to get error codes to check if login process was completed correctly
+     * @return returns list of Integer (codes), if the list is empty, login was successful
+     * @see pap.logic.ErrorCodes
+     */
     public List <Integer> getErrorCodes() {
         return codes;
     }

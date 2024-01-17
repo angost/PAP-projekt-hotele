@@ -26,6 +26,15 @@ public class AddNewOffer {
         this.offer.setHotel(hotel);
     }
 
+    /**
+     * method inserts new offer into database,
+     * creates new row in offers table
+     * @usage: new AddNewOffer(...new offer params...).insertIntoDatabase()
+     * @see pap.logic.validators.OfferValidator
+     * @see Offer
+     * @see OfferDAO
+     * @info (recommended validating data before inserting into database)
+     */
     public void insertIntoDatabase() {
         new OfferDAO().create(offer);
     }

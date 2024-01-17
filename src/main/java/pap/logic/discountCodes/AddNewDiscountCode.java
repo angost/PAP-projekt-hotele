@@ -20,6 +20,16 @@ public class AddNewDiscountCode {
         this.discount.setActive(isActive);
     }
 
+    /**
+     * method adds discount code for given hotel,
+     * inserts row into discounts
+     * @usage: new AddNewDiscountCode(...discount code params).insertIntoDatabase()
+     * @see Discount
+     * @see pap.db.dao.DiscountDAO
+     * @see pap.logic.validators.DiscountCodeValidator
+     * @info (recommended validating new code before inserting into database)
+     * @info useful in owner panel
+     */
     public void insertIntoDatabase() {
         new HotelDAO().update(discount.getHotel());
         new DiscountDAO().create(discount);

@@ -13,6 +13,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * class allowing to get reservation history for offer / hotel / client
+ * @usage: new GetReservationHistory(Hotel)
+ * @usage: new GetReservationHistory(Offer)
+ * @usage: new GetReservationHistory(Client)
+ * @see Offer
+ * @see Hotel
+ * @see Client
+ * @see pap.db.dao.OfferDAO
+ * @see pap.db.dao.ClientDAO
+ * @see pap.db.dao.HotelDAO
+ */
 public class GetReservationHistory {
     private final SessionFactory factory = SessionFactoryMaker.getFactory();
     private final Hotel hotel;

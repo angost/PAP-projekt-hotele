@@ -8,6 +8,12 @@ import pap.db.entities.Hotel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class allowing to validate input from user before inserting values into database
+ * @usage: new DiscountCodeValidator(...params to check...).validate()
+ * @see pap.logic.discountCodes.AddNewDiscountCode
+ * @see pap.logic.discountCodes.AddDiscountCodeForAllHotels
+ */
 public class DiscountCodeValidator {
     private final static int CODE_MIN_LENGTH = 4;
     private final static int CODE_MAX_LENGTH = 15;
@@ -32,6 +38,11 @@ public class DiscountCodeValidator {
         this.isActive = isActive;
     }
 
+    /**
+     * method which validates all given params
+     * @return returns list of error codes, if its empty - params are all valid
+     * @see pap.logic.ErrorCodes
+     */
     public List<Integer> validate() {
         List <Integer> codes = new ArrayList<>();
         validateCode(code, codes);

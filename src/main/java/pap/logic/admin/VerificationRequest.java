@@ -15,6 +15,15 @@ public class VerificationRequest {
         new OwnerDAO().update(owner);
     }
 
+    /**
+     * method allowing admin to verify owner
+     * @usage: new VerificationRequest(Owner).accept() / decline()
+     * @see Owner
+     * @see OwnerDAO
+     * @see GetNotVerifiedOwners
+     * @info if accepted -> is_verified = true
+     * @info if declined -> owner is removed from database
+     */
     public void decline() {
         new OwnerDAO().delete(owner);
     }

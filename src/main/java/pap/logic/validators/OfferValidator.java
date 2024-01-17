@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class allowing to validate input from user before inserting values into database
+ * @usage: new OfferValidator(...params to check...).validate()
+ * @see pap.logic.add.AddNewOffer
+ */
 public class OfferValidator {
     private static final int MIN_ROOMTYPE_LENGTH = 2;
     private static final int MAX_ROOMTYPE_LENGTH = 15;
@@ -39,6 +44,11 @@ public class OfferValidator {
         this.isActive = isActive;
     }
 
+    /**
+     * method which validates all given params
+     * @return returns list of error codes, if its empty - params are all valid
+     * @see pap.logic.ErrorCodes
+     */
     public List<Integer> validate() {
         List <Integer> codes = new ArrayList<>();
         validateRoomType(roomType, codes);

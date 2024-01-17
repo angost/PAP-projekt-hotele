@@ -3,6 +3,21 @@ package pap.logic;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * class providing information about error,
+ * it has description for every code
+ * @see pap.logic.validators.AddressValidator
+ * @see pap.logic.validators.ClientValidator
+ * @see pap.logic.validators.OwnerValidator
+ * @see pap.logic.validators.UserValidator
+ * @see pap.logic.validators.HotelValidator
+ * @see pap.logic.validators.OfferValidator
+ * @see pap.logic.validators.RatingValidator
+ * @see pap.logic.validators.DiscountCodeValidator
+ * @see pap.logic.login.AdminLogin
+ * @see pap.logic.login.ClientLogin
+ * @see pap.logic.login.OwnerLogin
+ */
 public class ErrorCodes {
     private static final Map<Integer, String> errorDescriptions = new HashMap<>();
 

@@ -16,6 +16,15 @@ public class ArchiveOffer {
         this.offer = offer;
     }
 
+    /**
+     * method archives given offer,
+     * changes offer status -> is_active = false
+     * @usage: new ArchiveOffer(Offer).archive()
+     * @see Offer
+     * @see OfferDAO
+     * @return bool representing success of the operation
+     * @info (if there are some reservations in given offer, it can't be archived
+     */
     public boolean archive() {
         // checking
         try (Session session = factory.openSession()) {

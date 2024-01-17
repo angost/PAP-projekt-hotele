@@ -18,6 +18,15 @@ public class ArchiveHotel {
         this.hotel = hotel;
     }
 
+    /**
+     * method archives given hotel,
+     * changes hotel status -> is_active = false
+     * @usage: new ArchiveHotel(Hotel).archive()
+     * @see Hotel
+     * @see HotelDAO
+     * @return bool representing success of the operation
+     * @info (if there are some reservations in given hotel, it can't be archived
+     */
     public boolean archive() {
         try (Session session = factory.openSession()) {
             String query = "select reservations.* from hotels join offers on hotels.hotel_id = offers.hotel_id join reservations on offers.offer_id = reservations.offer_id where hotels.hotel_id = '" + hotel.getHotelId() + "'";

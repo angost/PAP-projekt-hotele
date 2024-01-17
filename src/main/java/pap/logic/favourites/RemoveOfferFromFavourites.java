@@ -3,7 +3,9 @@ package pap.logic.favourites;
 import pap.db.dao.ClientDAO;
 import pap.db.dao.FavouriteOfferDAO;
 import pap.db.dao.OfferDAO;
+import pap.db.entities.Client;
 import pap.db.entities.FavouriteOffer;
+import pap.db.entities.Offer;
 
 import java.util.List;
 
@@ -23,6 +25,17 @@ public class RemoveOfferFromFavourites {
         this.fo.setOffer(new OfferDAO().findById(offerId));
     }
 
+    /**
+     * method allowing removing offer from favourites for user,
+     * deletes row from favourite_offers table
+     * @usage: new RemoveOfferFromFavourites(offerId, clientId)
+     * @see Offer
+     * @see Client
+     * @see FavouriteOffer
+     * @see OfferDAO
+     * @see ClientDAO
+     * @see FavouriteOfferDAO
+     */
     public void remove() {
         new FavouriteOfferDAO().delete(fo);
     }

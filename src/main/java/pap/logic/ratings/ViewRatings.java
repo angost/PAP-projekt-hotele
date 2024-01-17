@@ -3,12 +3,26 @@ package pap.logic.ratings;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
+import pap.db.dao.RatingDAO;
 import pap.db.entities.Hotel;
 import pap.db.entities.Offer;
 import pap.db.entities.Rating;
 
 import java.util.List;
 
+/**
+ * class allowing to get all ratings for offer / hotel / all ratings in database
+ * @usage: new ViewRatings(ownerView).someMethod
+ * @usage: new ViewRatings(Offer, ownerView).someMethod
+ * @usage: new ViewRatings(Hotel, ownerView).someMethod
+ * @see Hotel
+ * @see pap.db.dao.HotelDAO
+ * @see Offer
+ * @see pap.db.dao.OfferDAO
+ * @see Rating
+ * @see RatingDAO
+ * @info if offerView is true, methods return also hidden ratings
+ */
 public class ViewRatings {
     private final SessionFactory factory = SessionFactoryMaker.getFactory();
     private final Hotel hotel;
