@@ -74,7 +74,7 @@ public class Offer {
     private boolean isActive = true;
 
     @Basic
-    @Column(name = "image", nullable = false)
+    @Column(name = "image", nullable = true)
     private byte[] imageData;
 
     @ManyToOne

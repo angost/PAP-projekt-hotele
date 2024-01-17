@@ -10,6 +10,7 @@ public class AddNewOffer {
     private final Offer offer;
     public AddNewOffer(String roomType, String name, LocalDate addDate, String description,
                        Integer bathroomNo, Integer roomNo, Integer bedNo, boolean hasKitchen, boolean petFriendly,
+                       boolean hasWifi, boolean smokingAllowed, boolean hasParking,
                        Float price, boolean isActive, Hotel hotel) {
         this.offer = new Offer();
         this.offer.setRoomType(roomType);
@@ -21,9 +22,13 @@ public class AddNewOffer {
         this.offer.setBedNumber(bedNo);
         this.offer.setHasKitchen(hasKitchen);
         this.offer.setPetFriendly(petFriendly);
+        this.offer.setHasWifi(hasWifi);
+        this.offer.setSmokingAllowed(smokingAllowed);
+        this.offer.setHasParking(hasParking);
         this.offer.setPrice(price);
         this.offer.setActive(isActive);
         this.offer.setHotel(hotel);
+        this.offer.setImageData(null);
     }
 
     /**
