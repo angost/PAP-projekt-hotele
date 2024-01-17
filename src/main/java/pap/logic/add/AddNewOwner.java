@@ -45,6 +45,15 @@ public class AddNewOwner {
         address = false;
     }
 
+    /**
+     * method inserts new owner into database,
+     * creates new row in owners table (with or without address)
+     * @usage: new AddNewOwner(...new owner params...).insertIntoDatabase()
+     * @see pap.logic.validators.OwnerValidator
+     * @see Owner
+     * @see OwnerDAO
+     * @info (recommended validating data before inserting into database)
+     */
     public void insertIntoDatabase() {
         if (address) {
             new OwnerDAO().createWithNewAddress(owner);

@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import pap.db.SessionFactoryMaker;
 import pap.db.entities.Discount;
-import pap.db.entities.Hotel;
 
 public class AddDiscountCodeForAllHotels {
     SessionFactory factory = SessionFactoryMaker.getFactory();
@@ -22,6 +21,16 @@ public class AddDiscountCodeForAllHotels {
         this.discount.setActive(isActive);
     }
 
+    /**
+     * method adds discount code for all hotels,
+     * inserts row into discounts
+     * @usage: new AddNewDiscountCodeForAllHotels(...discount code params).insertIntoDatabase()
+     * @see Discount
+     * @see pap.db.dao.DiscountDAO
+     * @see pap.logic.validators.DiscountCodeValidator
+     * @info (recommended validating new code before inserting into database)
+     * @info useful in admin panel
+     */
     public void insertIntoDatabase() {
         String query = "INSERT INTO discounts (code, value_type, type, description, value, hotel_id, is_active) " +
                 "VALUES (:code, :valueType, :type, :description, :value, 0, true)";

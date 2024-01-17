@@ -15,6 +15,17 @@ public class AddHotelToFavourites {
         this.fo.setClient(new ClientDAO().findById(clientId));
     }
 
+    /**
+     * method allowing adding hotel to favourites for user,
+     * inserts row into favourite_hotels table
+     * @usage: new AddHotelToFavourites(hotelId, clientId)
+     * @see Hotel
+     * @see Client
+     * @see FavouriteHotel
+     * @see HotelDAO
+     * @see ClientDAO
+     * @see FavouriteHotelDAO
+     */
     public void insert() {
         new FavouriteHotelDAO().create(fo);
     }

@@ -51,6 +51,15 @@ public class AddNewUser {
         address = false;
     }
 
+    /**
+     * method inserts new client into database,
+     * creates new row in clients table
+     * @usage: new AddNewUser(...new user params...).insertIntoDatabase()
+     * @see pap.logic.validators.ClientValidator
+     * @see Client
+     * @see ClientDAO
+     * @info (recommended validating data before inserting into database)
+     */
     public void insertIntoDatabase() {
         if (address){
             new ClientDAO().createWithNewAddress(user);

@@ -1,6 +1,8 @@
 package pap.logic.login;
 import jakarta.persistence.NoResultException;
+import pap.db.dao.AdminDAO;
 import pap.db.dao.OwnerDAO;
+import pap.db.entities.Admin;
 import pap.db.entities.Owner;
 
 import java.util.ArrayList;
@@ -18,6 +20,14 @@ public class OwnerLogin {
         this.codes = new ArrayList<>();
     }
 
+    /**
+     * method allowing to log in owner account,
+     * method checks if such user exists and if given password is correct
+     * @usage: new OwnerLogin(username, password).getOwnerAccount()
+     * @see Owner
+     * @see OwnerDAO
+     * @return returns Admin object
+     */
     public Owner getOwnerAccount() {
         try {
             Owner owner = new OwnerDAO().findByUsername(username);
@@ -40,6 +50,11 @@ public class OwnerLogin {
         }
     }
 
+    /**
+     * method allows to get error codes to check if login process was completed correctly
+     * @return returns list of Integer (codes), if the list is empty, login was successful
+     * @see pap.logic.ErrorCodes
+     */
     public List <Integer> getErrorCodes() {
         return codes;
     }

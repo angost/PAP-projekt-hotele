@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * class allowing to validate input from user before inserting values into database
+ * @usage: new UserValidator(...params to check...).validateCredentials()
+ * @see ClientValidator
+ * @see OwnerValidator
+ */
 public class UserValidator {
     private static final int MIN_USERNAME_LENGTH = 8;
     private static final int MAX_USERNAME_LENGTH = 64;
@@ -37,6 +43,11 @@ public class UserValidator {
         this.addressValidator = new AddressValidator(country, city, street, postalCode, streetNo);
     }
 
+    /**
+     * method which validates all given params
+     * @return returns list of error codes, if its empty - params are all valid
+     * @see pap.logic.ErrorCodes
+     */
     public List <Integer> validateCredentials() {
         List <Integer> codes = new ArrayList<>();
         validateUsername(username, codes);

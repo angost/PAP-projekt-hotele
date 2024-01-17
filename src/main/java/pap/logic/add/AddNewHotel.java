@@ -32,6 +32,15 @@ public class AddNewHotel {
         this.hotel.setOwner(owner);
     }
 
+    /**
+     * method inserts new hotel into database,
+     * creates new row in addresses and hotels tables
+     * @usage: new AddNewHotel(...new hotels params...).insertIntoDatabase()
+     * @info (recommended validating data before inserting into database)
+     * @see pap.logic.validators.HotelValidator
+     * @see Hotel
+     * @see HotelDAO
+     */
     public void insertIntoDatabase() {
         new HotelDAO().createWithNewAddress(hotel);
     }

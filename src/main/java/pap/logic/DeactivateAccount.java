@@ -5,6 +5,15 @@ import pap.db.dao.*;
 import java.util.*;
 
 public class DeactivateAccount {
+    /**
+     * method allowing to deactivate client account,
+     * sets is_active = false for user in clients table in database
+     * @usage: new DeactivateAccount.deactivateClientAccount(clientId)
+     * @return returns list of error codes, if its empty - deactivating was successful
+     * @see Client
+     * @see ClientDAO
+     * @see ErrorCodes
+     */
     public static List <Integer> deactivateClientAccount(int id) {
         List <Integer> codes = new ArrayList<>();
         Client user = new ClientDAO().findById(id);
@@ -26,6 +35,15 @@ public class DeactivateAccount {
         return codes;
     }
 
+    /**
+     * method allowing to deactivate owner account,
+     * sets is_active = false for user in owner table in database
+     * @usage: new DeactivateAccount.deactivateOwnerAccount(ownerId)
+     * @return returns list of error codes, if its empty - deactivating was successful
+     * @see Owner
+     * @see OwnerDAO
+     * @see ErrorCodes
+     */
     public static List <Integer> deactivateOwnerAccount(int id) {
         List <Integer> codes = new ArrayList<>();
         Owner owner = new OwnerDAO().findById(id);

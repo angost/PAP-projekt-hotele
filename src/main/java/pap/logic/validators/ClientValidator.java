@@ -3,6 +3,12 @@ package pap.logic.validators;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * class allowing to validate input from user before inserting values into database
+ * @usage: new ClientValidator(...params to check...).validateClientCredentials()
+ * @see UserValidator
+ * @see pap.logic.add.AddNewUser
+ */
 public class ClientValidator extends UserValidator {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 64;
@@ -28,6 +34,11 @@ public class ClientValidator extends UserValidator {
         this.gender = gender;
     }
 
+    /**
+     * method which validates all given params
+     * @return returns list of error codes, if its empty - params are all valid
+     * @see pap.logic.ErrorCodes
+     */
     public List <Integer> validateClientCredentials() {
         List <Integer> codes = super.validateCredentials();
         validateName(name, codes);

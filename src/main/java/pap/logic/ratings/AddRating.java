@@ -1,6 +1,8 @@
 package pap.logic.ratings;
 
+import pap.db.dao.HotelDAO;
 import pap.db.dao.RatingDAO;
+import pap.db.entities.Hotel;
 import pap.db.entities.Rating;
 import pap.db.entities.Offer;
 import pap.db.entities.Client;
@@ -20,6 +22,15 @@ public class AddRating {
         this.rating.setHidden(false);
     }
 
+    /**
+     * method inserts new rating into database,
+     * creates new row in ratings table
+     * @usage: new AddRating(...new rating params...).insertIntoDatabase()
+     * @info (recommended validating data before inserting into database)
+     * @see pap.logic.validators.RatingValidator
+     * @see Rating
+     * @see RatingDAO
+     */
     public void insertIntoDatabase() {
         new RatingDAO().create(rating);
     }

@@ -5,6 +5,11 @@ import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import pap.db.SessionFactoryMaker;
+import pap.db.dao.ClientDAO;
+import pap.db.dao.FavouriteOfferDAO;
+import pap.db.dao.OfferDAO;
+import pap.db.entities.Client;
+import pap.db.entities.FavouriteOffer;
 import pap.logic.filtration.prepareStatements.*;
 import pap.db.entities.Offer;
 import pap.logic.filtration.properties.*;
@@ -48,6 +53,21 @@ public class FilterOffers {
 
     public FilterOffers() {}
 
+    /**
+     * method allowing filtering offers,
+     * @usage: var fo = new FilterOffers()
+     * @usage: then ex. fo.setCountry('Poland')
+     * @usage: then fo.filter()
+     * @see Offer
+     * @see Client
+     * @see FavouriteOffer
+     * @see pap.db.entities.FavouriteHotel
+     * @see OfferDAO
+     * @see ClientDAO
+     * @see FavouriteOfferDAO
+     * @see pap.db.dao.FavouriteHotelDAO
+     * @return returns list of matching offers
+     */
     public List <Offer> filter() {
         List <Offer> offers;
         try (Session session = factory.openSession()) {
@@ -100,17 +120,4 @@ public class FilterOffers {
         PrepareOwnerFilter ownerFilter = new PrepareOwnerFilter(ownerProperties);
         return ownerFilter.prepareQuery();
     }
-
-    public static void main(String[] args) {
-        FilterOffers fo = new FilterOffers();
-        fo.setHasKitchen(true);
-        fo.setHasParking(true);
-        //fo.setOfferName("Cityscape");
-        //fo.setRoomType("Suite");
-        List <Offer> offersList = fo.filter();
-        for (Offer offer : offersList) {
-            System.out.println(offer.getName());
-        }
-    }
-
 }

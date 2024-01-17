@@ -1,6 +1,8 @@
 package pap.logic.login;
 import jakarta.persistence.NoResultException;
+import pap.db.dao.AdminDAO;
 import pap.db.dao.ClientDAO;
+import pap.db.entities.Admin;
 import pap.db.entities.Client;
 import java.util.*;
 
@@ -14,6 +16,14 @@ public class ClientLogin {
         this.codes = new ArrayList<>();
     }
 
+    /**
+     * method allowing to log in client account,
+     * method checks if such user exists and if given password is correct
+     * @usage: new ClientLogin(username, password).getUserAccount()
+     * @see Client
+     * @see ClientDAO
+     * @return returns Client object
+     */
     public Client getUserAccount() {
         try {
             Client user = new ClientDAO().findByUsername(username);
@@ -36,6 +46,11 @@ public class ClientLogin {
         }
     }
 
+    /**
+     * method allows to get error codes to check if login process was completed correctly
+     * @return returns list of Integer (codes), if the list is empty, login was successful
+     * @see pap.logic.ErrorCodes
+     */
     public List <Integer> getErrorCodes() {
         return codes;
     }

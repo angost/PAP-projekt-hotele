@@ -2,6 +2,15 @@ package pap.logic.validators;
 
 import java.util.*;
 
+/**
+ * class allowing to validate input from user before inserting values into database
+ * @usage: new AddressValidator(...params to check...).validateCredentials()
+ * @see pap.db.entities.Address
+ * @see pap.db.dao.AddressDAO
+ * @see ClientValidator
+ * @see OwnerValidator
+ * @see HotelValidator
+ */
 public class AddressValidator {
     private static final int MIN_COUNTRY_LENGTH = 2;
     private static final int MAX_COUNTRY_LENGTH = 64;
@@ -28,6 +37,11 @@ public class AddressValidator {
         this.streetNo = streetNo;
     }
 
+    /**
+     * method which validates all given params
+     * @return returns list of error codes, if its empty - params are all valid
+     * @see pap.logic.ErrorCodes
+     */
     public List <Integer> validateCredentials() {
         List <Integer> codes = new ArrayList<>();
         validateCountry(country, codes);

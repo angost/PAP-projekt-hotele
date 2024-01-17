@@ -15,6 +15,17 @@ public class RemoveHotelFromFavourites {
         this.fo.setClient(new ClientDAO().findById(clientId));
     }
 
+    /**
+     * method allowing removing hotel from favourites for user,
+     * deletes row from favourite_hotels table
+     * @usage: new RemoveHotelFromFavourites(hotelId, clientId)
+     * @see Hotel
+     * @see Client
+     * @see FavouriteHotel
+     * @see HotelDAO
+     * @see ClientDAO
+     * @see FavouriteHotelDAO
+     */
     public void remove() {
         new FavouriteHotelDAO().delete(fo);
     }
