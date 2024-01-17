@@ -23,7 +23,7 @@ public class HomePageGUI extends BaseGUI {
             reservationHistoryButton, reviewsButton, paymentsButton,
             deactivateAccountButton, yourHotelsButton, yourOffersButton,
             addHotelButton, addOfferButton,
-            discountsButton;
+            discountsButton, newDiscountButton;
     JPanel mainPanel, buttonsPanel, buttonsRowsPanel, infoPanel;
     LogoPanel logoPanel;
     JLabel welcomeLabel;
@@ -170,11 +170,14 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow4.setBackground(bgColor);
             discountsButton = new MenuButton("Discount codes", "/icons/discount.png");
             discountsButton.addActionListener(e->seeDiscountsAction());
+            newDiscountButton = new MenuButton("Add discount code", "/icons/discount.png");
+            newDiscountButton.addActionListener(e->addDiscountAction());
             deactivateAccountButton = new MenuButton("Deactivate account", "/icons/deactivate.png");
             deactivateAccountButton.fillColor = statusWrongLighter;
             deactivateAccountButton.hoverColor = statusWrong;
             deactivateAccountButton.addActionListener(e->deactivateAccountAction());
             buttonsRow4.add(discountsButton); buttonsRow4.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
+            buttonsRow4.add(newDiscountButton); buttonsRow4.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow4.add(deactivateAccountButton); buttonsRow4.add(Box.createHorizontalGlue());
 
             buttonsRowsPanel.add(buttonsRow1); buttonsRowsPanel.add(Box.createVerticalGlue());
@@ -188,7 +191,10 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow1.setBackground(bgColor);
             discountsButton = new MenuButton("Manage discount codes", "/icons/discount.png");
             discountsButton.addActionListener(e->seeDiscountsAction());
+            newDiscountButton = new MenuButton("Add discount code", "/icons/discount.png");
+            newDiscountButton.addActionListener(e->addDiscountAction());
             buttonsRow1.add(discountsButton); buttonsRow1.add(Box.createHorizontalGlue());
+            buttonsRow1.add(newDiscountButton); buttonsRow1.add(Box.createHorizontalGlue());
             buttonsRowsPanel.add(buttonsRow1); buttonsRowsPanel.add(Box.createVerticalGlue());
         }
 
@@ -273,6 +279,11 @@ public class HomePageGUI extends BaseGUI {
 
     void seeDiscountsAction(){
         new ScrollDiscountsGUI(userId, userType).createGUI();
+        frame.setVisible(false);
+    }
+
+    void addDiscountAction(){
+        new AddDiscountGUI(userId, userType).createGUI();
         frame.setVisible(false);
     }
 
