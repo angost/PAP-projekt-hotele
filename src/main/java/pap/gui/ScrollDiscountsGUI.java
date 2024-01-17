@@ -28,8 +28,8 @@ public class ScrollDiscountsGUI extends ScrollGUITemplate {
             discounts = new DiscountDAO().findAll();
         }
         else if (userType.equals("Owner")) {
-            // @TODO change to get discounts for owner
-            discounts = new DiscountDAO().findAll();
+            System.out.println(userId);
+            discounts = new DiscountDAO().findAllForOwnerOnlyActive(userId);
         }
         else {
             System.out.println("Error: invalid user type: " + userType);
