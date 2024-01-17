@@ -13,7 +13,7 @@ public class AddNewDiscountCode {
         this.discount = new Discount();
         this.discount.setCode(code);
         this.discount.setValueType(valueType);
-        this.discount.setType(1);
+        this.discount.setType(0);
         this.discount.setDescription(description);
         this.discount.setValue(value);
         this.discount.setHotel(hotel);
