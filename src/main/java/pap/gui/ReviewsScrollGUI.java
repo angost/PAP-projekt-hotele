@@ -1,10 +1,12 @@
 package pap.gui;
 
+import pap.db.dao.ClientDAO;
 import pap.db.dao.OwnerDAO;
 import pap.db.dao.RatingDAO;
 import pap.db.entities.*;
 import pap.gui.components.ReviewPanel;
 import pap.gui.components.ScrollElementButton;
+import pap.logic.ratings.GetAllRatingsForClient;
 import pap.logic.ratings.GetAllRatingsForOwner;
 
 import javax.swing.*;
@@ -17,19 +19,29 @@ public class ReviewsScrollGUI extends ScrollGUITemplate{
 
     int offerId;
 
-    // mock funtion
     void getElementsData() {
         // Offer's reviews
         if (offerId != -1) {
             this.fittingElementsIds = new Integer[]{3};
+            List <Rating> ratingList = new RatingDAO().getRatingsForOffer(offerId);
+            List <Integer> ids = new ArrayList<>();
+            for (var rating : ratingList) {
+                ids.add(rating.getRatingId());
+            }
+            this.fittingElementsIds = ids.toArray(new Integer[0]);
         }
         // Client's reviews
         else if (userType.equals("Client")) {
-            this.fittingElementsIds = new Integer[]{1,2,3,4};
+            Client client = new ClientDAO().findById(userId);
+            List <Rating> ratingList = new GetAllRatingsForClient(client).getAllRatings();
+            List <Integer> ids = new ArrayList<>();
+            for (var rating : ratingList) {
+                ids.add(rating.getRatingId());
+            }
+            this.fittingElementsIds = ids.toArray(new Integer[0]);
         }
         // Owner's reviews
         else {
-//            this.fittingElementsIds = new Integer[]{1,4,5};
             Owner owner = new OwnerDAO().findById(userId);
             List<Rating> ratingList = new GetAllRatingsForOwner(owner).getAllRatings();
             List <Integer> ids = new ArrayList<>();
@@ -77,17 +89,17 @@ public class ReviewsScrollGUI extends ScrollGUITemplate{
         reviewPanel.add(Box.createRigidArea(new Dimension(gapSize,0)));
 
         // mock
-        boolean ratingByThisUser = true;
-
-        if (userType.equals("Client") && ratingByThisUser) {
-            ScrollElementButton editReviewButton = new ScrollElementButton("Edit review", buttonSize, buttonSize, secondColor, secondColorDarker, fontButtons, true, elementId);
-            editReviewButton.addActionListener(actionEvent -> {
-                ScrollElementButton button = (ScrollElementButton) actionEvent.getSource();
-//            new OfferDetailsGUI(userId, userType, button.elementId).createGUI();
-//            frame.setVisible(false);
-            });
-            reviewPanel.add(editReviewButton);
-        }
+//        boolean ratingByThisUser = true;
+//
+//        if (userType.equals("Client") && ratingByThisUser) {
+//            ScrollElementButton editReviewButton = new ScrollElementButton("Edit review", buttonSize, buttonSize, secondColor, secondColorDarker, fontButtons, true, elementId);
+//            editReviewButton.addActionListener(actionEvent -> {
+//                ScrollElementButton button = (ScrollElementButton) actionEvent.getSource();
+////            new OfferDetailsGUI(userId, userType, button.elementId).createGUI();
+////            frame.setVisible(false);
+//            });
+//            reviewPanel.add(editReviewButton);
+//        }
     }
 
     @Override
