@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DiscountCodeValidator {
-    private final static int CODE_LENGTH = 10;
+    private final static int CODE_MIN_LENGTH = 4;
+    private final static int CODE_MAX_LENGTH = 15;
     private final static int MIN_DESC_LENGTH = 5;
     private final static int MAX_DESC_LENGTH = 50;
     private final String code;
@@ -42,11 +43,13 @@ public class DiscountCodeValidator {
     }
 
     public static void validateCode(String code, List <Integer> codes) {
-        if (code.length() != CODE_LENGTH) codes.add(901);
+        if (code.length() < CODE_MIN_LENGTH) codes.add(901);
+        if (code.length() > CODE_MAX_LENGTH) codes.add(910);
         if (!code.matches("[a-zA-Z0-9]+")) codes.add(902);
         try {
-            new DiscountDAO().findByCodeWithNoActive(code);
-            codes.add(909);
+            var x = new DiscountDAO().findByCodeWithNoActive(code);
+            if (x != null)
+                codes.add(909);
         } catch (NoResultException error) {
             // expected situation, do nothing
         }

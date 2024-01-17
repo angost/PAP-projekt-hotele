@@ -87,11 +87,25 @@ public class HotelDAO {
         }
     }
 
+    public List<Hotel> findAll() {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("select * from hotels", Hotel.class).list();
+        }
+    }
+
     public Hotel findByNameAndOwnerId(String name, Integer id) {
         try (Session session = factory.openSession()) {
-            return session.createNativeQuery("SELECT * FROM hotels WHERE name = :name AND owner_id = :ownerId", Hotel.class)
+            return session.createNativeQuery("SELECT * FROM hotels WHERE name = :name AND owner_id = :owner_id", Hotel.class)
                     .setParameter("name", name)
                     .setParameter("owner_id", id)
+                    .uniqueResult();
+        }
+    }
+
+    public Hotel findByName(String name) {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("SELECT * FROM hotels WHERE name = :name", Hotel.class)
+                    .setParameter("name", name)
                     .uniqueResult();
         }
     }

@@ -75,7 +75,7 @@ public abstract class FormGUITemplate extends BaseGUI{
         String[] fieldTypes = getFieldTypes();
         Object[] fieldParameters = getFieldParameters();
 
-        if ((fieldLabels.length == fieldTypes.length) && (fieldLabels.length == fieldParameters.length) && (fieldTypes.length == fieldParameters.length)) {
+        if (fieldLabels.length == fieldTypes.length && fieldLabels.length == fieldParameters.length) {
             nrOfFields = fieldLabels.length;
         } else {
             nrOfFields = 0; // Throw exception?

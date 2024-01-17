@@ -76,6 +76,22 @@ public class DiscountDAO {
         }
     }
 
+    public List <Discount> findAllForOwner(int ownerId) {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("select discounts.* from owners join hotels on (owners.owner_id = hotels.owner_id) join discounts on (hotels.hotel_id = discounts.hotel_id) where owners.owner_id = :ownerId", Discount.class)
+                    .setParameter("ownerId", ownerId)
+                    .list();
+        }
+    }
+
+    public List <Discount> findAllForOwnerOnlyActive(int ownerId) {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("select discounts.* from owners join hotels on (owners.owner_id = hotels.owner_id) join discounts on (hotels.hotel_id = discounts.hotel_id) where discounts.is_active = true and owners.owner_id = :ownerId", Discount.class)
+                    .setParameter("ownerId", ownerId)
+                    .list();
+        }
+    }
+
     public List<Discount> findAllWithNotActive() {
         try (Session session = factory.openSession()) {
             return session.createNativeQuery("SELECT * FROM discounts", Discount.class).list();
