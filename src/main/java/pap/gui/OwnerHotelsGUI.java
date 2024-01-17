@@ -6,10 +6,13 @@ import pap.db.dao.OwnerDAO;
 import pap.db.entities.Hotel;
 import pap.db.entities.Offer;
 import pap.gui.components.*;
+import pap.logic.archiving.ArchiveHotel;
 import pap.logic.get.GetAllOwnerHotels;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 
@@ -88,6 +91,21 @@ public class OwnerHotelsGUI extends ScrollGUITemplate{
             ScrollElementButton button = (ScrollElementButton) actionEvent.getSource();
 //            new OfferDetailsGUI(userId, userType, button.elementId).createGUI();
 //            frame.setVisible(false);
+        });
+        deactivateHotelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int result = JOptionPane.showConfirmDialog(null, "Do you want to proceed?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    boolean done = new ArchiveHotel(new HotelDAO().findById(elementId)).archive();
+                    if (done){
+                        JOptionPane.showMessageDialog(null, "Hotel Deactivated!", "Deactivation", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Hotel cannot be deactivated!\n(Reservations for some offers still active.)", "Deactivation", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
         });
         hotelPanel.add(deactivateHotelBtn);
 //        hotelPanel.add(Box.createRigidArea(new Dimension(gapSize,0)));
