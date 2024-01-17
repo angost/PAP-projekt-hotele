@@ -134,9 +134,7 @@ public class AdminLogInGUI extends BaseGUI {
         statusLabel.setText(statusLabelText);
         statusLabel.setForeground(statusNeutral);
         statusLabel.paintImmediately(statusLabel.getVisibleRect());
-
-        new HomePageGUI(1, "Admin").createGUI();
-        frame.setVisible(false);
+        
         AdminLogin al = new AdminLogin(usernameText, passwordText);
         Admin admin = al.getAdminAccount();
         java.util.List<Integer> errorCodesAdmin = al.getErrorCodes();

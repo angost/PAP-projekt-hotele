@@ -325,6 +325,6 @@ INSERT INTO favourite_offers ("client_id", "offer_id") VALUES
 (10, 4);
 
 INSERT INTO discounts ("code", "value_type", "type", "description", "value", "hotel_id", "is_active") VALUES
-('SUMMER25', 1, 1, 'Summer Promotion', 25.00, 1, true),
-('WEEKEND10', 1, 2, 'Weekend Special', 10.00, 2, true),
-('LOYALTY15', 2, 1, 'Loyalty Discount', 15.00, 3, true);
+('SUMMER25', 1, 0, 'Summer Promotion', 25.00, 1, true),
+('WEEKEND10', 1, 0, 'Weekend Special', 10.00, 2, true),
+('LOYALTY15', 0, 0, 'Loyalty Discount', 15.00, 3, true);
