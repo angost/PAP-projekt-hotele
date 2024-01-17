@@ -53,15 +53,15 @@ public class AddDiscountGUI extends FormGUITemplate {
         String valueType = formFieldsValues.get("Value type");
         String hotelName = formFieldsValues.get("Hotel");
         Hotel hotel = new HotelDAO().findByNameAndOwnerId(hotelName, userId);
-        List<Integer> errorCodes = new DiscountCodeValidator(code, valueType.equals("Percentage (%)") ? 0 : 1, 1, description, Float.parseFloat(value), hotel, true).validate();
+        List<Integer> errorCodes = new DiscountCodeValidator(code, valueType.equals("Percentage (%)") ? 1 : 0, 1, description, Float.parseFloat(value), hotel, true).validate();
 
         if (errorCodes.isEmpty()) {
             if (hotelName.equals("ALL HOTELS"))
-                new AddDiscountCodeForAllHotels(code, valueType.equals("Percentage (%)") ? 0 : 1, description, Float.parseFloat(value), true).insertIntoDatabase();
+                new AddDiscountCodeForAllHotels(code, valueType.equals("Percentage (%)") ? 1 : 0, description, Float.parseFloat(value), true).insertIntoDatabase();
             else {
                 if (hotel == null)
                     hotel = new HotelDAO().findByName(hotelName);
-                new AddNewDiscountCode(code, valueType.equals("Percentage (%)") ? 0 : 1, description, Float.parseFloat(value), hotel, true).insertIntoDatabase();
+                new AddNewDiscountCode(code, valueType.equals("Percentage (%)") ? 1 : 0, description, Float.parseFloat(value), hotel, true).insertIntoDatabase();
             }
             JOptionPane.showMessageDialog(frame, "Success! Discount code added!");
             new HomePageGUI(userId, userType).createGUI();
