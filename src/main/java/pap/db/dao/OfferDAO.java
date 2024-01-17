@@ -80,6 +80,12 @@ public class OfferDAO {
         }
     }
 
+    public List<Offer> findAllActive() {
+        try (Session session = factory.openSession()) {
+            return session.createNativeQuery("select * from offers where is_active = true", Offer.class).list();
+        }
+    }
+
     public Offer findById(int id) {
         try (Session session = factory.openSession()) {
             return session.find(Offer.class, id);

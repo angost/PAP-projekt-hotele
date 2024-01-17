@@ -4,6 +4,7 @@ package pap.logic.validators;
 import jakarta.persistence.NoResultException;
 import pap.db.dao.DiscountDAO;
 import pap.db.dao.HotelDAO;
+import pap.db.entities.Hotel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -75,8 +76,10 @@ public class HotelValidator {
         if (name.length() < MIN_NAME_LENGTH) codes.add(701);
         if (name.length() > MAX_NAME_LENGTH) codes.add(702);
         try {
-            new HotelDAO().findByNameAndOwnerId(name, ownerId);
-            codes.add(717);
+            Hotel hotel = new HotelDAO().findByNameAndOwnerId(name, ownerId);
+            if (hotel != null) {
+                codes.add(717);
+            }
         } catch (NoResultException error) {
             // expected situation, do nothing
         }
