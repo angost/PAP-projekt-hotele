@@ -1,42 +1,67 @@
 package pap.gui;
 
+import pap.db.dao.ClientDAO;
+import pap.db.dao.OwnerDAO;
+import pap.db.dao.RatingDAO;
+import pap.db.entities.*;
 import pap.gui.components.ReviewPanel;
 import pap.gui.components.ScrollElementButton;
+import pap.logic.ratings.GetAllRatingsForClient;
+import pap.logic.ratings.GetAllRatingsForOwner;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ReviewsScrollGUI extends ScrollGUITemplate{
 
     int offerId;
 
-    // mock funtion
     void getElementsData() {
         // Offer's reviews
         if (offerId != -1) {
             this.fittingElementsIds = new Integer[]{3};
+            List <Rating> ratingList = new RatingDAO().getRatingsForOffer(offerId);
+            List <Integer> ids = new ArrayList<>();
+            for (var rating : ratingList) {
+                ids.add(rating.getRatingId());
+            }
+            this.fittingElementsIds = ids.toArray(new Integer[0]);
         }
         // Client's reviews
         else if (userType.equals("Client")) {
-            this.fittingElementsIds = new Integer[]{1,2,3,4};
+            Client client = new ClientDAO().findById(userId);
+            List <Rating> ratingList = new GetAllRatingsForClient(client).getAllRatings();
+            List <Integer> ids = new ArrayList<>();
+            for (var rating : ratingList) {
+                ids.add(rating.getRatingId());
+            }
+            this.fittingElementsIds = ids.toArray(new Integer[0]);
         }
         // Owner's reviews
         else {
-            this.fittingElementsIds = new Integer[]{1,4,5};
+            Owner owner = new OwnerDAO().findById(userId);
+            List<Rating> ratingList = new GetAllRatingsForOwner(owner).getAllRatings();
+            List <Integer> ids = new ArrayList<>();
+            for (var rating : ratingList) {
+                ids.add(rating.getRatingId());
+            }
+            this.fittingElementsIds = ids.toArray(new Integer[0]);
         }
         this.nrOfElements = fittingElementsIds.length;
     }
 
-    // mock function
     HashMap<String, String> getElementData(int elementId) {
+        Rating rating = new RatingDAO().findById(elementId);
         HashMap<String, String> reviewInfo = new HashMap<String, String>();
-        reviewInfo.put("offer_name", "Room with View");
-        reviewInfo.put("hotel_name", "Hotel Grand");
-        reviewInfo.put("user_name", "GreatUser");
-        reviewInfo.put("comment", "Beautiful view, but the room was a bit small");
-        reviewInfo.put("rating", "4");
-        reviewInfo.put("date_added", "2023-04-30");
+        reviewInfo.put("offer_name", rating.getOffer().getName());
+        reviewInfo.put("hotel_name", rating.getOffer().getHotel().getName());
+        reviewInfo.put("user_name", rating.getClient().getName());
+        reviewInfo.put("comment", rating.getComment());
+        reviewInfo.put("rating", String.valueOf(rating.getRating()));
+        reviewInfo.put("date_added", String.valueOf(rating.getAddDate()));
         return reviewInfo;
     }
 
@@ -64,17 +89,17 @@ public class ReviewsScrollGUI extends ScrollGUITemplate{
         reviewPanel.add(Box.createRigidArea(new Dimension(gapSize,0)));
 
         // mock
-        boolean ratingByThisUser = true;
-
-        if (userType.equals("Client") && ratingByThisUser) {
-            ScrollElementButton editReviewButton = new ScrollElementButton("Edit review", buttonSize, buttonSize, secondColor, secondColorDarker, fontButtons, true, elementId);
-            editReviewButton.addActionListener(actionEvent -> {
-                ScrollElementButton button = (ScrollElementButton) actionEvent.getSource();
-//            new OfferDetailsGUI(userId, userType, button.elementId).createGUI();
-//            frame.setVisible(false);
-            });
-            reviewPanel.add(editReviewButton);
-        }
+//        boolean ratingByThisUser = true;
+//
+//        if (userType.equals("Client") && ratingByThisUser) {
+//            ScrollElementButton editReviewButton = new ScrollElementButton("Edit review", buttonSize, buttonSize, secondColor, secondColorDarker, fontButtons, true, elementId);
+//            editReviewButton.addActionListener(actionEvent -> {
+//                ScrollElementButton button = (ScrollElementButton) actionEvent.getSource();
+////            new OfferDetailsGUI(userId, userType, button.elementId).createGUI();
+////            frame.setVisible(false);
+//            });
+//            reviewPanel.add(editReviewButton);
+//        }
     }
 
     @Override
