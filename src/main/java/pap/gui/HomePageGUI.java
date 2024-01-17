@@ -162,6 +162,7 @@ public class HomePageGUI extends BaseGUI {
             buttonsRow3.setBackground(bgColor);
             reservationHistoryButton = new MenuButton("See reservation history", "/icons/history.png");
             reviewsButton = new MenuButton("See reviews", "/icons/reviews.png");
+            reviewsButton.addActionListener(e->seeOwnerReviews());
             buttonsRow3.add(reservationHistoryButton); buttonsRow3.add(Box.createRigidArea(new Dimension(menuButtonGap,0)));
             buttonsRow3.add(reviewsButton); buttonsRow3.add(Box.createHorizontalGlue());
 
