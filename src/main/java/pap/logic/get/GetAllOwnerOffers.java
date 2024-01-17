@@ -28,7 +28,7 @@ public class GetAllOwnerOffers {
      */
     public List<Offer> get() {
         List<Offer> offers;
-        String query = "select offers.* from hotels join offers on (hotels.hotel_id = offers.hotel_id) where owner_id = '" + owner.getOwnerId() + "'";
+        String query = "select offers.* from hotels join offers on (hotels.hotel_id = offers.hotel_id) where owner_id = '" + owner.getOwnerId() + "' and offers.is_active = true";
         try (Session session = factory.openSession()) {
             offers = session.createNativeQuery(query, Offer.class).list();
         }

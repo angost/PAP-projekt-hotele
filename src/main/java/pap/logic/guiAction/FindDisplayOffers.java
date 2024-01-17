@@ -24,6 +24,7 @@ public class FindDisplayOffers {
 
     public List<Offer> filterOffers(){
         //TODO: filters
+        
         return SearchOffers.getAllOffers();
     }
 

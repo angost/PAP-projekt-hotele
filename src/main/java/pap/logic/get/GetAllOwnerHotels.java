@@ -29,7 +29,7 @@ public class GetAllOwnerHotels {
      */
     public List<Hotel> get() {
         List <Hotel> hotels;
-        String query = "select * from hotels where owner_id = '" + owner.getOwnerId() + "'";
+        String query = "select * from hotels where owner_id = '" + owner.getOwnerId() + "' and is_active = true";
         try (Session session = factory.openSession()) {
             hotels = session.createNativeQuery(query, Hotel.class).list();
         }

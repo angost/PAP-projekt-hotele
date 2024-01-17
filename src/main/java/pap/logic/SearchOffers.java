@@ -6,7 +6,7 @@ import pap.db.dao.*;
 
 public class SearchOffers {
     public static List <Offer> getAllOffers() {
-        return new OfferDAO().findAll();
+        return new OfferDAO().findAllActive();
     }
 
     public static Offer getOfferById(int id) {
